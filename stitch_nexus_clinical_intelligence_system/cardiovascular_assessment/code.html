@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Advanced Cardiovascular Clinical Workbench</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error-container": "#ffdad6",
+                      "inverse-surface": "#e2e2e5",
+                      "secondary-fixed-dim": "#bcc7de",
+                      "outline": "#859399",
+                      "tertiary-container": "#feb127",
+                      "inverse-on-surface": "#2f3033",
+                      "on-primary-container": "#00566a",
+                      "on-secondary": "#263143",
+                      "on-secondary-container": "#aeb9d0",
+                      "tertiary": "#ffd59c",
+                      "on-surface": "#e2e2e5",
+                      "surface-container": "#1e2022",
+                      "surface-dim": "#121416",
+                      "on-secondary-fixed-variant": "#3c475a",
+                      "secondary-container": "#3e495d",
+                      "surface-container-low": "#1a1c1e",
+                      "secondary": "#bcc7de",
+                      "secondary-fixed": "#d8e3fb",
+                      "outline-variant": "#3c494e",
+                      "surface-tint": "#4cd6ff",
+                      "surface-container-lowest": "#0c0e10",
+                      "primary": "#a4e6ff",
+                      "background": "#121416",
+                      "on-tertiary": "#442b00",
+                      "on-tertiary-container": "#6b4700",
+                      "inverse-primary": "#00677f",
+                      "tertiary-fixed": "#ffddb1",
+                      "on-tertiary-fixed-variant": "#624000",
+                      "on-error": "#690005",
+                      "primary-fixed": "#b7eaff",
+                      "surface-variant": "#333537",
+                      "surface-container-high": "#282a2c",
+                      "surface": "#121416",
+                      "on-tertiary-fixed": "#291800",
+                      "on-surface-variant": "#bbc9cf",
+                      "on-secondary-fixed": "#111c2d",
+                      "surface-bright": "#38393c",
+                      "tertiary-fixed-dim": "#ffba49",
+                      "on-primary": "#003543",
+                      "error-container": "#93000a",
+                      "error": "#ffb4ab",
+                      "on-primary-fixed-variant": "#004e60",
+                      "on-background": "#e2e2e5",
+                      "primary-container": "#00d1ff",
+                      "surface-container-highest": "#333537",
+                      "on-primary-fixed": "#001f28",
+                      "primary-fixed-dim": "#4cd6ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "sm": "8px",
+                      "lg": "24px",
+                      "unit": "4px",
+                      "margin-safe": "24px",
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "xl": "40px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "data-mono": ["JetBrains Mono"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "body-sm": ["13px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "display-lg": ["42px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-sm": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                      "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "data-mono": ["13px", {"lineHeight": "1.4", "fontWeight": "450"}],
+                      "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Base Styles for Medical Aesthetics */
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-surface');
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar for dense data panels */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface-container-lowest');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-variant');
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline-variant');
+        }
+
+        /* Subtle grid background for anatomical container */
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, theme('colors.outline-variant') 1px, transparent 1px),
+                linear-gradient(to bottom, theme('colors.outline-variant') 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: center;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface-dim dark:bg-surface-dim border-b border-outline-variant dark:border-outline-variant transition-colors duration-200 ease-in-out flex justify-between items-center w-full px-lg h-16 sticky top-0 z-50">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1; font-size: 28px;">vital_signs</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim tracking-tight">Clinical Intelligence</h1>
+</div>
+<div class="flex items-center gap-lg">
+<!-- Search Bar (on_left configuration implied by JSON, moving to right for balance in this specific layout, keeping styling consistent) -->
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container border border-outline-variant rounded pl-8 pr-sm py-1 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container transition-colors w-64 placeholder-on-surface-variant" placeholder="Patient ID / MRN" type="text"/>
+</div>
+<!-- Trailing Icon Actions -->
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded hover:bg-surface-variant dark:hover:bg-surface-variant text-on-surface-variant dark:text-on-surface-variant transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded hover:bg-surface-variant dark:hover:bg-surface-variant text-on-surface-variant dark:text-on-surface-variant transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded hover:bg-surface-variant dark:hover:bg-surface-variant text-on-surface-variant dark:text-on-surface-variant transition-colors duration-200 ease-in-out">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<!-- Profile -->
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-sm cursor-pointer">
+<img alt="Chief Medical Officer Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a Chief Medical Officer, dramatic studio lighting against a dark gray background, high contrast, sharp focus, technical and authoritative aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqhE_-IsSI5VzHMcIQx-RzUdoVB201qZKowBwJsKNeH3aAMHpy9kqwjgZFhSm0mQzlj1tEHEYXp0iAS63X7jHuTpnyxmw9DJJxf_aNUrCiKSZyIKqxnPB0yxHJZebpti7TKE7JLeg2-Zq8Xwc2YGtTpEQW4cxlUaWIWDgzXn8VvSa5KiaLS4c5jerjbMd9f6F1Fv2Te3JOqB5tc1aIgq6ZLG1cY1Jy4YQLwnHIIR2rt_Ts4bAfHhpneg"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 relative">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full flex flex-col pt-16 z-40 bg-surface-container dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline-variant w-64 transition-all duration-150">
+<!-- Header Area -->
+<div class="p-md border-b border-outline-variant flex flex-col gap-sm">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded bg-surface-variant border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container">hub</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">Core Workspace</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Active Session: 08:42</div>
+</div>
+</div>
+<button class="mt-sm w-full bg-surface-variant border border-outline-variant text-on-surface hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-bright dark:hover:bg-surface-bright py-sm rounded font-label-caps text-label-caps flex items-center justify-center gap-sm transition-all duration-150">
+<span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+                    New Consultation
+                </button>
+</div>
+<!-- Tabs -->
+<div class="flex-1 py-md flex flex-col gap-unit">
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-caps text-label-caps">Patients</span>
+</a>
+<!-- Active Tab: Diagnostics -->
+<a class="flex items-center gap-md px-lg py-sm text-primary dark:text-primary border-l-2 border-primary bg-surface-container-high dark:bg-surface-container-high transition-all duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">biotech</span>
+<span class="font-label-caps text-label-caps">Diagnostics</span>
+</a>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-caps text-label-caps">Research</span>
+</a>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-label-caps text-label-caps">Pharmacy</span>
+</a>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-label-caps text-label-caps">Analytics</span>
+</a>
+</div>
+<!-- Footer Tabs -->
+<div class="border-t border-outline-variant py-md flex flex-col gap-unit">
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dns</span>
+<span class="font-label-caps text-label-caps">System Status</span>
+</a>
+<a class="flex items-center gap-md px-lg py-sm text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-caps text-label-caps">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas (Split View) -->
+<main class="ml-64 flex-1 flex flex-col md:flex-row h-[calc(100vh-64px)] overflow-hidden bg-background">
+<!-- Left Panel: Anatomical Container -->
+<section class="w-full md:w-5/12 border-r border-outline-variant bg-surface-container relative overflow-hidden flex flex-col">
+<!-- Header -->
+<div class="absolute top-0 left-0 w-full p-md flex justify-between items-start z-10">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold drop-shadow-md">Cardiac Morphology</h2>
+<p class="font-data-mono text-data-mono text-on-surface-variant">SCAN_ID: XR-992-A</p>
+</div>
+<div class="bg-surface-variant border border-outline-variant rounded px-2 py-1 flex items-center gap-1 backdrop-blur-sm bg-opacity-80">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface">Live Model</span>
+</div>
+</div>
+<!-- 3D Model Area (Simulated) -->
+<div class="flex-1 relative w-full h-full">
+<div class="absolute inset-0 bg-grid-pattern"></div>
+<!-- Using placeholder for anatomical model as requested -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center mix-blend-screen opacity-90" data-alt="A highly detailed, glowing wireframe and volumetric 3D rendering of a human heart. The holographic heart is illuminated from within using an icy cyan and deep blue color palette. It sits against a pitch-black, minimalist background with subtle interface measurement lines radiating outward. Medical UI aesthetic, hyper-realistic details, mission-control style data visualization." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDm5Fja-osIZ7TBjBpO97gjzCIG4u-NbgTOozqkEv6fZtt0lUmdSuVbArnErGbRxJ7Ds2c_KONyyZOZ3qzFwie5tmDJhO1yXRpWrAS2qBCQFEQzwxA4aEGqnDYSB4Kp_tBQZD-jnAwCYwlD_WhJ_c5nB1qQ-_gk0ApG4UNMuNvrkT9Q2-qqSfSO8JZ28IqlogM29pkkyQktYbDDVzSXBvK2Lop0NfkmbqFYFRX82IQuQi6_0e_wibOAMA')"></div>
+<!-- Overlay Controls -->
+<div class="absolute bottom-md left-md flex gap-sm z-10">
+<button class="w-8 h-8 rounded bg-surface border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">360</span>
+</button>
+<button class="w-8 h-8 rounded bg-surface border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">zoom_in</span>
+</button>
+<button class="w-8 h-8 rounded bg-surface border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">layers</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Right Panel: Data-Rich Intelligence Canvas -->
+<section class="w-full md:w-7/12 p-lg overflow-y-auto">
+<div class="max-w-4xl mx-auto flex flex-col gap-lg">
+<!-- Top Row: Risk & Lipid Tracking (Bento Grid Style) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+<!-- 10-year CVD Risk Projection -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md flex flex-col justify-between">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-sm">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+                                    10-Year CVD Risk Projection
+                                </h3>
+<span class="px-2 py-1 rounded-full bg-error-container text-on-error-container font-label-caps text-[10px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Elevated
+                                </span>
+</div>
+<div class="flex items-end gap-sm mb-sm">
+<span class="font-display-lg text-display-lg text-on-surface">18.4</span>
+<span class="font-body-md text-body-md text-on-surface-variant mb-1">%</span>
+</div>
+<!-- Simplified Sparkline area -->
+<div class="h-16 w-full mt-auto relative border-b border-l border-outline-variant">
+<!-- Faux graph line -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0,80 C20,75 40,85 60,60 C80,35 100,20 100,20" fill="none" stroke="theme('colors.error')" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path d="M0,80 C20,75 40,85 60,60 C80,35 100,20 100,20 L100,100 L0,100 Z" fill="theme('colors.error-container')" opacity="0.2"></path>
+</svg>
+</div>
+<div class="flex justify-between mt-sm font-data-mono text-[10px] text-on-surface-variant">
+<span>Baseline</span>
+<span>Proj. Y10</span>
+</div>
+</div>
+<!-- Dynamic Lipid Profile Tracking -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-sm">
+<span class="material-symbols-outlined" style="font-size: 16px;">bloodtype</span>
+                                    Lipid Profile (Dynamic)
+                                </h3>
+<button class="text-primary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
+</button>
+</div>
+<table class="w-full text-left font-data-mono text-data-mono text-on-surface border-collapse">
+<thead>
+<tr class="border-b border-outline-variant text-on-surface-variant">
+<th class="pb-1 font-normal">Biomarker</th>
+<th class="pb-1 font-normal text-right">Latest</th>
+<th class="pb-1 font-normal text-right">Trend</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant hover:bg-surface-container-high transition-colors h-[32px]">
+<td class="align-middle">LDL-C</td>
+<td class="align-middle text-right text-error">142 mg/dL</td>
+<td class="align-middle text-right"><span class="material-symbols-outlined text-error" style="font-size: 16px;">arrow_upward</span></td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-high transition-colors h-[32px]">
+<td class="align-middle">HDL-C</td>
+<td class="align-middle text-right">48 mg/dL</td>
+<td class="align-middle text-right"><span class="material-symbols-outlined text-on-surface-variant" style="font-size: 16px;">horizontal_rule</span></td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-high transition-colors h-[32px]">
+<td class="align-middle">Triglycerides</td>
+<td class="align-middle text-right text-tertiary-container">160 mg/dL</td>
+<td class="align-middle text-right"><span class="material-symbols-outlined text-tertiary-container" style="font-size: 16px;">arrow_upward</span></td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors h-[32px]">
+<td class="align-middle">ApoB</td>
+<td class="align-middle text-right">110 mg/dL</td>
+<td class="align-middle text-right"><span class="material-symbols-outlined text-on-surface-variant" style="font-size: 16px;">horizontal_rule</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Middle Area: Intelligence Cards (AI Review) -->
+<div class="grid grid-cols-1 gap-lg">
+<!-- Coronary Artery Calcification AI Review (Intelligence Card) -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md flex flex-col gap-sm border-t-2 border-t-primary-container relative">
+<div class="flex items-center justify-between mb-sm">
+<div class="flex items-center gap-sm text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="font-label-caps text-label-caps tracking-widest uppercase">CAC AI Review</h3>
+</div>
+<span class="font-data-mono text-[10px] text-on-surface-variant">Conf: 98.4%</span>
+</div>
+<div class="flex flex-col md:flex-row gap-md">
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface mb-md">
+                                        Automated quantification detects dense calcific plaques primarily localized in the proximal Left Anterior Descending (LAD) artery. Agatston score equivalent calculated.
+                                    </p>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-dim p-sm rounded border border-outline-variant">
+<div class="font-label-caps text-[10px] text-on-surface-variant mb-1">Total Score</div>
+<div class="font-data-mono text-body-lg text-on-surface font-medium">342.5</div>
+</div>
+<div class="bg-surface-dim p-sm rounded border border-outline-variant">
+<div class="font-label-caps text-[10px] text-on-surface-variant mb-1">Percentile (Age/Sex)</div>
+<div class="font-data-mono text-body-lg text-tertiary-container font-medium">85th</div>
+</div>
+</div>
+</div>
+<!-- Micro imaging slot -->
+<div class="w-full md:w-32 h-24 bg-surface-dim border border-outline-variant rounded overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A macro close-up of a monochromatic medical CT scan slice showing a cross-section of a human torso, with a distinct bright white calcification spot highlighted by a glowing cyan targeting box. Dark, technical, diagnostic aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBezR8_WnyFBC9F2Nk9-OEd2iW-d9KpxVOsT5rXGuwOiNx_iUz62LUgLuq9UzoqxREBnimPF0I_vMtLn95tAwAfPsQKWyAvw8zj8nmkJOzIAgiZDIQ_MHwq_OOtzorUnLfMh8y2cp5ESgR4ZlTLLxqUq9i3WwtUUeSGH8pZN6_-g4uay0VzqULpDMpzbEknYss_MZWcV6u-LrKQLPxjZfHHJCEqEsHWYiRdCiqPN6MAI4cwuNT-gopDKQ')"></div>
+</div>
+</div>
+</div>
+<!-- Echocardiogram AI Analysis Results -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md flex flex-col gap-sm border-t-2 border-t-primary-container relative">
+<div class="flex items-center justify-between mb-sm">
+<div class="flex items-center gap-sm text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="font-label-caps text-label-caps tracking-widest uppercase">Echocardiogram Analysis</h3>
+</div>
+<span class="font-data-mono text-[10px] text-on-surface-variant">Model: EchoNet-V2</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-md font-data-mono text-sm">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant">LVEF (AI Est.)</span>
+<span class="text-on-surface font-medium">52% <span class="text-on-surface-variant text-xs">(±2%)</span></span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant">GLS</span>
+<span class="text-error font-medium">-16.4%</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant">Diastolic Func.</span>
+<span class="text-on-surface">Grade I Imp.</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant">Valve Regurg</span>
+<span class="text-on-surface">Trace MR</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Area: Medication Optimization -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-size: 20px;">medication</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Medication Optimization Proposals</h3>
+</div>
+<div class="border border-outline-variant rounded overflow-hidden">
+<!-- Proposal Item 1 -->
+<div class="p-md border-b border-outline-variant bg-surface flex flex-col sm:flex-row justify-between gap-md items-start sm:items-center">
+<div>
+<div class="flex items-center gap-sm mb-1">
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant">INTENSIFY TX</span>
+<h4 class="font-body-md text-on-surface font-semibold">Rosuvastatin</h4>
+</div>
+<p class="font-body-sm text-on-surface-variant">Increase from 20mg to 40mg daily. Goal LDL-C &lt; 70 mg/dL based on CAC burden.</p>
+</div>
+<div class="flex gap-sm w-full sm:w-auto">
+<button class="flex-1 sm:flex-none border border-outline-variant text-on-surface px-md py-sm rounded font-label-caps text-label-caps hover:bg-surface-variant transition-colors">Dismiss</button>
+<button class="flex-1 sm:flex-none bg-primary-container text-on-primary-container px-md py-sm rounded font-label-caps text-label-caps hover:bg-primary-fixed transition-colors">Apply</button>
+</div>
+</div>
+<!-- Proposal Item 2 -->
+<div class="p-md bg-surface flex flex-col sm:flex-row justify-between gap-md items-start sm:items-center">
+<div>
+<div class="flex items-center gap-sm mb-1">
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant">INITIATE TX</span>
+<h4 class="font-body-md text-on-surface font-semibold">Icosapent Ethyl</h4>
+</div>
+<p class="font-body-sm text-on-surface-variant">Initiate 2g BID. Indicated due to elevated triglycerides (160 mg/dL) and established risk.</p>
+</div>
+<div class="flex gap-sm w-full sm:w-auto">
+<button class="flex-1 sm:flex-none border border-outline-variant text-on-surface px-md py-sm rounded font-label-caps text-label-caps hover:bg-surface-variant transition-colors">Dismiss</button>
+<button class="flex-1 sm:flex-none bg-primary-container text-on-primary-container px-md py-sm rounded font-label-caps text-label-caps hover:bg-primary-fixed transition-colors">Apply</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

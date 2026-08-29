@@ -1,0 +1,18 @@
+{
+  "short_name": "Aurevia",
+  "name": "Aurevia Health AI — Clinical Intelligence Platform",
+  "description": "Aurevia Health AI — HIPAA-oriented clinical intelligence and decision support platform.",
+  "icons": [
+    {
+      "src": "/file.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512 192x192 any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0c0e10",
+  "theme_color": "#00d1ff",
+  "display": "standalone",
+  "orientation": "any",
+  "categories": ["medical", "health", "productivity"]
+}

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Federated Learning Control Surface</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@450&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#e2e2e5",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "outline": "#859399",
+                    "tertiary-container": "#feb127",
+                    "inverse-on-surface": "#2f3033",
+                    "on-primary-container": "#00566a",
+                    "on-secondary": "#263143",
+                    "on-secondary-container": "#aeb9d0",
+                    "tertiary": "#ffd59c",
+                    "on-surface": "#e2e2e5",
+                    "surface-container": "#1e2022",
+                    "surface-dim": "#121416",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "secondary-container": "#3e495d",
+                    "surface-container-low": "#1a1c1e",
+                    "secondary": "#bcc7de",
+                    "secondary-fixed": "#d8e3fb",
+                    "outline-variant": "#3c494e",
+                    "surface-tint": "#4cd6ff",
+                    "surface-container-lowest": "#0c0e10",
+                    "primary": "#a4e6ff",
+                    "background": "#121416",
+                    "on-tertiary": "#442b00",
+                    "on-tertiary-container": "#6b4700",
+                    "inverse-primary": "#00677f",
+                    "tertiary-fixed": "#ffddb1",
+                    "on-tertiary-fixed-variant": "#624000",
+                    "on-error": "#690005",
+                    "primary-fixed": "#b7eaff",
+                    "surface-variant": "#333537",
+                    "surface-container-high": "#282a2c",
+                    "surface": "#121416",
+                    "on-tertiary-fixed": "#291800",
+                    "on-surface-variant": "#bbc9cf",
+                    "on-secondary-fixed": "#111c2d",
+                    "surface-bright": "#38393c",
+                    "tertiary-fixed-dim": "#ffba49",
+                    "on-primary": "#003543",
+                    "error-container": "#93000a",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed-variant": "#004e60",
+                    "on-background": "#e2e2e5",
+                    "primary-container": "#00d1ff",
+                    "surface-container-highest": "#333537",
+                    "on-primary-fixed": "#001f28",
+                    "primary-fixed-dim": "#4cd6ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "margin-safe": "24px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "data-mono": ["JetBrains Mono"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-sm": ["13px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "display-lg": ["42px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "data-mono": ["13px", {"lineHeight": "1.4", "fontWeight": "450"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #0c0e10; }
+        .glass-panel {
+            background-color: #121416;
+            border: 1px solid #3c494e;
+        }
+        .ai-border {
+            border-top: 2px solid #00d1ff;
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container-lowest font-label-caps text-label-caps font-body-md text-body-md docked left-0 h-screen w-64 border-r border-outline-variant dark:border-outline-variant flat no shadows transition-all duration-150 fixed left-0 top-0 h-full flex flex-col pt-16 z-40 hidden md:flex">
+<div class="px-lg pb-md border-b border-outline-variant mb-4">
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface mb-2">Clinical Intelligence</div>
+<div class="flex items-center gap-2">
+<img alt="System Node" class="w-8 h-8 rounded-full object-cover" data-alt="A microscopic view of advanced synthetic neural pathways glowing with cool icy cyan light against a pitch-black background, representing complex computational medical nodes. The scene is hyper-detailed, technical, and slightly abstract, perfectly fitting a dense dark-mode clinical dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXPaskbbZTGpyA4dvrA9o8AzZOUdZLhbkAhXYGa-BTCuwHDguCKCgTAh0eXIDw4HhiY341pG-rtl0FBtcjPBkoEy87goxYTUcgWg8eCjRMrH4LPdft3GsTDTIO1QcVRxzf0guNs1q-CeGbXI2Z-MLUJnIvHaX0kFv7jLx5heTljYOHaZT997A22UYN54aRk4isWVb-FRstU5mVKAv6T-0W6JELgBbkwqdPVoTuMaswstfOU3r6urpw3A"/>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">Core Workspace</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Active Session: 08:42</div>
+</div>
+</div>
+</div>
+<div class="px-md mb-6">
+<button class="w-full bg-primary-container text-on-primary-fixed-variant font-label-caps text-label-caps py-2 rounded flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                New Consultation
+            </button>
+</div>
+<ul class="flex-1 px-sm space-y-1">
+<li>
+<a class="text-primary dark:text-primary border-l-2 border-primary bg-surface-container-high dark:bg-surface-container-high flex items-center gap-3 px-3 py-2 rounded-r hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center gap-3 px-3 py-2 rounded hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                    Patients
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center gap-3 px-3 py-2 rounded hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span>
+                    Diagnostics
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center gap-3 px-3 py-2 rounded hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+                    Research
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center gap-3 px-3 py-2 rounded hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+                    Pharmacy
+                </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center gap-3 px-3 py-2 rounded hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+                    Analytics
+                </a>
+</li>
+</ul>
+<div class="p-sm border-t border-outline-variant mt-auto">
+<ul class="space-y-1">
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center gap-3 px-3 py-2 rounded hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dns">dns</span>
+                        System Status
+                    </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center gap-3 px-3 py-2 rounded hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                        Logout
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-64 bg-background">
+<!-- TopNavBar (Mobile Only for Shell, but we need a header here) -->
+<header class="bg-surface-dim dark:bg-surface-dim font-headline-sm text-headline-sm font-label-caps text-label-caps docked full-width top-0 border-b border-outline-variant dark:border-outline-variant flat no shadows transition-colors duration-200 ease-in-out flex justify-between items-center w-full px-lg h-16 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Clinical Intelligence</div>
+<div class="hidden md:flex items-center bg-surface-container-high rounded px-3 py-1 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-2 text-[18px]">search</span>
+<input class="bg-transparent border-none text-body-sm font-body-sm text-on-surface focus:ring-0 p-0 w-64 placeholder-on-surface-variant" placeholder="Search parameters..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:bg-surface-variant dark:hover:bg-surface-variant p-2 rounded-full transition-colors duration-200 ease-in-out flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-surface-variant dark:hover:bg-surface-variant p-2 rounded-full transition-colors duration-200 ease-in-out flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="hover:bg-surface-variant dark:hover:bg-surface-variant p-2 rounded-full transition-colors duration-200 ease-in-out flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<img alt="Chief Medical Officer Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover ml-2" data-alt="A stark, minimalist portrait of a medical professional set against a deep gray background. The lighting is crisp and technical, emphasizing precision and authority. The subject is in focus, wearing subtle clinical attire, blending seamlessly into a dark-mode mission-control aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs_j4P9Olq9cKTBhIWO2xBXEODzo6o5YvJoIV0w9-7OAQnGhhqI2J1BrkZbTZDaQkybyBMbamvweHZdsYo3QxOdNlAQqWMJ5xACPFbHoJYKyvcnkSbX2Fvb7mnAwWUbb1wjfNJENR4jWMzGzFKCnKLHM7n5h4bFSmb8XrZ1vfzZZoL9cnP9tMuiCz4bmh7jveG5LV2SCbeyy42-5HPCWoCLP1MwF83oAmCj0rExyQ9BxXmStCFk8_i6Q"/>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-lg space-y-lg">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface">Federated Learning Control</h1>
+<p class="font-data-mono text-data-mono text-on-surface-variant mt-2">SYS.OP.MODE: DISTRIBUTED_TRAINING | ENCLAVE_SECURE</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container border border-outline-variant rounded px-4 py-2 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></div>
+<span class="font-data-mono text-data-mono text-on-surface">ALL NODES SYNCED</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg auto-rows-min">
+<!-- Model Convergence Chart (Large Card) -->
+<div class="md:col-span-8 glass-panel rounded-lg p-lg ai-border">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[20px]">show_chart</span>
+                            Global Model Convergence
+                        </h2>
+<span class="font-label-caps text-label-caps bg-surface-variant text-on-surface-variant px-2 py-1 rounded">EPOCH 4,092</span>
+</div>
+<div class="h-64 w-full bg-surface-container-low rounded border border-outline-variant relative overflow-hidden flex items-end px-4 pb-4">
+<!-- Abstract Chart Representation -->
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxtYXNrIGlkPSJtIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ3aGl0ZSIvPjwvbWFzaz48cGF0aCBkPSJNMCAyMDBRMTAwIDUwIDIwMCAxNTBUMzAwIDUwVDQwMCAxMDBUNTAwIDIwVDYwMCAxODBUNzAwIDUwVDgwMCAxMjBUOTAwIDQwVDEwMDAgMTAwIiBzdHJva2U9IiMzYzQ5NGUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC41Ii8+PHBhdGggZD0iTTAgMjUwUTEwMCAxNTAgMjAwIDIwMFQzMDAgMTAwVDQwMCAxNTBUNTAwIDYwVDYwMCAyMDBUNzAwIDEwMFQ4MDAgMTUwVDkwMCA4MFQxMDAwIDEzMCIgc3Ryb2tlPSIjMDBkMWZmIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiLz48L3N2Zz4=')] bg-cover bg-center opacity-70"></div>
+<div class="w-full flex justify-between font-data-mono text-data-mono text-on-surface-variant text-[10px] z-10 relative">
+<span>0k</span><span>1k</span><span>2k</span><span>3k</span><span>4k (Current)</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 mt-6">
+<div class="border-l-2 border-outline-variant pl-4">
+<div class="font-label-caps text-label-caps text-on-surface-variant">Loss (Validation)</div>
+<div class="font-data-mono text-data-mono text-on-surface text-lg mt-1">0.0142 <span class="text-primary-container text-xs ml-1">↓0.002</span></div>
+</div>
+<div class="border-l-2 border-outline-variant pl-4">
+<div class="font-label-caps text-label-caps text-on-surface-variant">F1 Score</div>
+<div class="font-data-mono text-data-mono text-on-surface text-lg mt-1">0.9881 <span class="text-primary-container text-xs ml-1">↑0.005</span></div>
+</div>
+<div class="border-l-2 border-outline-variant pl-4">
+<div class="font-label-caps text-label-caps text-on-surface-variant">Aggregated Weights</div>
+<div class="font-data-mono text-data-mono text-on-surface text-lg mt-1">1.24TB</div>
+</div>
+</div>
+</div>
+<!-- Node Status (Side Column) -->
+<div class="md:col-span-4 glass-panel rounded-lg p-lg flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">hub</span>
+                        Training Nodes
+                    </h2>
+<div class="space-y-3 flex-1 overflow-y-auto pr-2">
+<!-- Node 1 -->
+<div class="bg-surface-container p-3 rounded border border-outline-variant flex justify-between items-center hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<div>
+<div class="font-data-mono text-data-mono text-on-surface">N-EU-WEST-01</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-1">Compute: GPU x8</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-data-mono text-data-mono text-primary-container">98% SYNC</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-1">42ms ping</div>
+</div>
+</div>
+<!-- Node 2 -->
+<div class="bg-surface-container p-3 rounded border border-outline-variant flex justify-between items-center hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<div>
+<div class="font-data-mono text-data-mono text-on-surface">N-US-EAST-04</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-1">Compute: TPU v4</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-data-mono text-data-mono text-primary-container">99% SYNC</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-1">12ms ping</div>
+</div>
+</div>
+<!-- Node 3 (Warning) -->
+<div class="bg-surface-container p-3 rounded border border-tertiary-container/30 flex justify-between items-center hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+<div>
+<div class="font-data-mono text-data-mono text-on-surface">N-AP-SOUTH-02</div>
+<div class="font-label-caps text-label-caps text-tertiary-container mt-1">THROTTLED</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-data-mono text-data-mono text-on-surface-variant">84% SYNC</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-1">145ms ping</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Privacy Exchange Logs -->
+<div class="md:col-span-12 glass-panel rounded-lg p-lg">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">security</span>
+                        Privacy-Preserving Exchange Ledger
+                    </h2>
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-data-mono text-data-mono border-collapse">
+<thead>
+<tr class="border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant">
+<th class="py-2 font-normal">Timestamp (UTC)</th>
+<th class="py-2 font-normal">Exchange ID</th>
+<th class="py-2 font-normal">Source Node</th>
+<th class="py-2 font-normal">Differential Privacy (ε)</th>
+<th class="py-2 font-normal">Payload Size</th>
+<th class="py-2 font-normal text-right">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant hover:bg-surface-container-high transition-colors">
+<td class="py-3 text-on-surface-variant">2023-10-27T08:41:12Z</td>
+<td class="py-3 text-on-surface">EX-884A-9B21</td>
+<td class="py-3 text-on-surface">N-US-EAST-04</td>
+<td class="py-3 text-primary-container">ε=0.1, δ=1e-5</td>
+<td class="py-3 text-on-surface-variant">45.2 MB</td>
+<td class="py-3 text-right">
+<span class="bg-primary-fixed-dim/20 text-primary-container px-2 py-1 rounded font-label-caps text-label-caps">VERIFIED</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-high transition-colors">
+<td class="py-3 text-on-surface-variant">2023-10-27T08:39:44Z</td>
+<td class="py-3 text-on-surface">EX-712C-4F90</td>
+<td class="py-3 text-on-surface">N-EU-WEST-01</td>
+<td class="py-3 text-primary-container">ε=0.1, δ=1e-5</td>
+<td class="py-3 text-on-surface-variant">12.8 MB</td>
+<td class="py-3 text-right">
+<span class="bg-primary-fixed-dim/20 text-primary-container px-2 py-1 rounded font-label-caps text-label-caps">VERIFIED</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

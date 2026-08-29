@@ -1,0 +1,588 @@
+/* Fonts loaded via index.html <link> — no CSS @import needed */
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Custom Animations */
+  --animate-gradient-x: gradient-x 15s ease infinite;
+  --animate-pulse-slow: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-scanline: scanline 6s linear infinite;
+  --animate-float: float-animation 6s ease-in-out infinite;
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes float-animation {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:root {
+  /* ── Stitch Nexus — Aurevia Health AI Design Tokens (Material 3 dark baseline) ── */
+  /* Stitch canonical palette — see stitch_nexus_clinical_intelligence_system/clinical_intelligence_system/DESIGN.md */
+  --stitch-surface: #121416;
+  --stitch-surface-dim: #121416;
+  --stitch-surface-bright: #38393c;
+  --stitch-surface-lowest: #0c0e10;
+  --stitch-surface-low: #1a1c1e;
+  --stitch-surface-container: #1e2022;
+  --stitch-surface-high: #282a2c;
+  --stitch-surface-highest: #333537;
+  --stitch-on-surface: #e2e2e5;
+  --stitch-on-variant: #bbc9cf;
+  --stitch-outline: #859399;
+  --stitch-outline-variant: #3c494e;
+  --stitch-primary: #a4e6ff;
+  --stitch-on-primary: #003543;
+  --stitch-primary-container: #00d1ff;
+  --stitch-on-primary-container: #00566a;
+  --stitch-primary-fixed-dim: #4cd6ff;
+  --stitch-secondary: #bcc7de;
+  --stitch-tertiary: #ffd59c;
+  --stitch-error: #ffb4ab;
+  --stitch-surface-tint: #4cd6ff;
+
+  /* Surfaces — mapped to Stitch for Aurevia */
+  --bg-primary: #0c0e10;       /* stitch surface-container-lowest */
+  --bg-secondary: #121416;     /* stitch surface */
+  --bg-card: rgba(30, 32, 34, 0.62); /* stitch surface-container @ 62% */
+  --bg-card-hover: rgba(40, 42, 44, 0.72); /* stitch surface-high @ 72% */
+  --bg-elevated: #1e2022;
+
+  /* Borders — Stitch outline-variant with performance-safe opacity */
+  --border: rgba(60, 73, 78, 0.45);           /* outline-variant @ 45% */
+  --border-focus: rgba(0, 209, 255, 0.32);    /* primary-container @ 32% */
+  --border-subtle: rgba(60, 73, 78, 0.22);
+
+  /* Aurevia Accents — Stitch primary family (icy cyan) */
+  --accent: #00d1ff;           /* Stitch primary-container — hero CTA */
+  --accent-hover: #4cd6ff;     /* Stitch primary-fixed-dim */
+  --accent-muted: rgba(0, 209, 255, 0.07);
+  --accent-border: rgba(0, 209, 255, 0.20);
+
+  --accent-purple: #a4e6ff;    /* Stitch primary — secondary accent */
+  --accent-purple-muted: rgba(164, 230, 255, 0.07);
+  --accent-purple-border: rgba(164, 230, 255, 0.18);
+
+  --accent-blue: #4cd6ff;      /* Stitch surface-tint */
+  --accent-blue-muted: rgba(76, 214, 255, 0.07);
+  --accent-blue-border: rgba(76, 214, 255, 0.18);
+
+  --accent-emerald: #10b981;
+
+  /* Typography — Stitch on-surface hierarchy */
+  --text-primary: #e2e2e5;      /* on-surface */
+  --text-secondary: #bbc9cf;    /* on-surface-variant */
+  --text-dim: #859399;          /* outline */
+  --text-muted: #3c494e;        /* outline-variant */
+
+  /* Status Hues — Stitch error/tertiary adapted, performance muted */
+  --danger: #ffb4ab;            /* Stitch error */
+  --danger-muted: rgba(255, 180, 171, 0.08);
+  --danger-border: rgba(255, 180, 171, 0.20);
+  --warning: #ffd59c;           /* Stitch tertiary */
+  --warning-muted: rgba(255, 213, 156, 0.08);
+  --warning-border: rgba(255, 213, 156, 0.20);
+  --success: #a4e6ff;           /* use primary family for success to stay Stitch */
+  --success-muted: rgba(164, 230, 255, 0.07);
+  --success-border: rgba(164, 230, 255, 0.18);
+
+  /* Geometry — Stitch 4px baseline, 4/8/12 radii (DEFAULT 0.125rem) */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows — flat instrument-panel depth (Stitch: tonal layering, no heavy elevation) */
+  --shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  --shadow-glow-cyan: 0 0 20px rgba(0, 209, 255, 0.12);
+  --shadow-glow-indigo: 0 0 20px rgba(0, 209, 255, 0.10);
+  --shadow-focus: 0 0 0 1px var(--accent), 0 0 10px rgba(0, 209, 255, 0.22);
+
+  /* Material Design Elevation System */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.3), 0 3px 6px rgba(0, 0, 0, 0.4);
+  --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.4), 0 6px 6px rgba(0, 0, 0, 0.45);
+  --elevation-4: 0 14px 28px rgba(0, 0, 0, 0.5), 0 10px 10px rgba(0, 0, 0, 0.5);
+  --elevation-5: 0 19px 38px rgba(0, 0, 0, 0.6), 0 15px 12px rgba(0, 0, 0, 0.6);
+
+  /* Material Design Curves */
+  --transition-standard: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-acceleration: all 0.15s cubic-bezier(0.4, 0, 1, 1);
+  --transition-deceleration: all 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+body {
+  position: relative;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  /* Stitch atmospheric layering — low-cost radial tints only (no canvas/WebGL, no heavy blur) */
+  background:
+    radial-gradient(900px 600px at 12% 8%, rgba(0, 209, 255, 0.05), transparent 55%),
+    radial-gradient(800px 500px at 88% 14%, rgba(164, 230, 255, 0.035), transparent 55%),
+    radial-gradient(700px 450px at 50% 85%, rgba(76, 214, 255, 0.025), transparent 55%);
+  background-size: auto, auto, auto;
+  opacity: 0.9;
+}
+
+/* Keep app content above atmospheric layers */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.transition-smooth { 
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+
+.display-hero {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.display-title {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.lede {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  input, select, textarea {
+    background: transparent;
+    outline: none;
+    width: 100%;
+  }
+}
+
+@layer components {
+  /* ──────────────────────────────────────────────────
+     Precision Enterprise Buttons (SaaS styling)
+     ────────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.8125rem; /* 13px */
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s ease-out;
+  }
+  
+  .btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+  }
+  .btn-primary:active { 
+    transform: scale(0.98); 
+  }
+  .btn-primary:disabled { 
+    opacity: 0.4; 
+    cursor: not-allowed; 
+    transform: none; 
+    box-shadow: none;
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--border-focus);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+  }
+  .btn-ghost:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .btn-danger {
+    background: var(--danger-muted);
+    color: var(--danger);
+    border: 1px solid var(--danger-border);
+  }
+  .btn-danger:hover {
+    background: var(--danger);
+    color: #ffffff;
+  }
+
+  /* ──────────────────────────────────────────────────
+     Panel / Card System (Obsidian Glassmorphism)
+     ────────────────────────────────────────────────── */
+  .glass-card {
+    background: rgba(30, 32, 34, 0.52); /* Stitch surface-container */
+    border: 1px solid rgba(60, 73, 78, 0.35);
+    border-radius: var(--radius);
+    /* blur kept at 12px max for mobile perf — Stitch allows 20px only for toasts */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    contain: layout style paint;
+    transition: border-color 0.2s ease-out, background-color 0.2s ease-out, box-shadow 0.2s ease-out, transform 0.2s ease-out;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  }
+  .glass-card:hover {
+    border-color: rgba(0, 209, 255, 0.22);
+    background: rgba(40, 42, 44, 0.58);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), 0 0 14px rgba(0, 209, 255, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    transform: translateY(-1px);
+  }
+
+  .panel {
+    background: rgba(30, 32, 34, 0.58);
+    border: 1px solid rgba(60, 73, 78, 0.35);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.015);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    contain: layout style paint;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+    background: rgba(4, 4, 8, 0.35);
+    backdrop-filter: blur(12px);
+  }
+
+  /* ──────────────────────────────────────────────────
+     Typography Utilities
+     ────────────────────────────────────────────────── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+  }
+
+  .mono-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ──────────────────────────────────────────────────
+     Status Badge System (SaaS indicators)
+     ────────────────────────────────────────────────── */
+  .status-badge {
+    display: inline-flex;
+    aria-hidden: false;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    border: 1px solid;
+  }
+
+  .status-badge-success {
+    color: var(--success);
+    background: var(--success-muted);
+    border-color: var(--success-border);
+  }
+
+  .status-badge-danger {
+    color: var(--danger);
+    background: var(--danger-muted);
+    border-color: var(--danger-border);
+  }
+
+  .status-badge-accent {
+    color: var(--accent);
+    background: var(--accent-muted);
+    border-color: var(--accent-border);
+  }
+
+  /* ──────────────────────────────────────────────────
+     Clinical Input Field (High contrast modern focus)
+     ────────────────────────────────────────────────── */
+  .input-clinical {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    color: var(--text-primary);
+    font-size: 12px;
+    font-family: var(--font-sans);
+    transition: all 0.15s ease-out;
+  }
+  .input-clinical::placeholder {
+    color: var(--text-muted);
+  }
+  .input-clinical:focus {
+    border-color: var(--accent-blue);
+    background: rgba(255, 255, 255, 0.035);
+    box-shadow: 0 0 0 1px var(--accent-blue), 0 0 8px rgba(0, 188, 212, 0.25);
+  }
+
+  /* Glowing buttons & Pulses */
+  .btn-cyber-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 15px rgba(95, 95, 247, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  .btn-cyber-primary:hover {
+    box-shadow: 0 0 20px rgba(95, 95, 247, 0.35), 0 0 40px rgba(134, 86, 245, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+  }
+  .btn-cyber-primary:active {
+    transform: scale(0.98) translateY(0);
+  }
+
+  .status-pulse-ruby {
+    animation: pulse-ruby-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulse-ruby-glow {
+    0%, 100% {
+      border-color: rgba(255, 74, 74, 0.3);
+      box-shadow: 0 0 0 rgba(255, 74, 74, 0);
+    }
+    50% {
+      border-color: rgba(255, 74, 74, 0.6);
+      box-shadow: 0 0 12px rgba(255, 74, 74, 0.25);
+    }
+  }
+
+  .status-pulse-cyan {
+    animation: pulse-cyan-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulse-cyan-glow {
+    0%, 100% {
+      border-color: rgba(0, 188, 212, 0.3);
+      box-shadow: 0 0 0 rgba(0, 188, 212, 0);
+    }
+    50% {
+      border-color: rgba(0, 188, 212, 0.6);
+      box-shadow: 0 0 12px rgba(0, 188, 212, 0.25);
+    }
+  }
+}
+
+/* ──────────────────────────────────────────────────
+   Minimalist Scrollbar
+   ────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-focus);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+/* ──────────────────────────────────────────────────
+   Material Ripple Effect Style
+   ────────────────────────────────────────────────── */
+.material-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.material-ripple-span {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(0);
+  animation: material-ripple-animation 0.5s ease-out;
+  pointer-events: none;
+}
+
+@keyframes material-ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ──────────────────────────────────────────────────
+   View Transitions API — Silky Page Morphing
+   ────────────────────────────────────────────────── */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: vt-fade-out 120ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+::view-transition-new(root) {
+  animation: vt-fade-in 200ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
+}
+
+@keyframes vt-fade-out {
+  from { opacity: 1; filter: blur(0); }
+  to   { opacity: 0; filter: blur(2px); }
+}
+@keyframes vt-fade-in {
+  from { opacity: 0; filter: blur(2px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+/* ──────────────────────────────────────────────────
+   SOTA Rendering Responsiveness & Hardware Acceleration
+   ────────────────────────────────────────────────── */
+
+/* Hardware accelerated transitions */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Off-screen rendering containment for complex tables/grids */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Scroll anchoring prevents layout shifts when lazy assets mount */
+.scroll-anchoring-auto {
+  overflow-anchor: auto;
+}
+
+/* Fluid responsive container padding using clamp */
+.responsive-padding {
+  padding-left: clamp(1rem, 5vw, 3rem);
+  padding-right: clamp(1rem, 5vw, 3rem);
+}
+
+/* Dashboard Pulse & ECG Animations */
+.ecg-line-animate {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: ecg-dash 5s linear infinite;
+}
+@keyframes ecg-dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.status-pulse-emerald {
+  animation: pulse-emerald 2s infinite;
+  will-change: opacity;
+}
+@keyframes pulse-emerald {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.status-pulse-ruby {
+  animation: pulse-ruby 1.5s infinite;
+  will-change: opacity;
+}
+@keyframes pulse-ruby {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+

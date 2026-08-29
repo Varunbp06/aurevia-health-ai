@@ -1,0 +1,65 @@
+# Render Blueprint for Aurevia Health AI
+# Main application backend + frontend deployed together
+
+services:
+  # Frontend (Vercel) - deployed separately via Vercel
+  # This render.yaml configures the backend API and keygen services
+
+  # Backend API Server
+  - type: web
+    name: aurevia-backend
+    env: python
+    plan: starter
+    buildCommand: pip install -r requirements-full.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: aurevia-db
+          property: connectionString
+      - key: SECRET_KEY
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: OLLAMA_BASE_URL
+        value: http://127.0.0.1:11434
+      - key: OLLAMA_MODEL
+        value: llama3.2
+      - key: GEMINI_MODEL
+        value: gemini-flash-latest
+      - key: ALLOWED_HOSTS
+        value: "*"
+      - key: CORS_ORIGINS
+        value: "https://aurevia.health,https://www.aurevia.health"
+      - key: RATE_LIMIT_REQUESTS_PER_MINUTE
+        value: "60"
+      - key: TESTING
+        value: "false"
+
+  # License Keygen Server (existing service)
+  - type: web
+    name: aurevia-keygen
+    env: python
+    plan: free
+    buildCommand: pip install fastapi uvicorn python-jose[cryptography] cryptography
+    startCommand: uvicorn scripts.keygen_server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: LICENSE_SECRET
+        value: "ai-healthcare-system-license-signature-validation-key-2026"
+      - key: ADMIN_API_KEY
+        generateValue: true
+      - key: LEMONSQUEEZY_WEBHOOK_SECRET
+        generateValue: true
+      - key: LEMONSQUEEZY_COMMUNITY_VARIANT_ID
+        value: ""
+      - key: LEMONSQUEEZY_ENTERPRISE_VARIANT_ID
+        value: ""
+
+databases:
+  - name: aurevia-db
+    databaseName: aurevia_health
+    user: aurevia
+    plan: starter
+    region: oregon
+    postgresMajorVersion: "16"

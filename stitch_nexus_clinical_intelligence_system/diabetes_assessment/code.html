@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinical Intelligence - Specialized AI Assessment for Diabetes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@450&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e2e2e5",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "outline": "#859399",
+                        "tertiary-container": "#feb127",
+                        "inverse-on-surface": "#2f3033",
+                        "on-primary-container": "#00566a",
+                        "on-secondary": "#263143",
+                        "on-secondary-container": "#aeb9d0",
+                        "tertiary": "#ffd59c",
+                        "on-surface": "#e2e2e5",
+                        "surface-container": "#1e2022",
+                        "surface-dim": "#121416",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "secondary-container": "#3e495d",
+                        "surface-container-low": "#1a1c1e",
+                        "secondary": "#bcc7de",
+                        "secondary-fixed": "#d8e3fb",
+                        "outline-variant": "#3c494e",
+                        "surface-tint": "#4cd6ff",
+                        "surface-container-lowest": "#0c0e10",
+                        "primary": "#a4e6ff",
+                        "background": "#121416",
+                        "on-tertiary": "#442b00",
+                        "on-tertiary-container": "#6b4700",
+                        "inverse-primary": "#00677f",
+                        "tertiary-fixed": "#ffddb1",
+                        "on-tertiary-fixed-variant": "#624000",
+                        "on-error": "#690005",
+                        "primary-fixed": "#b7eaff",
+                        "surface-variant": "#333537",
+                        "surface-container-high": "#282a2c",
+                        "surface": "#121416",
+                        "on-tertiary-fixed": "#291800",
+                        "on-surface-variant": "#bbc9cf",
+                        "on-secondary-fixed": "#111c2d",
+                        "surface-bright": "#38393c",
+                        "tertiary-fixed-dim": "#ffba49",
+                        "on-primary": "#003543",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#004e60",
+                        "on-background": "#e2e2e5",
+                        "primary-container": "#00d1ff",
+                        "surface-container-highest": "#333537",
+                        "on-primary-fixed": "#001f28",
+                        "primary-fixed-dim": "#4cd6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "margin-safe": "24px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-sm": ["13px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display-lg": ["42px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "1.4", "fontWeight": "450" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0A0C0E; color: #e2e2e5; }
+        .clinical-table tr:hover { background-color: #161B22; }
+        .intelligence-card { border-top: 2px solid #4cd6ff; }
+        .glass-panel { background: rgba(28, 33, 40, 0.95); backdrop-filter: blur(20px); border: 1px solid #444C56; }
+    </style>
+</head>
+<body class="font-body-md text-body-md bg-background antialiased flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-surface-dim dark:bg-surface-dim flex justify-between items-center w-full px-lg h-16 sticky top-0 z-50 border-b border-outline-variant dark:border-outline-variant">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Clinical Intelligence</span>
+</div>
+<div class="flex-1 flex justify-center px-xl max-w-2xl hidden md:flex">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-[#0A0C0E] border border-[#30363D] text-on-surface rounded-DEFAULT pl-xl pr-sm py-xs focus:outline-none focus:border-[#00D1FF] transition-colors font-body-sm text-body-sm h-8" placeholder="Search patient records, diagnostics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-xs text-on-surface-variant hover:bg-surface-variant transition-colors duration-200 ease-in-out rounded-DEFAULT">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-variant transition-colors duration-200 ease-in-out rounded-DEFAULT">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-variant transition-colors duration-200 ease-in-out rounded-DEFAULT">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="ml-sm w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="Chief Medical Officer Profile" class="w-full h-full object-cover" data-alt="A highly detailed close up professional medical headshot of a Chief Medical Officer in a high tech clinical environment. The lighting is dramatic but clean, emphasizing a serious, analytical demeanor. Cool blue and grey tones dominate the color palette, matching a dark mode interface aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfYXVvdLHAP8bl7TvzWoLiVexGSq1jzZg571fFpBKlliVUQ4sdzvXVxYD5ejJEot-qbMi4aCDW_iXRzJDeYbSG5pI3CPyutNTc9a9DeHgReyAXcstuAen5RpUT5QSo7WjvEB6trcJike3L5C-MURty1zbkhDiBBSSDXDmvnLF3GQtvUapGRqrbolcF1JIdKXfxdzR4dfepST7gh6otcp1E_HLzIPx8yl56dAzbrBykh5PZOt9NsU0kBg"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container-lowest hidden md:flex flex-col pt-16 z-40 border-r border-outline-variant dark:border-outline-variant w-64 h-full flex-shrink-0 transition-all duration-150">
+<div class="px-md mb-lg">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-10 h-10 rounded-DEFAULT bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="System Node" class="w-full h-full object-cover" data-alt="Abstract geometric representation of a system node in a highly technical medical network. Glowing cyan lines connect intricate dark grey polygon structures in a dark, low-fatigue environment. The aesthetic is extremely minimalist and futuristic, suited for a clinical AI dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtONxjwmtz8kivDxvAsbiI_ETjUOckfXvE5rqk_xHCLDC8a0vr5jsIPlCYgYr7zDleHQLABfaOmkmnTonqwzo-6vKIVzxR-B0nmzGiOtVRU_mMi6rpgzy2Lnz2ERfd5g6shgKuX1RwB-XeNhnKWqr0py4qA66FiOpEkEdebJ3ifHPe_dQscX3by1YzvYHVuRYWjy8a3w7Opw_zO9-ZmIZr8cran6K3yuy_1di4EL3vp0NfzbUZ8gJ5cg"/>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">Core Workspace</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant opacity-70">Active Session: 08:42</div>
+</div>
+</div>
+<button class="w-full mt-sm bg-[#00D1FF] text-[#0A0C0E] font-label-caps text-label-caps font-bold py-sm px-md rounded-DEFAULT transition-opacity hover:opacity-90 flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                    New Consultation
+                </button>
+</div>
+<div class="flex-1 overflow-y-auto py-sm flex flex-col gap-unit px-sm">
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">group</span>
+                    Patients
+                </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-primary dark:text-primary border-l-2 border-primary bg-surface-container-high dark:bg-surface-container-high transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">biotech</span>
+                    Diagnostics
+                </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                    Research
+                </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+                    Pharmacy
+                </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+                    Analytics
+                </a>
+</div>
+<div class="mt-auto px-sm pb-md flex flex-col gap-unit border-t border-outline-variant pt-sm">
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">dns</span>
+                    System Status
+                </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface dark:hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">logout</span>
+                    Logout
+                </a>
+</div>
+</nav>
+<!-- Main Workspace -->
+<main class="flex-1 overflow-y-auto p-lg bg-background">
+<!-- Context Header -->
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface mb-xs">Diabetes AI Assessment</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">person</span> Patient: PT-8924 | <span class="material-symbols-outlined text-[16px]">calendar_today</span> DOB: 1978-04-12 | <span class="px-sm py-unit bg-error-container text-on-error-container font-label-caps text-[10px] rounded-full flex items-center gap-unit"><span class="w-1.5 h-1.5 rounded-full bg-on-error-container"></span>High Risk</span>
+</p>
+</div>
+<div class="flex items-center gap-sm">
+<label class="flex items-center cursor-pointer gap-2 glass-panel px-sm py-unit rounded-DEFAULT">
+<span class="font-label-caps text-label-caps text-on-surface">AI Overlay</span>
+<div class="relative">
+<input checked="" class="sr-only" type="checkbox"/>
+<div class="block bg-surface-variant w-8 h-5 rounded-full border border-outline-variant"></div>
+<div class="dot absolute left-1 top-1 bg-primary w-3 h-3 rounded-full transition transform translate-x-3"></div>
+</div>
+</label>
+<button class="border border-[#30363D] text-on-surface px-md py-unit rounded-DEFAULT font-label-caps text-label-caps hover:bg-surface-variant transition-colors">Generate Report</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-md h-full pb-xl">
+<!-- Center: Primary Data Canvas -->
+<div class="col-span-12 xl:col-span-8 flex flex-col gap-md">
+<!-- Longitudinal Glucose Chart -->
+<div class="bg-surface-container rounded-DEFAULT border border-outline-variant p-md flex flex-col min-h-[300px]">
+<div class="flex justify-between items-center mb-md border-b border-outline-variant pb-xs">
+<h2 class="font-label-caps text-label-caps text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">show_chart</span>
+                                Longitudinal Glucose (90 Days)
+                            </h2>
+<div class="flex gap-sm">
+<span class="font-label-caps text-[10px] text-on-surface-variant flex items-center gap-unit"><span class="w-2 h-2 rounded-full bg-primary"></span> eA1C: 7.8%</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant flex items-center gap-unit"><span class="w-2 h-2 rounded-full bg-tertiary-container"></span> TIR: 62%</span>
+</div>
+</div>
+<div class="flex-1 relative w-full h-full bg-[#161B22] rounded-DEFAULT overflow-hidden border border-[#30363D]">
+<!-- SVG Placeholder for Chart -->
+<div class="absolute inset-0 flex items-end p-sm">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Grid lines -->
+<line stroke="#30363D" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="20" y2="20"></line>
+<line stroke="#30363D" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="50" y2="50"></line>
+<line stroke="#30363D" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="80" y2="80"></line>
+<!-- Trend Line -->
+<path d="M0 60 Q 10 50, 20 55 T 40 40 T 60 70 T 80 45 T 100 50" fill="none" stroke="#00D1FF" stroke-linecap="round" stroke-width="1.5"></path>
+<!-- Projection Area -->
+<path d="M80 45 T 100 50 L 100 100 L 80 100 Z" fill="rgba(0, 209, 255, 0.1)"></path>
+</svg>
+<!-- Y Axis Labels -->
+<div class="absolute left-1 top-1 h-full flex flex-col justify-between py-2 text-[8px] font-data-mono text-on-surface-variant opacity-50">
+<span>250</span>
+<span>150</span>
+<span>70</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Clinical Data Table & Pharmacogenomics -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md flex-1">
+<!-- High Density Table -->
+<div class="bg-surface-container rounded-DEFAULT border border-outline-variant flex flex-col overflow-hidden">
+<div class="p-sm border-b border-outline-variant bg-surface-container-high">
+<h2 class="font-label-caps text-label-caps text-on-surface">Recent Labs</h2>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse clinical-table">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="px-sm py-unit font-label-caps text-[10px] text-on-surface-variant font-normal">Metric</th>
+<th class="px-sm py-unit font-label-caps text-[10px] text-on-surface-variant font-normal text-right">Value</th>
+<th class="px-sm py-unit font-label-caps text-[10px] text-on-surface-variant font-normal text-right">Trend</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-[12px] text-on-surface">
+<tr class="border-b border-[#30363D]">
+<td class="px-sm py-unit text-on-surface-variant">HbA1c</td>
+<td class="px-sm py-unit text-right">8.1%</td>
+<td class="px-sm py-unit text-right text-[#00D1FF]">+0.4</td>
+</tr>
+<tr class="border-b border-[#30363D]">
+<td class="px-sm py-unit text-on-surface-variant">Fasting Glu</td>
+<td class="px-sm py-unit text-right">142 mg/dL</td>
+<td class="px-sm py-unit text-right text-error">+12</td>
+</tr>
+<tr class="border-b border-[#30363D]">
+<td class="px-sm py-unit text-on-surface-variant">eGFR</td>
+<td class="px-sm py-unit text-right">88 mL/min</td>
+<td class="px-sm py-unit text-right text-on-surface-variant">-2</td>
+</tr>
+<tr class="border-b border-[#30363D]">
+<td class="px-sm py-unit text-on-surface-variant">UACR</td>
+<td class="px-sm py-unit text-right">45 mg/g</td>
+<td class="px-sm py-unit text-right text-tertiary-container">+5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Pharmacogenomics -->
+<div class="bg-surface-container rounded-DEFAULT border border-outline-variant p-sm flex flex-col">
+<h2 class="font-label-caps text-label-caps text-on-surface mb-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">science</span>
+                                Pharmacogenomics
+                            </h2>
+<div class="flex-1 bg-[#0A0C0E] border border-[#30363D] rounded-DEFAULT p-sm flex flex-col gap-sm">
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-tertiary-container text-[18px] mt-unit">warning</span>
+<div>
+<div class="font-data-mono text-[11px] text-on-surface">CYP2C9 *2/*3 Variant Detected</div>
+<div class="font-body-sm text-[11px] text-on-surface-variant leading-tight mt-unit">Reduced metabolism of Sulfonylureas. High risk of severe hypoglycemia.</div>
+</div>
+</div>
+<div class="h-px bg-[#30363D] w-full"></div>
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-[#00D1FF] text-[18px] mt-unit">check_circle</span>
+<div>
+<div class="font-data-mono text-[11px] text-on-surface">SLC22A1 Normal Function</div>
+<div class="font-body-sm text-[11px] text-on-surface-variant leading-tight mt-unit">Standard Metformin transport efficacy expected. Continue current titration.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: AI Intelligence Panel -->
+<div class="col-span-12 xl:col-span-4 flex flex-col gap-md">
+<!-- AI Reasoning Block -->
+<div class="bg-surface-container rounded-DEFAULT intelligence-card p-md shadow-lg shadow-black/50">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-label-caps text-label-caps text-[#00D1FF] flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+                                Clinical AI Insight
+                            </h2>
+<span class="px-xs py-[2px] bg-surface-variant text-on-surface-variant font-data-mono text-[9px] rounded-sm border border-[#30363D]">Conf: 94%</span>
+</div>
+<p class="font-body-sm text-on-surface leading-relaxed mb-sm">
+                            Patient exhibits a consistent dawn phenomenon with fasting glucose &gt;140mg/dL despite adherence to basal insulin regimen. 
+                        </p>
+<div class="bg-[#161B22] border border-[#30363D] p-sm rounded-DEFAULT mb-sm font-data-mono text-[11px] text-on-surface-variant">
+<span class="text-[#00D1FF]">&gt;</span> Analyzing CGM traces... <br/>
+<span class="text-[#00D1FF]">&gt;</span> Correlating with meal logs... <br/>
+<span class="text-tertiary-container">Recommendation:</span> Consider shifting 20% of basal dose to morning or initiating a GLP-1 RA to address post-prandial excursions and weight management.
+                        </div>
+<div class="flex gap-sm">
+<button class="flex-1 bg-[#00D1FF] text-[#0A0C0E] font-label-caps text-[10px] py-unit rounded-DEFAULT hover:opacity-90 transition-opacity">Accept Rec</button>
+<button class="flex-1 border border-[#30363D] text-on-surface font-label-caps text-[10px] py-unit rounded-DEFAULT hover:bg-surface-variant transition-colors">Dismiss</button>
+</div>
+</div>
+<!-- Complication Risk Assessment -->
+<div class="bg-surface-container rounded-DEFAULT border border-outline-variant p-md flex-1">
+<h2 class="font-label-caps text-label-caps text-on-surface mb-md border-b border-outline-variant pb-xs">Complication Risk Horizon</h2>
+<div class="flex flex-col gap-md">
+<!-- Retinopathy -->
+<div>
+<div class="flex justify-between items-end mb-unit">
+<span class="font-data-mono text-[12px] text-on-surface">Retinopathy</span>
+<span class="font-label-caps text-[10px] text-error">Elevated (68%)</span>
+</div>
+<div class="w-full bg-[#161B22] h-2 rounded-full overflow-hidden border border-[#30363D]">
+<div class="bg-error h-full rounded-full" style="width: 68%;"></div>
+</div>
+<div class="mt-unit text-[10px] font-body-sm text-on-surface-variant">Last fundus exam &gt; 14 months. Microaneurysms noted previously.</div>
+</div>
+<!-- Neuropathy -->
+<div>
+<div class="flex justify-between items-end mb-unit">
+<span class="font-data-mono text-[12px] text-on-surface">Neuropathy</span>
+<span class="font-label-caps text-[10px] text-tertiary-container">Moderate (42%)</span>
+</div>
+<div class="w-full bg-[#161B22] h-2 rounded-full overflow-hidden border border-[#30363D]">
+<div class="bg-tertiary-container h-full rounded-full" style="width: 42%;"></div>
+</div>
+<div class="mt-unit text-[10px] font-body-sm text-on-surface-variant">Monofilament test normal last visit. Patient reports occasional tingling.</div>
+</div>
+<!-- Nephropathy -->
+<div>
+<div class="flex justify-between items-end mb-unit">
+<span class="font-data-mono text-[12px] text-on-surface">Nephropathy</span>
+<span class="font-label-caps text-[10px] text-[#00D1FF]">Low (15%)</span>
+</div>
+<div class="w-full bg-[#161B22] h-2 rounded-full overflow-hidden border border-[#30363D]">
+<div class="bg-[#00D1FF] h-full rounded-full" style="width: 15%;"></div>
+</div>
+<div class="mt-unit text-[10px] font-body-sm text-on-surface-variant">eGFR stable. UACR slightly elevated but managed on current ACEi.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

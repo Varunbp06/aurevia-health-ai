@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Predictive Diagnostics Workbench</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e2e2e5",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "outline": "#859399",
+                        "tertiary-container": "#feb127",
+                        "inverse-on-surface": "#2f3033",
+                        "on-primary-container": "#00566a",
+                        "on-secondary": "#263143",
+                        "on-secondary-container": "#aeb9d0",
+                        "tertiary": "#ffd59c",
+                        "on-surface": "#e2e2e5",
+                        "surface-container": "#1e2022",
+                        "surface-dim": "#121416",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "secondary-container": "#3e495d",
+                        "surface-container-low": "#1a1c1e",
+                        "secondary": "#bcc7de",
+                        "secondary-fixed": "#d8e3fb",
+                        "outline-variant": "#3c494e",
+                        "surface-tint": "#4cd6ff",
+                        "surface-container-lowest": "#0c0e10",
+                        "primary": "#a4e6ff",
+                        "background": "#121416",
+                        "on-tertiary": "#442b00",
+                        "on-tertiary-container": "#6b4700",
+                        "inverse-primary": "#00677f",
+                        "tertiary-fixed": "#ffddb1",
+                        "on-tertiary-fixed-variant": "#624000",
+                        "on-error": "#690005",
+                        "primary-fixed": "#b7eaff",
+                        "surface-variant": "#333537",
+                        "surface-container-high": "#282a2c",
+                        "surface": "#121416",
+                        "on-tertiary-fixed": "#291800",
+                        "on-surface-variant": "#bbc9cf",
+                        "on-secondary-fixed": "#111c2d",
+                        "surface-bright": "#38393c",
+                        "tertiary-fixed-dim": "#ffba49",
+                        "on-primary": "#003543",
+                        "error-container": "#93000a",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#004e60",
+                        "on-background": "#e2e2e5",
+                        "primary-container": "#00d1ff",
+                        "surface-container-highest": "#333537",
+                        "on-primary-fixed": "#001f28",
+                        "primary-fixed-dim": "#4cd6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "margin-safe": "24px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-sm": ["13px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display-lg": ["42px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "1.4", "fontWeight": "450" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(28, 33, 40, 0.7); backdrop-filter: blur(12px); border: 1px solid theme('colors.outline-variant'); }
+        .data-card { background-color: theme('colors.surface-container'); border: 1px solid theme('colors.outline-variant'); border-top: 2px solid theme('colors.primary-container'); }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<nav class="bg-surface-container border-r border-outline-variant fixed left-0 top-0 h-full flex flex-col pt-16 z-40 w-64">
+<div class="px-md py-lg border-b border-outline-variant mb-md">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden">
+<img alt="System Node" class="object-cover w-full h-full" data-alt="A minimalist, highly abstract digital avatar for a system node, featuring glowing neon cyan circuitry patterns on a deep matte black background. The style is strictly technical and futuristic, fitting a dark-mode clinical interface. 8k resolution, flat vector style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB1Ml1OKk_O0heHWGmhi36MHU9AwucuX1qiiO7Exlsxtc9n1dLXsKN5Hysg1qGsJjgvAbr-wS5Czsx3NBujfhiWdRKwumpDPGgbX2O8kdOYdqOsrGzqJvOxD-Tewl9YmMsc41FaLFP2mLdYtFLJgSbyvGTHI6Yk18-MUM9f7ta1opNOOJGkEFsoFUHTljtMzbZcZfuYpXzCZtaRlcWyrgj9MfhnzEqs7PoC3gNW1RMKAAlVYE9tw7I8A"/>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Core Workspace</h2>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Active Session: 08:42</p>
+</div>
+<div class="flex-1 overflow-y-auto px-sm flex flex-col gap-unit">
+<!-- Tabs -->
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span> Patients
+            </a>
+<!-- Active Tab: Diagnostics -->
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-primary border-l-2 border-primary bg-surface-container-high transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">biotech</span> Diagnostics
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">menu_book</span> Research
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">medical_services</span> Pharmacy
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">query_stats</span> Analytics
+            </a>
+</div>
+<div class="p-md">
+<button class="w-full py-sm bg-primary-container text-[#000000] font-label-caps text-label-caps rounded-DEFAULT hover:bg-primary-fixed transition-colors">
+                New Consultation
+            </button>
+</div>
+<div class="border-t border-outline-variant p-sm flex flex-col gap-unit">
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">dns</span> System Status
+            </a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span> Logout
+            </a>
+</div>
+</nav>
+<!-- Main Workspace Area -->
+<main class="flex-1 ml-64 flex flex-col relative z-0">
+<!-- TopNavBar Component -->
+<header class="bg-surface-dim text-primary border-b border-outline-variant flex justify-between items-center w-full px-lg h-16 sticky top-0 z-50 transition-colors duration-200 ease-in-out">
+<div class="flex items-center gap-md">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Clinical Intelligence</h1>
+</div>
+<div class="flex items-center flex-1 max-w-md ml-xl relative">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container border border-outline-variant rounded-full py-sm pl-10 pr-4 text-on-surface font-body-sm focus:border-primary-container focus:ring-0 focus:outline-none transition-colors" placeholder="Search patient ID, marker, or protocol..." type="text"/>
+</div>
+<div class="flex items-center gap-sm ml-auto">
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">settings</span></button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">help</span></button>
+<div class="w-8 h-8 rounded-full border border-outline-variant overflow-hidden ml-sm cursor-pointer">
+<img alt="Chief Medical Officer Profile" class="object-cover w-full h-full" data-alt="A macro photography crop of an abstract, dark mode user profile texture. Subtle brushed metal in dark gunmetal gray with a single glowing icy cyan led indicator light. Sophisticated, authoritative, high-end medical research aesthetic. Uncluttered and minimal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWDmiRTZ1_l3fun5UcnIBQ0g7eXD2yz5nxN51xFWEsml5gwglS_z-XZhHCQxB3lRNUPYe0TzPkRrXjX7apyf7BsQ8xZvoUXs9uNa1mU4O4pSF3sAAESdTWkodPR3ZlTiLhwsZ0zk8ctxf9dP1YVTY-lb9VLlhg9kFfwZUBNo47oZcr36rAV4pulpOeoqjCZIS6agM-IUmf1gzvclD5w9Zli3nAIQWslfdpHTY_0orQg87sRXjR3tbR_A"/>
+</div>
+</div>
+</header>
+<!-- Canvas Content -->
+<div class="flex-1 overflow-y-auto p-lg flex flex-col gap-lg pb-xl">
+<!-- Context Header -->
+<div class="flex justify-between items-end border-b border-outline-variant pb-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Predictive Analysis: Cohort Alpha-7</h2>
+<p class="font-data-mono text-data-mono text-on-surface-variant mt-1">ID: #994-VX-2 | Last Sync: <span class="text-primary">0.4s ago</span></p>
+</div>
+<div class="flex gap-sm">
+<span class="inline-flex items-center gap-xs px-2 py-1 rounded bg-surface-container-high border border-outline-variant font-label-caps text-label-caps text-on-surface">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> Processing Ensemble
+                    </span>
+</div>
+</div>
+<!-- Upload Zone -->
+<div class="w-full border-2 border-dashed border-outline-variant rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors duration-200 p-xl flex flex-col items-center justify-center cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center mb-md group-hover:bg-primary-container group-hover:text-[#000000] transition-colors">
+<span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Initialize Multi-Organ Analysis</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center max-w-md">Drag &amp; drop DICOM directories, EHR extracts (JSON/XML), or longitudinal telemetry feeds to begin concurrent predictive modeling.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter items-start">
+<!-- Assessment Cards (Col 1-8) -->
+<div class="col-span-12 xl:col-span-8 grid grid-cols-2 gap-gutter">
+<!-- Cardiovascular Card -->
+<div class="data-card rounded-lg p-md flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-primary-container">favorite</span>
+<h4 class="font-headline-sm text-headline-sm">Cardiovascular</h4>
+</div>
+<span class="text-error font-label-caps text-label-caps px-2 py-1 bg-error/10 border border-error/20 rounded">Critical</span>
+</div>
+<div>
+<div class="flex justify-between font-data-mono text-data-mono text-on-surface-variant mb-1">
+<span>Risk Projection</span>
+<span class="text-on-surface">94% Conf</span>
+</div>
+<div class="w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error w-[94%]"></div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-sm">Elevated Troponin trajectory detected across 48h horizon.</p>
+</div>
+</div>
+<!-- Pulmonary Card -->
+<div class="data-card rounded-lg p-md flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-primary-container">air</span>
+<h4 class="font-headline-sm text-headline-sm">Pulmonary</h4>
+</div>
+<span class="text-tertiary-container font-label-caps text-label-caps px-2 py-1 bg-tertiary-container/10 border border-tertiary-container/20 rounded">Assessing</span>
+</div>
+<div>
+<div class="flex justify-between font-data-mono text-data-mono text-on-surface-variant mb-1">
+<span>Model Confidence</span>
+<span class="text-on-surface">62% (High Unc.)</span>
+</div>
+<div class="w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-[62%]"></div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-sm">Awaiting hi-res HRCT segmentation mask generation.</p>
+</div>
+</div>
+<!-- Liver Card -->
+<div class="data-card rounded-lg p-md flex flex-col justify-between min-h-[160px] opacity-75">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-primary-container">water_drop</span>
+<h4 class="font-headline-sm text-headline-sm">Liver</h4>
+</div>
+<span class="text-on-surface-variant font-label-caps text-label-caps">Queued</span>
+</div>
+<div class="flex items-center justify-center flex-1">
+<div class="flex gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-on-surface-variant animate-pulse"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-on-surface-variant animate-pulse delay-75"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-on-surface-variant animate-pulse delay-150"></div>
+</div>
+</div>
+</div>
+<!-- Kidney Card -->
+<div class="data-card rounded-lg p-md flex flex-col justify-between min-h-[160px]">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-primary-container">filter_alt</span>
+<h4 class="font-headline-sm text-headline-sm">Kidney</h4>
+</div>
+<span class="text-primary-container font-label-caps text-label-caps px-2 py-1 bg-primary-container/10 border border-primary-container/20 rounded">Stable</span>
+</div>
+<div>
+<div class="flex justify-between font-data-mono text-data-mono text-on-surface-variant mb-1">
+<span>eGFR Decline Risk</span>
+<span class="text-on-surface">12%</span>
+</div>
+<div class="w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[12%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Explainability & Review (Col 9-12) -->
+<div class="col-span-12 xl:col-span-4 flex flex-col gap-md sticky top-6">
+<!-- Explainability Panel -->
+<div class="bg-surface-container border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-sm border-b border-outline-variant flex items-center justify-between bg-surface-container-low">
+<span class="font-label-caps text-label-caps text-on-surface-variant">LIME Feature Attribution</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">info</span>
+</div>
+<div class="h-48 w-full relative bg-surface-dim border-b border-outline-variant">
+<!-- Visual Placeholder for SHAP/LIME -->
+<div class="bg-cover bg-center w-full h-full opacity-80 mix-blend-screen" data-alt="A complex, abstract dark-mode medical data visualization representing SHAP values and machine learning feature importance. High-contrast neon cyan and magenta gradient bars stretch horizontally against a deep charcoal background grid. Sharp, clean technical lines, resembling an elite diagnostic laboratory interface. High precision, zero clutter." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA003ECeubBmW2BOEZ8Zc0ZPq05kL_y4nGJGlnE8V092I7M9e51SEDWw4W_zoxp-8fbHNKhdwngk_tDhYaWY9_w58XRyhNk0bYF1E7ObMDORw-KP4vPpNUj0bjep-D-BiepULl-uOunPl9fPLYaEuZHfV0DsEkQMH2PTvwJY38sY4bAtqkVO7gc6XLKld8LYJRXcpq7lJH_2tTIhVJl59I-AdGJtjDZjaQUEC5Yh4qMxa7D-7OAUav1gQ')"></div>
+</div>
+<div class="p-sm flex flex-col gap-xs font-data-mono text-data-mono">
+<div class="flex justify-between text-on-surface-variant">
+<span>Feature: BP_SYS_T1</span>
+<span class="text-error">+2.45</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Feature: GLUC_FAST</span>
+<span class="text-primary-container">-0.82</span>
+</div>
+</div>
+</div>
+<!-- Action Panel -->
+<div class="glass-panel rounded-lg p-md flex flex-col gap-sm">
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Clinician Review</h4>
+<textarea class="w-full h-24 bg-surface-dim border border-outline-variant rounded p-sm font-body-sm text-on-surface placeholder:text-on-surface-variant focus:border-primary-container focus:ring-0 resize-none transition-colors" placeholder="Enter diagnostic rationale or parameter overrides..."></textarea>
+<div class="flex gap-sm mt-sm">
+<button class="flex-1 py-sm bg-transparent border border-outline-variant text-on-surface font-label-caps text-label-caps rounded hover:bg-surface-variant transition-colors">
+                                Request Re-run
+                            </button>
+<button class="flex-1 py-sm bg-primary-container text-[#000000] font-label-caps text-label-caps rounded hover:bg-primary-fixed transition-colors flex justify-center items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">verified</span> Sign-off
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
