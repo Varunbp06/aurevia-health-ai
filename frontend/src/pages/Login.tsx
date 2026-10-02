@@ -6,6 +6,25 @@ import { motion } from "framer-motion";
 import { Activity, Lock, Mail, User, ArrowRight, HeartPulse, Sparkles, ShieldCheck } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
 
+// The connection console used to print a hardcoded "HOST: 127.0.0.1:8000",
+// which told every production visitor they were pointed at a developer's
+// machine. Show the host the client is actually configured to reach.
+const configuredApiHost = () => {
+  const configured = import.meta.env.NEXT_PUBLIC_API_URL || import.meta.env.VITE_PUBLIC_API_URL;
+  if (configured) {
+    try {
+      return new URL(configured).host;
+    } catch {
+      return configured.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+    }
+  }
+  if (typeof window !== 'undefined') {
+    if (window.location.port === '3000') return '127.0.0.1:8000';
+    return window.location.host;
+  }
+  return 'localhost:8000';
+};
+
 export default function LoginPage() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
@@ -21,6 +40,7 @@ export default function LoginPage() {
     }
   }, []);
 
+  const [displayHost] = useState(() => configuredApiHost());
   const [view, setView] = useState<'login' | 'forgot'>('login');
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -188,7 +208,7 @@ export default function LoginPage() {
           <div className="flex items-center gap-1.5 uppercase font-bold text-white mb-2 pb-1.5 border-b border-white/[0.05]">
             <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping" /> Connection Console
           </div>
-          <div>&gt; HOST: 127.0.0.1:8000</div>
+          <div>&gt; HOST: {displayHost}</div>
           <div>&gt; FHIR BROKER: SYNCED</div>
           <div>&gt; SECURE TUNNEL: ACTIVE</div>
           <div className="text-[var(--success)]">&gt; SESSION STATUS: ONLINE</div>
