@@ -31,15 +31,15 @@ from backend.security_decorators import no_log_zone_async
 logger = logging.getLogger(__name__)
 
 # Configure Rate Limiter
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
-from slowapi.util import get_remote_address
 
-# Use global limiter for all components to import
-limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
-if os.getenv("TESTING") == "1":
-    limiter.enabled = False
+# The limiter itself lives in backend.rate_limit so that backend.auth can use it
+# without importing this module (which would be circular: main imports every
+# router, and routers depend on auth).
+from backend.rate_limit import limiter
+
 GENERATE_REPORT_FAILURE_DETAIL = "Failed to generate report"
 
 

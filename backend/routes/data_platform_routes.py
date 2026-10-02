@@ -12,9 +12,10 @@ Exposes REST endpoints for:
 
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
+from backend import auth
 from backend.agents.supervisor_orchestrator import (
     AgentCapability,
     RegisteredAgent,
@@ -54,7 +55,16 @@ if supervisor_router.agent_count == 0:
         priority=7,
     ))
 
-router = APIRouter(prefix="/v1/data-platform", tags=["Unified Data Platform"])
+# Every route on this router requires an authenticated admin. These endpoints
+# expose raw SQL execution over the lakehouse, agentic BI and multi-agent
+# orchestration; a license tier says what the deployment bought, not who is
+# asking, so it cannot stand in for authorization.
+
+router = APIRouter(
+    prefix="/v1/data-platform",
+    tags=["Unified Data Platform"],
+    dependencies=[Depends(auth.require_admin)],
+)
 
 
 # =====================================================================

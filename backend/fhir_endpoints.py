@@ -346,13 +346,30 @@ def get_fhir_audit_events(
 @router.post("/Patient/import/{external_fhir_id}", status_code=status.HTTP_201_CREATED)
 def import_fhir_patient(
     external_fhir_id: str,
+    token_data: Dict[str, Any] = Depends(validate_fhir_token),
     db: Session = Depends(database.get_db),
 ) -> Dict[str, Any]:
-    """Fetch a real patient from public HAPI FHIR server and import into local DB."""
+    """Fetch a real patient from public HAPI FHIR server and import into local DB.
+
+    Importing a patient provisions a local account, so this is restricted to
+    clinicians and admins. It previously had no authentication dependency at
+    all: any anonymous caller could create patient accounts and read the
+    imported demographics back.
+    """
     import re
+    import secrets
     import urllib.parse
 
     import requests
+
+    # Only a clinician or admin may provision patient accounts. A patient token
+    # may never create another account.
+    role = str(token_data.get("role", "")).lower()
+    if role not in ("doctor", "admin", "clinician"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only a clinician or admin may import FHIR patients.",
+        )
 
 
     if not re.match(r"^[A-Za-z0-9\-\.]+$", external_fhir_id):
@@ -418,7 +435,10 @@ def import_fhir_patient(
     # 6. Create User record
     new_user = models.User(
         username=username,
-        hashed_password=auth.get_password_hash("temporary_fhir_pass_123"),
+        # An unguessable random password, not a shared constant: the account is
+        # unusable until a reset is issued, so no known credential exists for
+        # anyone to log in with.
+        hashed_password=auth.get_password_hash(secrets.token_urlsafe(32)),
         role="patient",
         full_name=full_name,
         gender=gender,
@@ -435,6 +455,11 @@ def import_fhir_patient(
         "message": "Patient successfully imported from public HAPI FHIR server",
         "local_user_id": new_user.id,
         "username": new_user.username,
+        "password_initialised": True,
+        "note": (
+            "A random initial password was generated and discarded. Issue a "
+            "password reset to grant access to this imported account."
+        ),
         "full_name": new_user.full_name,
         "gender": new_user.gender,
         "dob": new_user.dob,

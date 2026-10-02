@@ -39,27 +39,34 @@ export default function LoginPage() {
 
     try {
       const res = await login(username, password);
-      useAuthStore.getState().setAuth(res.access_token, null as any);
+      // The token is only usable together with an authoritative profile. Do
+      // not commit it to the store until the profile has been fetched.
       let profile;
       try {
         profile = await fetchProfile();
       } catch {
-        profile = {
-          id: 1,
-          username: username || 'admin',
-          email: `${username || 'admin'}@hospital.org`,
-          full_name: username === 'admin' ? 'System Administrator' : 'Clinical User',
-          role: username === 'admin' ? 'admin' : 'clinician',
-          plan_tier: 'enterprise',
-        };
+        // Fail closed: a failed profile lookup must never become an
+        // authenticated user. This previously synthesised an identity -- and
+        // an 'admin' role for anyone logging in as "admin" -- which granted
+        // clinical access on the strength of a request that had already failed.
+        useAuthStore.getState().logout();
+        setError(
+          "Signed in, but your account profile could not be loaded. Please try again."
+        );
+        return;
       }
       setAuth(res.access_token, profile as any);
       navigate("/dashboard");
     } catch (err: any) {
       const msg = err?.message || "Login failed";
       const isConnectionError = msg.includes("Unable to connect") || msg.includes("Network") || err?.name === "ApiConnectionError";
-      // Only allow demo offline fallback on true connection failure, never on 401/invalid credentials
-      if (isConnectionError && import.meta.env.VITE_ENABLE_OFFLINE_DEMO === "true") {
+      // Offline demo mode must never be reachable in a production build. It is
+      // gated on both the opt-in flag and a development build so a production
+      // bundle cannot be talked into fabricating a session.
+      const demoEnabled =
+        import.meta.env.VITE_ENABLE_OFFLINE_DEMO === "true" &&
+        import.meta.env.DEV;
+      if (isConnectionError && demoEnabled) {
         const offlineToken = "offline-session-access-token";
         const offlineProfile = {
           username: username || "admin",

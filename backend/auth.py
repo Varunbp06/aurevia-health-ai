@@ -140,7 +140,7 @@ import pyotp
 import qrcode
 from fastapi import Form, Request
 
-from .main import limiter
+from .rate_limit import limiter
 
 
 @router.post("/signup", response_model=schemas.UserResponse)
@@ -560,3 +560,36 @@ def reset_password(
 
     return {"status": "success", "message": "Password has been reset successfully"}
 
+
+def require_roles(*allowed: str):
+    """Dependency factory: authenticate, then require one of `allowed` roles.
+
+    A license tier check is not an authorization check -- it says what the
+    deployment bought, not who is asking. Every clinical or data-plane route
+    needs an authenticated principal as well.
+
+    Usage:
+        current_user: models.User = Depends(require_roles("admin"))
+    """
+    allowed_set = {str(role).strip().lower() for role in allowed if role}
+
+    def dependency(
+        current_user: models.User = Depends(get_current_user),
+    ) -> models.User:
+        role = str(getattr(current_user, "role", "") or "").strip().lower()
+        if role not in allowed_set:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=(
+                    "This operation requires one of the following roles: "
+                    + ", ".join(sorted(allowed_set))
+                ),
+            )
+        return current_user
+
+    return dependency
+
+
+# Convenience aliases for the two roles used across the data/clinical planes.
+require_admin = require_roles("admin")
+require_clinician_or_admin = require_roles("doctor", "clinician", "admin")

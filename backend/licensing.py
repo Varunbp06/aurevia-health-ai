@@ -16,17 +16,30 @@ logger = logging.getLogger(__name__)
 _DEFAULT_LICENSE_SECRET = "ai-healthcare-system-license-signature-validation-key-2026"
 
 
+def _is_testing() -> bool:
+    """True only when the process is explicitly running its own test suite."""
+    return str(os.getenv("TESTING", "")).strip().lower() in ("1", "true", "yes", "on")
+
+
 def _load_license_secret() -> str:
+    """Resolve the license signing secret.
+
+    The secret used to be a committed constant that production silently fell
+    back to, which let anyone forge an enterprise license JWT offline. Outside
+    an explicit test run a missing secret is now a hard startup failure, so a
+    misconfigured deployment cannot serve forged licenses.
+    """
     env_secret = os.getenv("LICENSE_SIGNING_SECRET")
     if env_secret:
         return env_secret
-    if os.getenv("TESTING"):
+    if _is_testing():
         return _DEFAULT_LICENSE_SECRET
-    logger.warning(
-        "LICENSE_SIGNING_SECRET not set. Using default license secret. "
-        "Set this variable in production to prevent license key forgery."
+    raise RuntimeError(
+        "LICENSE_SIGNING_SECRET must be set outside of testing. Generate one "
+        "with: python -c \"import secrets; print(secrets.token_urlsafe(48))\". "
+        "Refusing to start with a publicly known signing secret, which would "
+        "allow forged license keys."
     )
-    return _DEFAULT_LICENSE_SECRET
 
 
 LICENSE_SECRET = _load_license_secret()
@@ -48,8 +61,10 @@ def verify_license_key(license_key: str) -> Tuple[bool, str]:
     Returns:
         (is_valid: bool, reason_or_holder: str)
     """
-    # 1. Check for local trial keys first
-    if license_key in TRIAL_KEYS:
+    # 1. Check for local trial keys first. The bundled key is a published
+    #    constant, so it only confers a tier in an explicit test/local run;
+    #    in production it must be signed like any other license.
+    if license_key in TRIAL_KEYS and _is_testing():
         details = TRIAL_KEYS[license_key]
         expiry = datetime.datetime.fromisoformat(details["expires_at"])
         if datetime.datetime.now() > expiry:
@@ -99,8 +114,9 @@ def get_active_license_tier() -> str:
     Returns 'none' if no valid license key is configured.
     """
     import os
-    raw_key = os.getenv("LICENSE_KEY")
-    license_key = "CLINIC-TRIAL-2026" if raw_key is None else raw_key.strip()
+    license_key = (os.getenv("LICENSE_KEY") or "").strip()
+    # An unset LICENSE_KEY used to be treated as the bundled enterprise trial
+    # key, so an unconfigured production deployment reported enterprise tier.
     if not license_key:
         return "none"
 
@@ -133,8 +149,7 @@ def get_active_license_tier() -> str:
 def get_active_license_modules() -> list:
     """Retrieve the list of allowed modules from the active license key."""
     import os
-    raw_key = os.getenv("LICENSE_KEY")
-    license_key = "CLINIC-TRIAL-2026" if raw_key is None else raw_key.strip()
+    license_key = (os.getenv("LICENSE_KEY") or "").strip()
     if not license_key:
         return []
 
@@ -165,7 +180,7 @@ def enforce_license_tier(required_tier: str):
 
     def dependency():
         # During unit testing of general app paths, we can bypass general check if TESTING is active.
-        if os.getenv("TESTING") == "1":
+        if _is_testing():
             return
 
         tier = get_active_license_tier()
@@ -195,7 +210,7 @@ def enforce_license_module(required_module: str, minimum_tier: str = "enterprise
     from fastapi import HTTPException
 
     def dependency():
-        if os.getenv("TESTING") == "1":
+        if _is_testing():
             return
 
         tier = get_active_license_tier()

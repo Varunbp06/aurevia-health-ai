@@ -5,14 +5,22 @@ optimizing payloads for low-bandwidth rural GSM and SMS transmission.
 """
 import logging
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
+from backend import auth
 from backend.rust_bridge import rust_bridge
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/fhir", tags=["FHIR Compression"])
+# Compressing and decompressing FHIR payloads handles live patient records, so
+# these require an authenticated clinician or admin.
+
+router = APIRouter(
+    prefix="/fhir",
+    tags=["FHIR Compression"],
+    dependencies=[Depends(auth.require_clinician_or_admin)],
+)
 
 class CompactRequest(BaseModel):
     fhir_bundle: dict

@@ -17,10 +17,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   // EULA Consent state
   const [consentChecked, setConsentChecked] = useState(false);
+  const [consentError, setConsentError] = useState(false);
   const [showEula, setShowEula] = useState(false);
   const [eulaVersion, setEulaVersion] = useState("1.0");
   const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
   const [isAccepting, setIsAccepting] = useState(false);
+  const [acceptError, setAcceptError] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -34,7 +36,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (mounted && !token) {
       navigate("/login");
-    } else if (mounted && token && !consentChecked) {
+    } else if (mounted && token && !consentChecked && !consentError) {
       // Check EULA consent status from backend
       checkConsentStatus()
         .then((res) => {
@@ -45,11 +47,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           setConsentChecked(true);
         })
         .catch(() => {
-          // If connection fails or endpoint not ready, default to secure bypass for local testing
-          setConsentChecked(true);
+          // Fail closed: an undeterminable consent state must not grant access
+          // to protected clinical functionality. Retry rather than assume consent.
+          setConsentError(true);
         });
     }
-  }, [token, navigate, pathname, mounted, consentChecked]);
+  }, [token, navigate, pathname, mounted, consentChecked, consentError]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
@@ -61,6 +64,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   const handleAcceptEula = () => {
     setIsAccepting(true);
+    setAcceptError(null);
     acceptEula(eulaVersion)
       .then(() => {
         setShowEula(false);
@@ -69,12 +73,56 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       .catch((err) => {
         console.error("Failed to accept EULA:", err);
         setIsAccepting(false);
-        // Fallback fallback on local mocks/test instances
-        setShowEula(false);
+        // Fail closed: a failed acceptance must not close the mandatory gate
+        // as though the user had accepted. Keep it open and offer a retry.
+        setAcceptError("We could not record your acceptance. Please try again.");
       });
   };
 
+  const retryConsentCheck = () => {
+    setConsentError(false);
+    setConsentChecked(false);
+  };
+
   if (!mounted || !token) return null;
+
+  // Fail-closed gate: protected content is withheld until the authoritative
+  // consent status is known.
+  if (consentError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 p-6">
+        <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div className="mb-3">
+            <span className="text-2xl">⚠️</span>
+          </div>
+          <h2 className="text-lg font-bold tracking-wide uppercase text-slate-100 mb-2">
+            Consent status unavailable
+          </h2>
+          <p className="text-xs text-slate-400 leading-relaxed mb-5">
+            We could not verify your consent status, so clinical functionality
+            stays locked until we can. Nothing has been granted access.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={retryConsentCheck}
+              className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-colors text-xs uppercase"
+            >
+              Retry
+            </button>
+            <button
+              onClick={() => {
+                useAuthStore.getState().logout();
+                navigate("/login");
+              }}
+              className="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition-colors text-xs uppercase"
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <SessionTimeoutManager>
@@ -198,6 +246,15 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
                     />
                     <span>Verified EULA scroll-through compliance</span>
                   </div>
+
+                  {acceptError && (
+                    <p
+                      role="alert"
+                      className="w-full text-[11px] text-red-400 font-mono mb-2"
+                    >
+                      {acceptError}
+                    </p>
+                  )}
 
                   <div className="flex gap-3 w-full sm:w-auto">
                     <button

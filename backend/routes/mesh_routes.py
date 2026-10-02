@@ -4,8 +4,9 @@ Exposes endpoints for auditing, monitoring, and triggering full-stack runs acros
 Doppler, Cloudflare Workers AI, Neon PostgreSQL, Databricks Free Edition, Kaggle GPU, and Hugging Face.
 """
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from backend import auth
 from backend.pipeline_mesh_orchestrator import (
     CloudflareAIBridge,
     DatabricksLakehouseBridge,
@@ -18,7 +19,14 @@ from backend.pipeline_mesh_orchestrator import (
     pipeline_mesh_orchestrator,
 )
 
-router = APIRouter(prefix="/v1/mesh", tags=["Multi-Cloud Pipeline Mesh"])
+# Executing a mesh pipeline is an infrastructure-level action, so it requires
+# an authenticated admin rather than only a license tier.
+
+router = APIRouter(
+    prefix="/v1/mesh",
+    tags=["Multi-Cloud Pipeline Mesh"],
+    dependencies=[Depends(auth.require_admin)],
+)
 
 
 @router.get("/status")

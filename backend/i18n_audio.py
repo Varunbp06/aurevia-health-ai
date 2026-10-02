@@ -12,13 +12,24 @@ import struct
 import wave
 
 import httpx
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+
+from backend import auth
+
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/audio", tags=["i18n Audio"])
+# Translation, transcription and TTS are metered third-party calls over
+# patient-authored content, so they require an authenticated clinician or admin
+# instead of being freely available to anonymous callers.
+
+router = APIRouter(
+    prefix="/audio",
+    tags=["i18n Audio"],
+    dependencies=[Depends(auth.require_clinician_or_admin)],
+)
 
 # Supported clinical localization languages
 SUPPORTED_LANGUAGES = {"en", "es", "hi", "te", "fr", "de", "zh", "ar"}

@@ -7,8 +7,9 @@ FastAPI Router for Peak Healthcare Capabilities:
 
 import logging
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
+from backend import auth
 from backend.agents.clinical_consensus_council import clinical_council
 from backend.clinical_digital_twin import digital_twin_engine
 from backend.precision_pharmacogenomics import pharmacogenomics_engine
@@ -23,7 +24,15 @@ from backend.schemas.peak_healthcare import (
 
 logger = logging.getLogger("backend.peak_healthcare_routes")
 
-router = APIRouter(prefix="/v1", tags=["Peak Healthcare Intelligence"])
+# Digital-twin simulation, pharmacogenomic evaluation and clinical council
+# deliberation all touch patient data, so they require an authenticated
+# clinician or admin rather than an anonymous caller.
+
+router = APIRouter(
+    prefix="/v1",
+    tags=["Peak Healthcare Intelligence"],
+    dependencies=[Depends(auth.require_clinician_or_admin)],
+)
 
 
 @router.post("/digital-twin/simulate", response_model=DigitalTwinSimulationResponse, summary="Simulate 10-Year Multi-Organ Clinical Trajectory")

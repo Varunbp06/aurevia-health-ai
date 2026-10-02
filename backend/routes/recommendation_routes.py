@@ -4,12 +4,20 @@ FastAPI Router for 4-Stage Multi-Objective Clinical Recommendation Engine.
 
 from typing import Any, Dict
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
+from backend import auth
 from backend.recommendation.engine import recommendation_pipeline
 from backend.schemas.recommendation import FeedbackEvent, RecommendationRequest, RecommendationResponse
 
-router = APIRouter(prefix="/v1/recommendations", tags=["Recommendation Engine"])
+# These endpoints derive and record clinical interventions, so they are limited
+# to authenticated clinicians and admins.
+
+router = APIRouter(
+    prefix="/v1/recommendations",
+    tags=["Recommendation Engine"],
+    dependencies=[Depends(auth.require_clinician_or_admin)],
+)
 
 
 @router.post("/clinical-interventions", response_model=RecommendationResponse, summary="Generate Personalized Clinical Interventions")

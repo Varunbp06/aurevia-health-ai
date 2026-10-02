@@ -7,14 +7,22 @@ FastAPI Router for Enterprise Healthcare Data Engineering Platform:
 
 from typing import Any, Dict, List
 
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel, Field
 
+from backend import auth
 from backend.data_platform.data_quality_gates import data_quality_gate
 from backend.data_platform.delta_time_travel import delta_time_travel
 from backend.data_platform.omop_cdm_engine import omop_engine
 
-router = APIRouter(prefix="/v1/lakehouse", tags=["Lakehouse Data Engineering"])
+# OMOP transforms, time-travel reads and delta restores act directly on
+# production lakehouse tables, so they require an authenticated admin.
+
+router = APIRouter(
+    prefix="/v1/lakehouse",
+    tags=["Lakehouse Data Engineering"],
+    dependencies=[Depends(auth.require_admin)],
+)
 
 
 class RawPatientPayload(BaseModel):
