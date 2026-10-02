@@ -46,7 +46,7 @@ services:
     startCommand: uvicorn scripts.keygen_server:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: LICENSE_SECRET
-        value: "ai-healthcare-system-license-signature-validation-key-2026"
+        sync: false
       - key: ADMIN_API_KEY
         generateValue: true
       - key: LEMONSQUEEZY_WEBHOOK_SECRET

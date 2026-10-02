@@ -123,9 +123,19 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
     throw new Error(errorMessage);
   }
 
-  const data = await res.json();
+  // A reachable host that answers with HTML is not a working API. This happens
+  // whenever API_BASE points at a static host or a dead backend, because a SPA
+  // fallback or a 404 page returns a 200 or error page. Parsing that body
+  // throws a raw SyntaxError which escapes ApiConnectionError, so callers
+  // surface "Unexpected token '<'" to the user instead of a real failure.
+  let data: unknown;
+  try {
+    data = await res.json();
+  } catch {
+    throw new ApiConnectionError(path);
+  }
   if (isGet) {
     requestCache.set(cacheKey, { data, timestamp: Date.now() });
   }
-  return data;
+  return data as T;
 }
