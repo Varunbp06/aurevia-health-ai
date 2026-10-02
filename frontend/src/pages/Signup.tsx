@@ -157,8 +157,14 @@ export default function SignupPage() {
         <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 0)", backgroundSize: "24px 24px" }} />
 
         {/* Ambient glows */}
-        <div className="absolute top-[30%] right-[20%] w-[320px] h-[320px] rounded-full bg-[var(--accent-purple)]/8 blur-[100px] animate-pulse-slow" />
-        <div className="absolute bottom-[20%] left-[30%] w-[250px] h-[250px] rounded-full bg-[var(--accent-emerald)]/6 blur-[90px] animate-pulse-slow" />
+        {/* Ambient glows — blur on a static inner layer so the pulse only
+            animates opacity. See the matching note in Login.tsx. */}
+        <div className="absolute top-[30%] right-[20%] w-[320px] h-[320px] animate-pulse-slow">
+          <div className="w-full h-full rounded-full bg-[var(--accent-purple)]/8 blur-[100px]" />
+        </div>
+        <div className="absolute bottom-[20%] left-[30%] w-[250px] h-[250px] animate-pulse-slow">
+          <div className="w-full h-full rounded-full bg-[var(--accent-emerald)]/6 blur-[90px]" />
+        </div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

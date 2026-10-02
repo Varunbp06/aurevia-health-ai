@@ -138,9 +138,17 @@ export default function LoginPage() {
         {/* Dot grid texture */}
         <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 0)", backgroundSize: "24px 24px" }} />
 
-        {/* Ambient glows */}
-        <div className="absolute top-[25%] left-[20%] w-[320px] h-[320px] rounded-full bg-[var(--accent)]/8 blur-[100px] animate-pulse-slow" />
-        <div className="absolute bottom-[25%] right-[20%] w-[280px] h-[280px] rounded-full bg-[var(--accent-blue)]/6 blur-[90px] animate-pulse-slow" />
+        {/* Ambient glows.
+            The blur lives on an inner, never-changing layer and only the
+            wrapper animates. Animating an element that itself carries a
+            100px blur forces the browser to re-run the blur on every frame,
+            which pinned this page at ~30fps. */}
+        <div className="absolute top-[25%] left-[20%] w-[320px] h-[320px] animate-pulse-slow">
+          <div className="w-full h-full rounded-full bg-[var(--accent)]/8 blur-[100px]" />
+        </div>
+        <div className="absolute bottom-[25%] right-[20%] w-[280px] h-[280px] animate-pulse-slow">
+          <div className="w-full h-full rounded-full bg-[var(--accent-blue)]/6 blur-[90px]" />
+        </div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -321,7 +329,7 @@ export default function LoginPage() {
                         setError("");
                         setSuccessMsg("");
                       }}
-                      className="text-[9px] font-bold text-[var(--accent-blue)] hover:underline uppercase tracking-wider bg-transparent border-0 cursor-pointer"
+                      className="py-2 -my-2 px-1 text-xs font-bold text-[var(--accent-blue)] hover:underline uppercase tracking-wider bg-transparent border-0 cursor-pointer"
                     >
                       Forgot?
                     </button>
@@ -412,9 +420,9 @@ export default function LoginPage() {
               </form>
             )}
 
-            <div className="pt-6 mt-6 border-t border-white/[0.04] text-center text-[10px] text-[var(--text-dim)] uppercase tracking-wider font-bold">
+            <div className="pt-6 mt-6 border-t border-white/[0.04] text-center text-[11px] text-[var(--text-dim)] uppercase tracking-wider font-bold">
               Don&apos;t have terminal key?{" "}
-              <Link to="/signup" className="text-[var(--accent-blue)] font-bold hover:underline">
+              <Link to="/signup" className="inline-block py-2 -my-2 text-[var(--accent-blue)] font-bold hover:underline">
                 Request Admission
               </Link>
             </div>
