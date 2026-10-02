@@ -2,6 +2,7 @@
  * Aurevia Health AI — Auth & Profile API
  */
 import { apiFetch, API_BASE } from './apiCore';
+import { ApiConnectionError } from './apiErrors';
 
 // ── Auth ─────────────────────────────────────────────────────────
 export interface LoginResponse {
@@ -10,16 +11,30 @@ export interface LoginResponse {
 }
 
 export async function login(username: string, password: string): Promise<LoginResponse> {
-  const res = await fetch(`${API_BASE}/token`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ username, password }),
-  });
+  // This deliberately posts form-encoded credentials rather than going through
+  // apiFetch, but it used to call fetch with no error handling at all. A
+  // transport failure therefore surfaced the browser's raw
+  // "TypeError: Failed to fetch", and a host that answered with HTML instead
+  // of JSON surfaced a raw SyntaxError. Neither identified the real problem.
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE}/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ username, password }),
+    });
+  } catch {
+    throw new ApiConnectionError('/token');
+  }
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     throw new Error(body.detail || 'Login failed');
   }
-  return await res.json();
+  try {
+    return (await res.json()) as LoginResponse;
+  } catch {
+    throw new ApiConnectionError('/token');
+  }
 }
 
 export async function signup(data: {
