@@ -27,6 +27,13 @@ export async function login(username: string, password: string): Promise<LoginRe
     throw new ApiConnectionError('/token');
   }
   if (!res.ok) {
+    // A 404 or 5xx on the auth endpoint means the backend is not actually
+    // serving this application (e.g. paused/failed service), which is a
+    // connection-level failure for demo purposes — not a credential error.
+    // 4xx credential errors (400/401/403) must never trigger demo mode.
+    if (res.status === 404 || res.status >= 500) {
+      throw new ApiConnectionError('/token');
+    }
     const body = await res.json().catch(() => ({}));
     throw new Error(body.detail || 'Login failed');
   }
