@@ -8,8 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **License restoration** — Aurevia Health AI is a derivative of the AGPL-3.0 project AI-Healthcare-System. The AGPL-3.0 license text and upstream copyright are restored (see [LICENSE](LICENSE) and [NOTICE](NOTICE)); modifications are © 2026 Varun B P
 - **Aurevia Health AI Rebrand** — Complete rebrand from AI Healthcare System to **Aurevia Health AI**
-- **MIT License** — Changed from AGPL-3.0 to MIT License (Copyright 2026 Varun B P)
+- **License** — Distributed under **AGPL-3.0** as required by the upstream project; upstream copyright and license notices preserved (see [NOTICE](NOTICE))
 - **Stitch Nexus Design System** — Implemented across all UI components
 - **Documentation Hub** — New `/documentation` and `/developers` routes with comprehensive API reference
 - **Feature Highlights** — 9 feature cards on Federated Learning page (TabICLv2, Databricks Lakehouse, Digital Twin, CPIC, OMOP/FHIR, Conformal Sets, Cloudflare Edge AI, 3D DICOM, Bayesian Consensus)
@@ -18,13 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Trust & Credibility Section** — Compliance badges, research citations, security transparency
 
 ### Changed
-- **License** — Changed from AGPL-3.0 to MIT License (Copyright 2026 Varun B P)
+- **License** — Remains **AGPL-3.0**; upstream AI-Healthcare-System notice preserved (see [NOTICE](NOTICE))
 - **Branding** — Complete rebrand from "AI Healthcare System" to "Aurevia Health AI"
 - **Documentation Routes** — Added `/documentation`, `/developers`, `/documentation` routes (legacy `/docs` now points to Swagger UI)
 - **Navigation** — Added "Developers" tab group (📚) with Documentation and Developers quickstart
 - **Federated Learning Page** — Complete redesign with hero section, value prop, 9 feature highlights, trust section, FAQ, SEO schemas
 - **Documentation Page** — New comprehensive documentation hub with 6 sections (API Reference, EHR Integration, Deployment, SDK & Samples, Clinical Models, Compliance)
-- **License** — Changed from AGPL-3.0 to MIT License (Copyright 2026 Varun B P)
+- **License** — Remains **AGPL-3.0**; upstream AI-Healthcare-System notice preserved (see [NOTICE](NOTICE))
 
 ### Fixed
 - License endpoint double `/v1` prefix bug (was `/v1/v1/licensing/status`)
@@ -36,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Aurevia Health AI Rebrand** — Complete rebrand from AI Healthcare System to **Aurevia Health AI**
-- **MIT License** — Changed from AGPL-3.0 to MIT License (Copyright 2026 Varun B P)
+- **License** — Distributed under **AGPL-3.0** as required by the upstream project; upstream copyright and license notices preserved (see [NOTICE](NOTICE))
 - **Stitch Nexus Design System** — Implemented across all UI components
 - **Documentation Hub** — New `/documentation` and `/developers` routes with comprehensive API reference
 - **Feature Highlights** — 9 feature cards on Federated Learning page (TabICLv2, Databricks Lakehouse, Digital Twin, CPIC, OMOP/FHIR, Conformal Sets, Cloudflare Edge AI, 3D DICOM, Bayesian Consensus)
@@ -45,13 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Trust & Credibility Section** — Compliance badges, research citations, security transparency
 
 ### Changed
-- **License** — Changed from AGPL-3.0 to MIT License (Copyright 2026 Varun B P)
+- **License** — Remains **AGPL-3.0**; upstream AI-Healthcare-System notice preserved (see [NOTICE](NOTICE))
 - **Branding** — Complete rebrand from "AI Healthcare System" to "Aurevia Health AI"
 - **Documentation Routes** — Added `/documentation`, `/developers`, `/documentation` routes (legacy `/docs` now points to Swagger UI)
 - **Navigation** — Added "Developers" tab group (📚) with Documentation and Developers quickstart
 - **Federated Learning Page** — Complete redesign with hero section, value prop, 9 feature highlights, trust section, FAQ, SEO schemas
 - **Documentation Page** — New comprehensive documentation hub with 6 sections (API Reference, EHR Integration, Deployment, SDK & Samples, Clinical Models, Compliance)
-- **License** — Changed from AGPL-3.0 to MIT License (Copyright 2026 Varun B P)
+- **License** — Remains **AGPL-3.0**; upstream AI-Healthcare-System notice preserved (see [NOTICE](NOTICE))
 
 ### Fixed
 - License endpoint double `/v1` prefix bug (was `/v1/v1/licensing/status`)

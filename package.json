@@ -29,5 +29,5 @@
     "fastapi"
   ],
   "author": "Varun B P <varunbpvarunbp@gmail.com>",
-  "license": "MIT"
+  "license": "AGPL-3.0"
 }
