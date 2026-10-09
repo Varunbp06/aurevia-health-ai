@@ -1,4 +1,4 @@
-# 🎨 AI Healthcare System — React 19 Clinical Portal & Telemedicine UI
+# 🎨 Aurevia Health AI — React 19 Clinical Portal & Telemedicine UI
 
 > A modern, high-performance, and responsive clinical portal and telemedicine web application built with **React 19**, **Vite 8**, and **Tailwind CSS v4**.
 

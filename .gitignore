@@ -141,3 +141,6 @@ tests_diff.txt
 *.keystore
 secrets/
 credentials/
+
+# Upstream agent working files (personal machine paths) and Vercel build output
+.agents/

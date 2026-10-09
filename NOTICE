@@ -7,8 +7,11 @@ General Public License v3.0 (AGPL-3.0). See LICENSE for the full license text.
 Upstream project
 ----------------
   AI-Healthcare-System
-  https://github.com/pavanbadempet/AI-Healthcare-System
-  Copyright (c) the AI-Healthcare-System authors
+  https://gitlab.com/pavanbadempet/AI-Healthcare-System
+  (the original GitHub mirror at github.com/pavanbadempet/AI-Healthcare-System
+  has since been deleted; the GitLab repository above preserves the upstream
+  source and its AGPL-3.0 LICENSE)
+  Copyright (c) 2026 Pavan Badempet, Shiva Prasad Anagondi, Prashanth Cheerala
   Licensed under AGPL-3.0
 
 Modifications ("Aurevia Health AI")

@@ -1,4 +1,4 @@
-# 🌀 AI Healthcare System — PySpark & Apache Airflow Data Platform
+# 🌀 Aurevia Health AI — PySpark & Apache Airflow Data Platform
 
 > A production-grade clinical MLOps & Big Data platform orchestrating ingestion pipelines, Medallion Lakehouse structures, schema evolution, slowly changing dimensions (SCD Type 2), and data lineage.
 
