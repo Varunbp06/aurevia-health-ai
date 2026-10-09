@@ -38,7 +38,7 @@ export default function SignupPage() {
       if (isConn && import.meta.env.VITE_ENABLE_OFFLINE_DEMO === "true") {
         const offlineToken = "offline-session-access-token";
         const offlineProfile = { username: formData.username || "staff_clinician", email: formData.email || "staff@hospital.org", full_name: formData.full_name || "Staff Clinician", id: "staff-01", role: "clinician" };
-        setAuth(offlineToken, offlineProfile as any);
+        setAuth(offlineToken, offlineProfile as any, true);
         navigate("/dashboard");
         return;
       }
