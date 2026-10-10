@@ -1,0 +1,25 @@
+# Node / build artifacts
+node_modules
+frontend/node_modules
+frontend/dist
+edge_gateway/node_modules
+rust_gateway/target
+
+# VCS / local
+.git
+.gitignore
+active_handoff.md
+*.log
+
+# Heavy or non-frontend source trees not needed for the Vite build
+data
+models
+android
+airflow
+kaggle_gpu_kernel
+databricks_notebooks
+mlops
+monitoring
+k8s
+terraform
+microservices

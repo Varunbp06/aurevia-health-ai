@@ -8,7 +8,9 @@ import { setTokenGetter, type UserProfile } from './api';
 interface AuthState {
   token: string | null;
   user: UserProfile | null;
-  setAuth: (token: string, user: UserProfile) => void;
+  /** True when inside a frontend-only demo session (no live backend). */
+  isDemo: boolean;
+  setAuth: (token: string, user: UserProfile, isDemo?: boolean) => void;
   setUser: (user: UserProfile) => void;
   logout: () => void;
   isAuthenticated: () => boolean;
@@ -38,9 +40,10 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       token: null,
       user: null,
-      setAuth: (token, user) => set({ token, user }),
+      isDemo: false,
+      setAuth: (token, user, isDemo = false) => set({ token, user, isDemo }),
       setUser: (user) => set({ user }),
-      logout: () => set({ token: null, user: null }),
+      logout: () => set({ token: null, user: null, isDemo: false }),
       isAuthenticated: () => !!get().token,
     }),
     {

@@ -44,7 +44,7 @@ export default function TopNav({
   const location = useLocation();
   const pathname = location.pathname;
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { user, logout, isDemo } = useAuthStore();
   const { language, setLanguage, t } = useTranslation();
 
   const { isOnline, queueCount } = useNetworkStatus();
@@ -306,6 +306,15 @@ export default function TopNav({
             <p className="text-[9px] font-bold tracking-[0.18em] uppercase text-[#00d1ff] -mt-0.5">Health AI</p>
           </div>
         </Link>
+
+        {isDemo && (
+          <span
+            title="Frontend demo session — simulated data, no live backend"
+            className="ml-1 shrink-0 rounded-full border border-[#00d1ff]/40 bg-[#00d1ff]/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#00d1ff]"
+          >
+            Demo mode
+          </span>
+        )}
 
 
         {/* ─── Center: Navigation with Mega Menus ─── */}

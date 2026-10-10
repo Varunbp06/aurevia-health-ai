@@ -80,12 +80,13 @@ export default function LoginPage() {
     } catch (err: any) {
       const msg = err?.message || "Login failed";
       const isConnectionError = msg.includes("Unable to connect") || msg.includes("Network") || err?.name === "ApiConnectionError";
-      // Offline demo mode must never be reachable in a production build. It is
-      // gated on both the opt-in flag and a development build so a production
-      // bundle cannot be talked into fabricating a session.
+      // Frontend-only demo mode for the resume demonstration: when the API is
+      // unreachable AND the demo is enabled for this build, enter a clearly
+      // disclosed simulated session with synthetic identity data. Never
+      // fabricates a session for credential errors (401) — only for genuine
+      // connection failures.
       const demoEnabled =
-        import.meta.env.VITE_ENABLE_OFFLINE_DEMO === "true" &&
-        import.meta.env.DEV;
+        import.meta.env.VITE_ENABLE_OFFLINE_DEMO === "true";
       if (isConnectionError && demoEnabled) {
         const offlineToken = "offline-session-access-token";
         const offlineProfile = {
@@ -95,7 +96,7 @@ export default function LoginPage() {
           id: "staff-01",
           role: username === "admin" ? "admin" : "clinician",
         };
-        setAuth(offlineToken, offlineProfile as any);
+        setAuth(offlineToken, offlineProfile as any, true);
         navigate("/dashboard");
       } else {
         setError(msg.includes("401") || msg.toLowerCase().includes("incorrect") || msg.toLowerCase().includes("invalid") ? "Incorrect username or password." : msg);
@@ -301,6 +302,7 @@ export default function LoginPage() {
             )}
 
             {view === 'login' ? (
+              <>
               <form onSubmit={handleLogin} className="space-y-5">
                 <div className="space-y-1.5">
                   <label className="section-label" htmlFor="login-username">{t.username}</label>
@@ -367,6 +369,14 @@ export default function LoginPage() {
                   )}
                 </button>
               </form>
+
+              <div className="mt-4 p-3 bg-[var(--info-muted)] text-[var(--info)] border border-[var(--info-border)] text-[10px] font-mono rounded-xl uppercase tracking-wide leading-relaxed">
+                <span className="font-bold">Demo preview.</span> Aurevia Health
+                AI is a resume demonstration. If the server is offline, valid
+                credentials enter a simulated workspace with synthetic sample
+                data — no real account, no stored password, no clinical claims.
+              </div>
+              </>
             ) : (
               <form onSubmit={handleForgotPassword} className="space-y-5">
                 <div className="space-y-1.5">

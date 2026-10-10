@@ -10,7 +10,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
-  const { token } = useAuthStore();
+  const { token, isDemo } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [inIframe, setInIframe] = useState(false);
@@ -37,6 +37,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     if (mounted && !token) {
       navigate("/login");
     } else if (mounted && token && !consentChecked && !consentError) {
+      if (isDemo) {
+        // Frontend-only demo session: there is no backend to query consent
+        // against, and the session is explicitly disclosed as simulated.
+        setConsentChecked(true);
+        return;
+      }
       // Check EULA consent status from backend
       checkConsentStatus()
         .then((res) => {
@@ -52,7 +58,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           setConsentError(true);
         });
     }
-  }, [token, navigate, pathname, mounted, consentChecked, consentError]);
+  }, [token, navigate, pathname, mounted, consentChecked, consentError, isDemo]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
