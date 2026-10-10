@@ -18,8 +18,8 @@ except ImportError:
     print("pip install requests")
     sys.exit(1)
 
-OWNER = "pavanbadempet"
-REPO = "AI-Healthcare-System"
+OWNER = "Varunbp06"
+REPO = "aurevia-health-ai"
 
 
 def generate_ai_release_summary(commits_text: str, cf_url: Optional[str], google_key: Optional[str]) -> str:
