@@ -2,10 +2,7 @@
 
 ### *Clinical Intelligence Platform — Stitch Nexus Design System*
 
-> **Aurevia Health AI** — Clinical Intelligence Platform with React 19, FastAPI, LangGraph, and Ollama local inference. Rebranded from AI Healthcare System (MIT License © 2026 Varun B P — see [LICENSE](LICENSE)).
-
-# Aurevia Health AI
-### *Clinical Intelligence Platform — Stitch Nexus Design System*
+> **Aurevia Health AI** — Clinical Intelligence Platform with React 19, FastAPI, LangGraph, and Ollama local inference. A derivative work built on the open-source **AI-Healthcare-System** project; upstream copyright and **AGPL-3.0** licensing are preserved — see [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
 **Production-grade clinical AI platform — TabICLv2 Foundation Model · Databricks Lakehouse (OMOP CDM v5.4) · 10-Year Digital Twin · Multi-Agent RAG · FHIR R4**
 
@@ -14,8 +11,8 @@ Aurevia Health AI is a production-grade, privacy-first **Clinical Intelligence P
 The platform provides native **HL7 FHIR R4** and **OHDSI OMOP CDM v5.4** compatibility, **TabICLv2 Tabular Foundation Models** (Rank #1 on TabArena) alongside calibrated **CatBoost, XGBoost, and FT-Transformer ensembles** with **95% Conformal Prediction sets** and **C++ SHAP explainability**, a 10-year coupled ODE **multi-organ digital twin simulator**, and a stateful **LangGraph multi-agent RAG** supervisor chatbot supporting complete **offline private inference (via local Ollama Llama 3.2)**. Designed to run on consumer hardware or scale to enterprise Databricks workspaces and Kubernetes on AWS, it provides an open, sovereign blueprint for clinical intelligence.
 
 <p>
-  <a href="https://aurevia.health"><img src="https://img.shields.io/badge/🌐%20Aurevia-Health%20AI-blue?style=flat-square" alt="Aurevia Health AI" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/varunbpvarunbp/aurevia-health-ai?color=22c55e&style=flat-square" alt="License" /></a>
+  <a href="https://aurevia-health-ai.vercel.app/"><img src="https://img.shields.io/badge/🌐%20Aurevia-Health%20AI-blue?style=flat-square" alt="Aurevia Health AI" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Varunbp06/aurevia-health-ai?color=22c55e&style=flat-square" alt="License" /></a>
   <img src="https://img.shields.io/badge/PRs-welcome-10b981?style=flat-square" alt="PRs Welcome" />
 </p>
 
@@ -95,7 +92,7 @@ The platform provides native **HL7 FHIR R4** and **OHDSI OMOP CDM v5.4** compati
 
 ```bash
 # Clone the repository
-git clone https://github.com/varunbpvarunbp/aurevia-health-ai.git
+git clone https://github.com/Varunbp06/aurevia-health-ai.git
 cd aurevia-health-ai
 
 # Install Python dependencies
@@ -238,21 +235,26 @@ DATABASE_URL=postgresql://user:pass@host:5432/dbname
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+**AGPL-3.0** — Aurevia Health AI is a derivative work of
+[AI-Healthcare-System](https://github.com/pavanbadempet/AI-Healthcare-System)
+and is distributed under the GNU Affero General Public License v3.0. Upstream
+copyright and license notices are preserved — see [LICENSE](LICENSE) and
+[NOTICE](NOTICE).
 
-**Copyright (c) 2026 Varun B P** — © 2026 Varun B P
+**Modifications © 2026 Varun B P** — [github.com/Varunbp06](https://github.com/Varunbp06)
 
 ---
 
 ## 📞 Support
 
-- **Technical Support**: [support@aurevia.health](mailto:support@aurevia.health)
-- **General Inquiries**: [varunbpvarunbp@gmail.com](mailto:varunbpvarunbp@gmail.com)
+- **Issues & Support**: [github.com/Varunbp06/aurevia-health-ai/issues](https://github.com/Varunbp06/aurevia-health-ai/issues)
+- **Maintainer**: Varun B P — [github.com/Varunbp06](https://github.com/Varunbp06)
 
 ---
 
 ## 🙏 Acknowledgments
 
+- **AI-Healthcare-System** ([github.com/pavanbadempet](https://github.com/pavanbadempet/AI-Healthcare-System)) — the upstream open-source project this work derives from, licensed **AGPL-3.0**
 - **TabICLv2**: Inria Foundation Transformer (Inria SODA team)
 - **Databricks**: Unity Catalog & Delta Lake
 - **OHDSI**: OMOP CDM v5.4 Standard

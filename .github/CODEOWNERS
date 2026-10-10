@@ -2,23 +2,23 @@
 # Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
 # Default: everything
-* @pavanbadempet
+* @Varunbp06
 
 # Backend — API, AI, ML
-/backend/ @pavanbadempet
+/backend/ @Varunbp06
 
 # Frontend — React/Vite UI
-/frontend/ @pavanbadempet
+/frontend/ @Varunbp06
 
 # Infrastructure — CI/CD, Docker, Terraform
-/.github/ @pavanbadempet
-/terraform/ @pavanbadempet
-/Dockerfile* @pavanbadempet
-/docker-compose* @pavanbadempet
+/.github/ @Varunbp06
+/terraform/ @Varunbp06
+/Dockerfile* @Varunbp06
+/docker-compose* @Varunbp06
 
 # Tests
-/tests/ @pavanbadempet
+/tests/ @Varunbp06
 
 # Documentation
-/docs/ @pavanbadempet
-*.md @pavanbadempet
+/docs/ @Varunbp06
+*.md @Varunbp06

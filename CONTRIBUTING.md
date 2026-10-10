@@ -11,7 +11,7 @@ Welcome to the **Aurevia Health AI** project! We appreciate your interest in con
 3. Clone the forked repository to your local machine:
 
     ```bash
-    git clone https://github.com/varunbpvarunbp/aurevia-health-ai.git
+    git clone https://github.com/Varunbp06/aurevia-health-ai.git
     ```
 
 2. Create a new branch for your contribution:

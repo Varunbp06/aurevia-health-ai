@@ -85,7 +85,7 @@ The platform implements a multi-tier, event-driven architecture structured aroun
 
 ## 3. Empirical Performance Benchmarks
 
-All performance benchmarks were measured on a commodity workstation (AMD Ryzen 9, 32GB RAM, Windows/Linux) using the automated test harness ([`scripts/benchmark_system.py`](file:///c:/Users/pavan/OneDrive/Documents/GitHub/AI-Healthcare-System/scripts/benchmark_system.py)):
+All performance benchmarks were measured on a commodity workstation (AMD Ryzen 9, 32GB RAM, Windows/Linux) using the automated test harness ([`scripts/benchmark_system.py`](/scripts/benchmark_system.py)):
 
 | Performance Dimension | Metric | Measured Value | Standard Deviation |
 | :--- | :--- | :---: | :---: |

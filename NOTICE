@@ -1,0 +1,32 @@
+Aurevia Health AI — NOTICE
+==========================
+
+This product is a derivative work and is distributed under the GNU Affero
+General Public License v3.0 (AGPL-3.0). See LICENSE for the full license text.
+
+Upstream project
+----------------
+  AI-Healthcare-System
+  https://gitlab.com/pavanbadempet/AI-Healthcare-System
+  (the original GitHub mirror at github.com/pavanbadempet/AI-Healthcare-System
+  has since been deleted; the GitLab repository above preserves the upstream
+  source and its AGPL-3.0 LICENSE)
+  Copyright (c) 2026 Pavan Badempet, Shiva Prasad Anagondi, Prashanth Cheerala
+  Licensed under AGPL-3.0
+
+Modifications ("Aurevia Health AI")
+-----------------------------------
+  Copyright (C) 2026 Varun B P
+  https://github.com/Varunbp06
+
+Rebranding the product, adding features, and changing user-facing copy does not
+transfer copyright of the upstream source. The upstream authors' copyright and
+license notices are retained here and in LICENSE, as required by AGPL-3.0.
+
+Because this software can be used over a network, AGPL-3.0 section 13 requires
+that the complete corresponding source of the running version be offered to
+users. The source is published at https://github.com/Varunbp06/aurevia-health-ai.
+
+Third-party components retain their own licenses and notices; see the
+respective dependencies (FastAPI, React, LangGraph, TabICLv2 (Inria), and
+others) for details.

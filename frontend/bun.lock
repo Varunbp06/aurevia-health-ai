@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@pavanbadempet/ai-healthcare-system-frontend",
+      "name": "aurevia-health-ai-frontend",
       "dependencies": {
         "@mlc-ai/web-llm": "^0.2.84",
         "@stripe/stripe-js": "^9.9.0",

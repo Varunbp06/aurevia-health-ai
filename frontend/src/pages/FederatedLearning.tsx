@@ -557,13 +557,13 @@ export default function FederatedLearning() {
             </div>
             <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
               <div className="text-[10px] font-mono uppercase tracking-widest text-purple-400 font-bold flex items-center gap-1.5"><Users size={12} /> Security transparency</div>
-              <p className="text-xs text-zinc-400 mt-2">Encryption: AES-GCM + TLS 1.3. Access: RBAC + facility RLS. Audits: immutable `audit_logs` (PII-redacted). Contact: <a href="mailto:security@aurevia.health" className="text-[#00d1ff] hover:underline">security@aurevia.health</a></p>
+              <p className="text-xs text-zinc-400 mt-2">Encryption: AES-GCM + TLS 1.3. Access: RBAC + facility RLS. Audits: immutable `audit_logs` (PII-redacted). Contact: <a href="mailto:varunbpvarunbp@gmail.com" className="text-[#00d1ff] hover:underline">varunbpvarunbp@gmail.com</a></p>
               <a href="/documentation#compliance" className="inline-flex items-center gap-1 mt-3 text-xs text-[#00d1ff] hover:underline">Security page <ExternalLink size={10} /></a>
             </div>
           </div>
           <div className="mt-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="text-xs text-zinc-400">Trusted by clinical research teams — partner badges available upon NDA. Case studies: Central General Hospital (3-node, 1.2k records, ε 4.2 → 92.1% accuracy).</div>
-            <a href="mailto:hello@aurevia.health" className="px-4 py-2 rounded-xl bg-white text-black font-bold text-xs uppercase tracking-wider hover:bg-zinc-100 transition-colors">Contact: hello@aurevia.health</a>
+            <a href="mailto:varunbpvarunbp@gmail.com" className="px-4 py-2 rounded-xl bg-white text-black font-bold text-xs uppercase tracking-wider hover:bg-zinc-100 transition-colors">Contact: varunbpvarunbp@gmail.com</a>
           </div>
         </section>
 

@@ -6,13 +6,13 @@
 
   <!-- Core Product & Platform Pages -->
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system</loc>
+    <loc>https://aurevia-health-ai.vercel.app/</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://github.com/pavanbadempet/AI-Healthcare-System</loc>
+    <loc>https://github.com/Varunbp06/aurevia-health-ai</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -20,55 +20,55 @@
 
   <!-- Interactive Clinical Screening & AI Calculators (High-Intent SEO Keywords) -->
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/diabetes-screening</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/diabetes-screening</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/cardiovascular-risk-calculator</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/cardiovascular-risk-calculator</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/chronic-kidney-disease-egfr</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/chronic-kidney-disease-egfr</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/liver-fibrosis-fib4-meld</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/liver-fibrosis-fib4-meld</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/lung-cancer-thoracic-risk</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/lung-cancer-thoracic-risk</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/digital-twin-trajectory</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/digital-twin-trajectory</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/cpic-pharmacogenomics-guide</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/cpic-pharmacogenomics-guide</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/omop-cdm-lakehouse-converter</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/omop-cdm-lakehouse-converter</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/#/clinical-consensus-council</loc>
+    <loc>https://aurevia-health-ai.vercel.app/#/clinical-consensus-council</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -76,25 +76,25 @@
 
   <!-- Technical Documentation & Architecture Whitepapers -->
   <url>
-    <loc>https://github.com/pavanbadempet/AI-Healthcare-System/blob/main/docs/TECHNICAL_WHITEPAPER.md</loc>
+    <loc>https://github.com/Varunbp06/aurevia-health-ai/blob/main/docs/TECHNICAL_WHITEPAPER.md</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://github.com/pavanbadempet/AI-Healthcare-System/blob/main/docs/AI_AGENT_ARCHITECTURE.md</loc>
+    <loc>https://github.com/Varunbp06/aurevia-health-ai/blob/main/docs/AI_AGENT_ARCHITECTURE.md</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://github.com/pavanbadempet/AI-Healthcare-System/blob/main/docs/MODEL_AND_DATASET_CARDS.md</loc>
+    <loc>https://github.com/Varunbp06/aurevia-health-ai/blob/main/docs/MODEL_AND_DATASET_CARDS.md</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://github.com/pavanbadempet/AI-Healthcare-System/blob/main/docs/architecture-decisions.md</loc>
+    <loc>https://github.com/Varunbp06/aurevia-health-ai/blob/main/docs/architecture-decisions.md</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>

@@ -1,5 +1,5 @@
 {
-  "name": "@pavanbadempet/ai-healthcare-system-edge-gateway",
+  "name": "@varunbp06/ai-healthcare-system-edge-gateway",
   "version": "1.0.0",
   "description": "High-Performance Bun + ElysiaJS API Orchestration Layer and Edge Gateway (PID 1)",
   "main": "src/index.ts",
