@@ -196,7 +196,7 @@ The existing vector store is enhanced with Singularity Engine patterns:
 AI Healthcare System includes three dedicated SOTA AI agents specialized in auditing, care transitions, and shift handoffs. They leverage structured prompting and JSON output parsing for high reliability.
 
 ### 3.1 Clinical Billing Agent (`ClinicalBillingAgent`)
-*   **Module**: [billing_agent.py](file:///c:/Users/pavan/OneDrive/Documents/GitHub/AI-Healthcare-System/backend/agents/billing_agent.py)
+*   **Module**: [billing_agent.py](/backend/agents/billing_agent.py)
 *   **Workflow**:
     *   Accepts a clinical SOAP note or provider narrative.
     *   Generates recommended ICD-10 and CPT codes.
@@ -205,7 +205,7 @@ AI Healthcare System includes three dedicated SOTA AI agents specialized in audi
 *   **REST Integration**: `POST /v1/billing/invoices/{invoice_id}/audit`
 
 ### 3.2 Clinical Discharge Agent (`ClinicalDischargeAgent`)
-*   **Module**: [discharge_agent.py](file:///c:/Users/pavan/OneDrive/Documents/GitHub/AI-Healthcare-System/backend/agents/discharge_agent.py)
+*   **Module**: [discharge_agent.py](/backend/agents/discharge_agent.py)
 *   **Workflow**:
     *   Fetches patient demographic context.
     *   Queries recent vital telemetry trends (last 5 records).
@@ -214,7 +214,7 @@ AI Healthcare System includes three dedicated SOTA AI agents specialized in audi
 *   **REST Integration**: `POST /v1/discharge/summaries/generate/{patient_id}`
 
 ### 3.3 Clinical Nursing Agent (`ClinicalNursingAgent`)
-*   **Module**: [nursing_agent.py](file:///c:/Users/pavan/OneDrive/Documents/GitHub/AI-Healthcare-System/backend/agents/nursing_agent.py)
+*   **Module**: [nursing_agent.py](/backend/agents/nursing_agent.py)
 *   **Workflow**:
     *   Gathers patient profile data and active clinical conditions.
     *   Summarizes telemetry trends (vitals over the last 24 hours).

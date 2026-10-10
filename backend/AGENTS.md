@@ -4,7 +4,7 @@
 
 ## Key Module Ownership
 
-For a deep reference of all 50+ backend modules, check [CONTEXT.md](file:///c:/Users/pavan/OneDrive/Documents/GitHub/AI-Healthcare-System/backend/CONTEXT.md#L7-L78). Here is a high-level summary:
+For a deep reference of all 50+ backend modules, check [CONTEXT.md](/backend/CONTEXT.md#L7-L78). Here is a high-level summary:
 
 - **AI Layer**: `core_ai.py` (Central entry point for all LLM/Ollama inference), `prompt_registry.py` (Prompt templates), `agent.py` (Supervisor agent), `chat_context.py` (RAG builder).
 - **Data & DB**: `models.py` (SQLAlchemy models), `database.py` (Session engine), `schemas/` (Pydantic schemas), `rag.py` (Vector store).
