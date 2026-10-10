@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@pavanbadempet/ai-healthcare-system-edge-gateway",
+      "name": "@varunbp06/ai-healthcare-system-edge-gateway",
       "dependencies": {
         "@elysiajs/cors": "^1.2.0",
         "@elysiajs/jwt": "^1.2.0",
