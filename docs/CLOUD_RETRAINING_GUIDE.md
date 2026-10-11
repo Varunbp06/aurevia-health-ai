@@ -28,7 +28,7 @@ You can run the entire pipeline interactively in your browser using Google's fre
 
 ```python
 # 1. Clone the repository
-!git clone https://github.com/pavanbadempet/AI-Healthcare-System.git
+!git clone https://github.com/Varunbp06/aurevia-health-ai.git
 
 # 2. Install required dependencies in the Colab container
 !pip install pyspark delta-spark xgboost scikit-learn pandas sqlalchemy psycopg2-binary requests
@@ -36,7 +36,7 @@ You can run the entire pipeline interactively in your browser using Google's fre
 # 3. Set your credentials (replace with your Neon/Supabase Postgres credentials)
 import os
 os.environ["DATABASE_URL"] = "postgresql://user:password@host:port/dbname"
-os.environ["BACKEND_URL"] = "https://pavanbadempet-ai-healthcare-system.hf.space"
+os.environ["BACKEND_URL"] = "https://aurevia-health-ai.hf.space"
 os.environ["ADMIN_JWT_TOKEN"] = "your_admin_jwt_token" # (optional, for reloading models on the fly)
 
 # 4. Run the PySpark ETL & Retraining pipeline

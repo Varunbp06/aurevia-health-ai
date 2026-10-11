@@ -1,14 +1,16 @@
 cff-version: 1.2.0
-message: "If you use AI Healthcare System in your research or clinical informatics projects, please cite it as below."
+message: "If you use Aurevia Health AI (a derivative of AI Healthcare System) in your research or clinical informatics projects, please cite it as below."
 authors:
+  - name: "Varun B P"
+    website: "https://github.com/Varunbp06"
   - family-names: Badempet
     given-names: Pavan
     orcid: "https://orcid.org/0000-0000-0000-0000"
-title: "AI Healthcare System: Open-Source Privacy-First Clinical Intelligence & EHR Interoperability Platform"
+title: "Aurevia Health AI: Privacy-First Clinical Intelligence & EHR Interoperability Platform (derivative of AI Healthcare System)"
 version: 1.0.0
 date-released: 2026-07-22
-url: "https://github.com/pavanbadempet/AI-Healthcare-System"
-repository-code: "https://github.com/pavanbadempet/AI-Healthcare-System"
+url: "https://github.com/Varunbp06/aurevia-health-ai"
+repository-code: "https://github.com/Varunbp06/aurevia-health-ai"
 keywords:
   - clinical decision support
   - healthcare AI

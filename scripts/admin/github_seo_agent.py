@@ -17,8 +17,8 @@ except ImportError:
     print("pip install requests")
     sys.exit(1)
 
-OWNER = "pavanbadempet"
-REPO = "AI-Healthcare-System"
+OWNER = "Varunbp06"
+REPO = "aurevia-health-ai"
 API_URL = f"https://api.github.com/repos/{OWNER}/{REPO}"
 
 SEO_TOPICS = [

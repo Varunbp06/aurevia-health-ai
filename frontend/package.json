@@ -16,14 +16,14 @@
     "react",
     "tailwind"
   ],
-  "author": "Aurevia Health AI",
-  "homepage": "https://aurevia.health",
+  "author": "Varun B P <varunbpvarunbp@gmail.com>",
+  "homepage": "https://aurevia-health-ai.vercel.app/",
   "repository": {
     "type": "git",
-    "url": "https://aurevia.health"
+    "url": "https://github.com/Varunbp06/aurevia-health-ai.git"
   },
   "bugs": {
-    "url": "https://aurevia.health/support"
+    "url": "https://github.com/Varunbp06/aurevia-health-ai/issues"
   },
   "private": true,
   "scripts": {

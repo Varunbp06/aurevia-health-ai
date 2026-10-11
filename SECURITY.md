@@ -14,7 +14,7 @@ We take security seriously in this healthcare AI system, especially given the se
 ### How to Report
 
 1. **DO NOT** open a public issue for security vulnerabilities.
-2. Email **[support@aurevia.health](mailto:support@aurevia.health)** with:
+2. Email **[varunbpvarunbp@gmail.com](mailto:varunbpvarunbp@gmail.com)** or use [GitHub private vulnerability reporting](https://github.com/Varunbp06/aurevia-health-ai/security/advisories/new) with:
    - Description of the vulnerability
    - Steps to reproduce
    - Potential impact assessment

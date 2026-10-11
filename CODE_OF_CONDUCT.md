@@ -32,7 +32,7 @@ Project contributors have the responsibility to adhere to these standards, as we
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [support@aurevia.health](mailto:support@aurevia.health). The project team will review and investigate all complaints and will respond in a manner that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality regarding the reporter of an incident.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [varunbpvarunbp@gmail.com](mailto:varunbpvarunbp@gmail.com). The project team will review and investigate all complaints and will respond in a manner that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality regarding the reporter of an incident.
 
 ## Attribution
 
@@ -40,4 +40,4 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 For answers to common questions about this code of conduct, see the [FAQ](https://www.contributor-covenant.org/faq).
 
-[support@aurevia.health]: mailto:support@aurevia.health
+[varunbpvarunbp@gmail.com]: mailto:varunbpvarunbp@gmail.com

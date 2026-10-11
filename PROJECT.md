@@ -96,7 +96,7 @@ The system transitions from a Python/FastAPI monolithic backend to a zero-Python
 ## Code Layout
 
 ```
-c:\Users\pavan\OneDrive\Documents\GitHub\AI-Healthcare-System/
+AI-Healthcare-System/
 ├── rust_gateway/                     # Primary Rust Backend Server (Axum + Tokio)
 │   ├── Cargo.toml                    # Dependencies: axum, tokio, sqlx, ort, aes-gcm, serde, jsonwebtoken
 │   ├── src/

@@ -82,7 +82,7 @@ export default function DocumentationPage() {
           <div className="mt-4 p-4 rounded-2xl bg-[#00d1ff]/5 border border-[#00d1ff]/15">
             <div className="text-[10px] font-mono uppercase tracking-widest text-[#00d1ff] font-bold">Need help?</div>
             <p className="text-xs text-zinc-400 mt-1">Contact clinical engineering for EHR onboarding.</p>
-            <a href="mailto:support@aurevia.health" className="text-xs text-[#00d1ff] hover:underline mt-2 inline-flex items-center gap-1">support@aurevia.health <ExternalLink size={10} /></a>
+            <a href="mailto:varunbpvarunbp@gmail.com" className="text-xs text-[#00d1ff] hover:underline mt-2 inline-flex items-center gap-1">varunbpvarunbp@gmail.com <ExternalLink size={10} /></a>
           </div>
         </nav>
 
@@ -117,7 +117,7 @@ export default function DocumentationPage() {
             </div>
             <div className="mt-4">
               <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-300">Data Models (Pydantic)</h3>
-              <InlineCode lang="json" code={`// UserCreate\n{ "username": "aurevia_admin", "email": "admin@aurevia.health", "full_name": "Aurevia Admin", "password": "Admin123!", "dob": "1990-01-01", "role": "admin" }\n// DiabetesInput\n{ "age": 45, "bmi": 27.5, "gender": 1, "hypertension": 0, "high_chol": 0 }`} />
+              <InlineCode lang="json" code={`// UserCreate\n{ "username": "aurevia_admin", "email": "admin@example.com", "full_name": "Aurevia Admin", "password": "Admin123!", "dob": "1990-01-01", "role": "admin" }\n// DiabetesInput\n{ "age": 45, "bmi": 27.5, "gender": 1, "hypertension": 0, "high_chol": 0 }`} />
             </div>
           </section>
 

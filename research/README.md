@@ -1,4 +1,4 @@
-# Research Experiments — AI Healthcare System
+# Research Experiments — Aurevia Health AI
 
 ## Overview
 

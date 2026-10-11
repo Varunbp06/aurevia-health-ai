@@ -10,8 +10,8 @@ This frontend is a client-side React SPA powered by Vite 6, Tailwind CSS v4, and
 
 ## Structure
 
-- App entry and main router configuration live in [App.tsx](file:///c:/Users/pavan/OneDrive/Documents/GitHub/AI-Healthcare-System/frontend/src/App.tsx).
-- Page components live in [src/pages/](file:///c:/Users/pavan/OneDrive/Documents/GitHub/AI-Healthcare-System/frontend/src/pages/) and are lazy-loaded via `React.lazy()` inside `App.tsx`.
+- App entry and main router configuration live in [App.tsx](/frontend/src/App.tsx).
+- Page components live in [src/pages/](/frontend/src/pages/) and are lazy-loaded via `React.lazy()` inside `App.tsx`.
 - Shared UI components live in `frontend/src/components/`.
 - Frontend libraries, state managers (Zustand), and hooks live in `frontend/src/lib/`.
 - Public static assets live in `frontend/public/`.

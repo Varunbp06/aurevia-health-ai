@@ -1,12 +1,12 @@
-# AI Healthcare System
+# Aurevia Health AI
 
-> Planetary-Scale Distributed Clinical Intelligence, 10-Year Digital Twin & OMOP CDM v5.4 Lakehouse Platform.
+> Clinical Intelligence Platform with TabICLv2 Foundation Models, Databricks Lakehouse, 10-Year Digital Twin & OMOP CDM v5.4.
 
 ## Core Capabilities & Endpoints
 
-- **Live Web Demo & Space**: https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system
-- **GitHub Repository**: https://github.com/pavanbadempet/AI-Healthcare-System
-- **Model Hub Weights**: https://huggingface.co/pavanbadempet/ai-healthcare-models
+- **Live Web Demo**: https://aurevia-health-ai.vercel.app/
+- **GitHub Repository**: https://github.com/Varunbp06/aurevia-health-ai
+- **Upstream Project**: https://github.com/pavanbadempet/AI-Healthcare-System
 
 ## Clinical Engines & Features
 

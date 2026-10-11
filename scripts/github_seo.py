@@ -23,8 +23,8 @@ except ImportError:
     print("pip install requests")
     sys.exit(1)
 
-OWNER = "pavanbadempet"
-REPO = "AI-Healthcare-System"
+OWNER = "Varunbp06"
+REPO = "aurevia-health-ai"
 API = f"https://api.github.com/repos/{OWNER}/{REPO}"
 
 # ============================================================
@@ -153,7 +153,7 @@ def main():
     set_description(token)
     print("\n✅ Done! Changes take effect immediately on GitHub.")
     print("\n📝 MANUAL STEPS STILL NEEDED:")
-    print("   1. Go to: https://github.com/pavanbadempet/AI-Healthcare-System/settings")
+    print("   1. Go to: https://github.com/Varunbp06/aurevia-health-ai/settings")
     print("   2. Scroll to 'Social preview' section")
     print("   3. Upload docs/assets/social-preview.svg (or convert to PNG first)")
     print("      → This image shows on Twitter/LinkedIn/Discord when your repo is shared")

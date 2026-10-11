@@ -21,5 +21,5 @@ User-agent: Google-Extended
 Allow: /
 
 # Sitemaps & LLM Context Specifications
-Sitemap: https://huggingface.co/spaces/pavanbadempet/ai-healthcare-system/sitemap.xml
-Sitemap: https://raw.githubusercontent.com/pavanbadempet/AI-Healthcare-System/main/frontend/public/sitemap.xml
+Sitemap: https://aurevia.health/sitemap.xml
+Sitemap: https://aurevia-health-ai.vercel.app/sitemap.xml

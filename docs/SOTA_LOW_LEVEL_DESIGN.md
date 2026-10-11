@@ -1,6 +1,6 @@
 # SOTA Low Level Design (LLD) Specification
 
-This document details the State-of-the-Art (SOTA) Low Level Design (LLD) object-oriented and structural patterns implemented in [`backend/sota_lld.py`](file:///c:/Users/pavan/OneDrive/Documents/GitHub/AI-Healthcare-System/backend/sota_lld.py).
+This document details the State-of-the-Art (SOTA) Low Level Design (LLD) object-oriented and structural patterns implemented in [`backend/sota_lld.py`](/backend/sota_lld.py).
 
 ---
 

@@ -119,7 +119,7 @@ def review_pull_request(event_path: str, token: str):
     pr = event.get("pull_request", {})
     pr_number = pr.get("number")
     pr_title = pr.get("title", "Pull Request Review")
-    repo = event.get("repository", {}).get("full_name", "pavanbadempet/AI-Healthcare-System")
+    repo = event.get("repository", {}).get("full_name", "Varunbp06/aurevia-health-ai")
 
     if not pr_number:
         print("No PR number found in event.")

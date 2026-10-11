@@ -1,7 +1,7 @@
-title: AI Healthcare System Documentation
+title: Aurevia Health AI Documentation
 description: Privacy-First Clinical AI & EHR Interoperability Platform Documentation
-url: "https://pavanbadempet.github.io"
-baseurl: "/AI-Healthcare-System"
+url: "https://varunbp06.github.io"
+baseurl: "/aurevia-health-ai"
 
 # Automatically generate SEO tags and a sitemap.xml for Google Indexing
 plugins:
