@@ -41,12 +41,21 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Prepare lowercase image tag
+      id: image
+      env:
+        REPOSITORY_OWNER: ${{ github.repository_owner }}
+      shell: bash
+      run: |
+        owner_lower=$(printf '%s' "$REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')
+        echo "tag=ghcr.io/${owner_lower}/ai-healthcare-system:latest" >> "$GITHUB_OUTPUT"
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v7
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/ai-healthcare-system:latest
+        tags: ${{ steps.image.outputs.tag }}
 
     # - name: Run the container
     #   run: |
