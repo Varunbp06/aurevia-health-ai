@@ -113,7 +113,7 @@ export default function DocumentationPage() {
             </div>
             <div className="mt-4">
               <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-300">Authentication</h3>
-              <InlineCode lang="bash" code={`curl -X POST http://127.0.0.1:8000/v1/token -d "username=dr_smith&password=Doctor123!" -H "Content-Type: application/x-www-form-urlencoded"\n# → { "access_token": "eyJ...", "token_type": "bearer" }\ncurl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8000/v1/profile`} />
+              <InlineCode lang="bash" code={`curl -X POST http://<your-api-host>:8000/v1/token -d "username=dr_smith&password=Doctor123!" -H "Content-Type: application/x-www-form-urlencoded"\n# → { "access_token": "eyJ...", "token_type": "bearer" }\ncurl -H "Authorization: Bearer $TOKEN" http://<your-api-host>:8000/v1/profile`} />
             </div>
             <div className="mt-4">
               <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-300">Data Models (Pydantic)</h3>
@@ -144,7 +144,7 @@ export default function DocumentationPage() {
             <div className="grid md:grid-cols-3 gap-4 mt-3">
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
                 <h3 className="text-xs font-bold uppercase">Docker</h3>
-                <InlineCode lang="bash" code={`docker compose up --build\n# frontend 127.0.0.1:3000, backend 127.0.0.1:8000`} />
+                <InlineCode lang="bash" code={`docker compose up --build\n# frontend :3000, backend :8000`} />
               </div>
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
                 <h3 className="text-xs font-bold uppercase">Kubernetes</h3>
@@ -163,7 +163,7 @@ export default function DocumentationPage() {
             <div className="grid md:grid-cols-2 gap-4 mt-3">
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-widest">Python</h3>
-                <InlineCode lang="python" code={`import requests\ntoken = requests.post("http://127.0.0.1:8000/v1/token", data={"username":"dr_smith","password":"Doctor123!"}).json()["access_token"]\nheaders={"Authorization": f"Bearer {token}"}\nrequests.post("http://127.0.0.1:8000/v1/predict/stroke", json={"age":50,"bmi":25}, headers=headers)`} />
+                <InlineCode lang="python" code={`import requests\ntoken = requests.post("http://<your-api-host>:8000/v1/token", data={"username":"dr_smith","password":"Doctor123!"}).json()["access_token"]\nheaders={"Authorization": f"Bearer {token}"}\nrequests.post("http://<your-api-host>:8000/v1/predict/stroke", json={"age":50,"bmi":25}, headers=headers)`} />
               </div>
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-widest">TypeScript</h3>

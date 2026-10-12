@@ -5,6 +5,24 @@ import { launchSmartApp } from "@/lib/apiSmart";
 import { dispatchCareEvent } from "@/lib/api";
 import { toast } from "@/lib/toast";
 
+// SMART on FHIR `iss` (issuer) must point at this deployment's FHIR server,
+// not a developer loopback. Resolve it like apiCore: honour an explicit env
+// override, else same-origin in production, else the local dev server on :3000.
+// A hardcoded 127.0.0.1 here would send every production SMART-app launch
+// toward the end-user's own machine.
+const resolveFhirIss = () => {
+  const envVal = import.meta.env.NEXT_PUBLIC_API_URL || import.meta.env.VITE_PUBLIC_API_URL;
+  const base = (envVal || '').replace(/\/$/, '');
+  if (base) return `${base}/v1/fhir`;
+  if (typeof window !== 'undefined') {
+    if (window.location.port === '3000' && (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')) {
+      return 'http://127.0.0.1:8000/v1/fhir';
+    }
+    return `${window.location.origin}/v1/fhir`;
+  }
+  return 'http://127.0.0.1:8000/v1/fhir';
+};
+
 interface SmartAppLauncherModalProps {
   onClose: () => void;
   onAppLaunched?: (launchUrl: string) => void;
@@ -42,7 +60,7 @@ export const SmartAppLauncherModal: React.FC<SmartAppLauncherModalProps> = ({
       const patient = patients.find((p) => p.id === patientId);
 
       const launchToken = res?.launch_token || `smt_launch_${Math.floor(100000 + Math.random() * 900000)}`;
-      const targetUrl = `${app?.launch_url}?iss=http://127.0.0.1:8000/v1/fhir&launch=${launchToken}`;
+      const targetUrl = `${app?.launch_url}?iss=${encodeURIComponent(resolveFhirIss())}&launch=${launchToken}`;
 
       setLaunchedSandbox({ url: targetUrl, launchToken });
 

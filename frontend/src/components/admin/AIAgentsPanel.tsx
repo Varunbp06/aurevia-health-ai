@@ -129,7 +129,7 @@ const AGENTS_CONFIG: AgentConfig[] = [
         label: "Hardened Enterprise Config",
         inputs: {
           dependencies: "fastapi>=0.136.3, python-jose[cryptography]>=3.5.0, bcrypt==3.2.0, pyjwt>=2.13.0",
-          env_config: "SECRET_KEY=rsa_private_key_production_vault, ALLOWED_HOSTS=127.0.0.1,clinic.com, DEBUG=False"
+          env_config: "SECRET_KEY=<rotated-at-deploy>, ALLOWED_HOSTS=app.example.com, DEBUG=False"
         }
       }
     ]

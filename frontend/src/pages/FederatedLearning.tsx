@@ -80,7 +80,7 @@ export default function FederatedLearning() {
       "@type": "HowTo",
       "name": "Deploy Aurevia federated privacy mesh",
       "step": [
-        { "@type": "HowToStep", "name": "Deploy via Docker", "text": "docker compose up --build — frontend 127.0.0.1:3000, backend 127.0.0.1:8000" },
+        { "@type": "HowToStep", "name": "Deploy via Docker", "text": "docker compose up --build — frontend :3000, backend :8000" },
         { "@type": "HowToStep", "name": "Configure FHIR", "text": "Set FHIR_BASE_URL and SMART_FHIR_* in .env, then register apps at /apps" },
         { "@type": "HowToStep", "name": "Trigger federated sync", "text": "Select model and ε at /federated, execute Sync Bridge, verify audit ledger" }
       ]

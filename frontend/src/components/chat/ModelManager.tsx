@@ -3,7 +3,23 @@ import { Download, Trash2, Check, Loader2, HardDrive, Zap, ChevronLeft, AlertCir
 import * as webllm from '@/lib/webllm';
 import { useAuthStore } from '@/lib/auth';
 
-const API_BASE = import.meta.env.NEXT_PUBLIC_API_URL || import.meta.env.VITE_PUBLIC_API_URL || "http://127.0.0.1:8000";
+// Resolve the API base the same way apiCore does: honour an explicit
+// build-time env override, fall back to same-origin in the browser, and only
+// use the loopback dev host when running locally on port 3000. A hardcoded
+// 127.0.0.1 fallback here would send every production visitor's model-library
+// requests to their own machine.
+const resolveApiBase = () => {
+  const envVal = import.meta.env.NEXT_PUBLIC_API_URL || import.meta.env.VITE_PUBLIC_API_URL;
+  if (envVal) return envVal.replace(/\/$/, '');
+  if (typeof window !== 'undefined') {
+    if (window.location.port === '3000' && (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')) {
+      return 'http://127.0.0.1:8000';
+    }
+    return window.location.origin;
+  }
+  return 'http://127.0.0.1:8000';
+};
+const API_BASE = resolveApiBase();
 
 /* Types */
 interface CatalogModel {

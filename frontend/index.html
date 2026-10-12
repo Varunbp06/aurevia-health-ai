@@ -51,9 +51,9 @@
     <link rel="modulepreload" href="/src/main.tsx" />
     <link rel="modulepreload" href="/src/App.tsx" />
 
-    <!-- DNS prefetch for API server -->
+    <!-- DNS prefetch for API server (same-origin in production; the previous
+         loopback-host hint here was a dev default and is intentionally omitted) -->
     <meta http-equiv="x-dns-prefetch-control" content="on" />
-    <link rel="dns-prefetch" href="//127.0.0.1:8000" />
 
     <!-- Structured Data: Multi-Entity JSON-LD for Google Rich Snippets & AI Search Crawlers — Aurevia Health AI -->
     <script type="application/ld+json">
