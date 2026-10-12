@@ -198,7 +198,7 @@ export function SotaClinicalStudio() {
                     <span>Calculated Practice Pathway</span>
                   </div>
                   <p className="text-slate-300 leading-relaxed">
-                    Algorithm evaluation connected to authoritative backend endpoint via <code className="text-cyan-300">backend.database.get_db</code>.
+                    Algorithm evaluation runs against the deployed clinical backend service.
                   </p>
                 </div>
               )}

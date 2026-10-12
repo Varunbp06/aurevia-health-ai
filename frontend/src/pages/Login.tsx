@@ -158,93 +158,58 @@ export default function LoginPage() {
           className="relative z-10 max-w-md text-center px-8 flex flex-col items-center"
         >
           {/* Central Logo HUD Container */}
-          <div className="mb-10 relative h-48 w-48 flex items-center justify-center">
-            {/* Spinning Dotted Outer Ring */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 border border-dashed border-[var(--accent)]/30 rounded-full"
-            />
-            {/* Spinning Dashed Middle Ring */}
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-4 border-2 border-dashed border-[var(--accent-blue)]/20 rounded-full"
-            />
-            {/* Solid Ring with ticks */}
-            <motion.div
-              animate={{ rotate: 180 }}
-              transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-8 border border-white/[0.04] rounded-full flex items-center justify-between p-2"
-            >
-              <div className="w-1.5 h-1.5 bg-[var(--accent-blue)]/40 rounded-full" />
-              <div className="w-1.5 h-1.5 bg-[var(--accent-purple)]/40 rounded-full" />
-            </motion.div>
+          <div className="mb-8 h-16 w-16 rounded-2xl bg-[rgba(10,10,15,0.7)] border border-white/[0.06] flex items-center justify-center">
             
-            {/* Core Biometric Heart Icon */}
-            <motion.div
-              animate={{ scale: [0.96, 1.04, 0.96] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              className="w-24 h-24 rounded-full bg-[rgba(10,10,15,0.7)] border border-white/[0.06] flex items-center justify-center shadow-[0_0_35px_rgba(95,95,247,0.15)] relative z-10"
-            >
-              <HeartPulse size={48} className="text-[var(--accent)]" strokeWidth={1.5} />
-            </motion.div>
+            {/* Static logo mark (no ambient animation) */}
+            <HeartPulse size={30} className="text-[var(--accent)]" strokeWidth={1.5} />
           </div>
 
-          <h2 className="text-3xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[var(--text-primary)] via-white to-[var(--text-secondary)] display-hero mb-4">
+          <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] mb-3">
             Aurevia Health AI
           </h2>
-          <p className="text-[var(--text-secondary)] text-[11px] font-mono max-w-xs leading-relaxed uppercase tracking-wider mb-8 opacity-75">
-            Secure diagnostic modeling • Real-time patient telemetry • On-premises clinical intelligence
+          <p className="text-[var(--text-secondary)] text-sm max-w-xs leading-relaxed mb-8">
+            Clinical decision-support workspace — synthetic demo data
           </p>
 
           {/* Core system properties */}
-          <div className="flex items-center justify-center gap-4 text-[9px] font-mono text-[var(--text-dim)] uppercase tracking-wider border-t border-white/[0.04] pt-6 w-full">
+          <div className="flex items-center justify-center gap-4 text-[11px] text-[var(--text-secondary)] border-t border-white/[0.04] pt-6 w-full">
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 bg-[var(--success)] rounded-full animate-pulse" /> Secure Session
+              <span className="w-1.5 h-1.5 bg-[var(--success)] rounded-full" /> Clinical workspace
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-pulse" /> JWT Encrypted
+              <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full" /> Synthetic demo data
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 bg-[var(--warning)] rounded-full" /> Audit Active
+              <span className="w-1.5 h-1.5 bg-[var(--warning)] rounded-full" /> Prototype
             </span>
           </div>
         </motion.div>
 
-        {/* Dynamic Telemetry Log Terminal */}
-        <div className="absolute bottom-6 left-6 p-4 glass-card border border-white/[0.03] bg-black/40 font-mono text-[9px] text-[var(--accent-blue)] space-y-1 rounded-xl w-64 text-left shadow-2xl pointer-events-none">
-          <div className="flex items-center gap-1.5 uppercase font-bold text-white mb-2 pb-1.5 border-b border-white/[0.05]">
-            <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping" /> Connection Console
-          </div>
-          <div>&gt; HOST: {displayHost}</div>
-          <div>&gt; FHIR BROKER: SYNCED</div>
-          <div>&gt; SECURE TUNNEL: ACTIVE</div>
-          <div className="text-[var(--success)]">&gt; SESSION STATUS: ONLINE</div>
-        </div>
+        {/* Persistent prototype / synthetic-data disclosure */}
+        <p className="absolute bottom-6 left-6 max-w-xs text-[11px] leading-relaxed text-[var(--text-dim)] pointer-events-none">
+          Prototype demo running on synthetic data. Not for clinical use.
+        </p>
       </div>
 
       {/* Right Panel: Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12 relative z-20">
         <div className="max-w-sm w-full relative">
-          {/* Glass Form Container */}
-          <div className="glass-card p-8 md:p-10 border border-white/[0.04] shadow-[var(--shadow-lg)] rounded-2xl relative overflow-hidden backdrop-blur-3xl bg-[rgba(6,6,12,0.45)]">
-            {/* Top light edge glow */}
-            <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-85" />
+          {/* Form container */}
+          <div className="p-8 md:p-10 border border-white/[0.06] rounded-2xl bg-[rgba(6,6,12,0.6)]">
             
             {/* Header */}
             <div className="space-y-2 mb-6">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded bg-gradient-to-br from-[var(--accent)] to-[var(--accent-purple)] flex items-center justify-center text-white shadow-md">
+                <div className="w-6 h-6 rounded bg-[var(--accent)] flex items-center justify-center text-white">
                   <Sparkles size={12} />
                 </div>
                 <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--text-secondary)]">Aurevia Health AI</span>
               </div>
-              <h1 className="text-xl font-black tracking-widest text-[var(--text-primary)] uppercase display-title">
+              <h1 className="text-lg font-semibold text-[var(--text-primary)]">
                 {view === 'login' ? t.signIn : "Reset Key"}
               </h1>
-              <p className="text-[10px] text-[var(--text-secondary)] font-mono uppercase tracking-wider opacity-70">
-                {view === 'login' ? "Enter credentials to link with telemetry." : "Request a secure temporary reset token."}
+              <p className="text-xs text-[var(--text-secondary)]">
+                {view === 'login' ? "Sign in to your workspace." : "Request a password reset link."}
               </p>
             </div>
 
@@ -363,7 +328,7 @@ export default function LoginPage() {
                     </>
                   ) : (
                     <>
-                      {t.accessConsole}
+                      Sign in
                       <ArrowRight size={13} />
                     </>
                   )}
@@ -430,10 +395,10 @@ export default function LoginPage() {
               </form>
             )}
 
-            <div className="pt-6 mt-6 border-t border-white/[0.04] text-center text-[11px] text-[var(--text-dim)] uppercase tracking-wider font-bold">
-              Don&apos;t have terminal key?{" "}
+            <div className="pt-6 mt-6 border-t border-white/[0.04] text-center text-xs text-[var(--text-secondary)]">
+              New here?{" "}
               <Link to="/signup" className="inline-block py-2 -my-2 text-[var(--accent-blue)] font-bold hover:underline">
-                Request Admission
+                Create an account
               </Link>
             </div>
           </div>
