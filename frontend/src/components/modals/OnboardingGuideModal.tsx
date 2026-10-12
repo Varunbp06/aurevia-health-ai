@@ -222,7 +222,7 @@ export const OnboardingGuideModal: React.FC<OnboardingGuideModalProps> = ({ isOp
               <div className="p-4 bg-slate-900 text-slate-100 rounded-xl font-mono text-[11px] space-y-2">
                 <div className="text-slate-400"># Start local zero-config development session</div>
                 <div className="text-emerald-400">python scripts/ai_context.py</div>
-                <div className="text-blue-400">uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000</div>
+                <div className="text-blue-400">uvicorn backend.main:app --reload --port 8000</div>
                 <div className="text-purple-400">bun --cwd frontend run dev</div>
               </div>
 
