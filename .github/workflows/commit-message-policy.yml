@@ -1,0 +1,23 @@
+name: Commit Message Policy
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check commit messages
+        run: |
+          COMMITS=$(git log --format="%s" origin/main..HEAD)
+          for msg in $COMMITS; do
+            if echo "$msg" | grep -qiE "Generated with Codebuff"; then
+              echo "ERROR: Commit message contains prohibited Codebuff footer: $msg"
+              exit 1
+            fi
+          done
