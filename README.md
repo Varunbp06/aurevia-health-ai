@@ -12,6 +12,7 @@ The platform provides native **HL7 FHIR R4** and **OHDSI OMOP CDM v5.4** compati
 
 <p>
   <a href="https://aurevia-health-ai.vercel.app"><img src="https://img.shields.io/badge/🌐%20Aurevia-Health%20AI-blue?style=flat-square" alt="Aurevia Health AI" /></a>
+  <a href="https://aureviahealth.vercel.app"><img src="https://img.shields.io/badge/🌐%20Mirror-aureviahealth.vercel.app-0ea5e9?style=flat-square" alt="Aurevia Health AI mirror domain" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/Varunbp06/aurevia-health-ai?color=22c55e&style=flat-square" alt="License" /></a>
   <img src="https://img.shields.io/badge/PRs-welcome-10b981?style=flat-square" alt="PRs Welcome" />
 </p>
