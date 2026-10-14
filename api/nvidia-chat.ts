@@ -24,11 +24,16 @@ export const config = { runtime: 'edge' };
 declare const process: { env: Record<string, string | undefined> };
 
 const NVIDIA_ENDPOINT = 'https://integrate.api.nvidia.com/v1/chat/completions';
-const DEFAULT_MODEL = 'nvidia/llama-3.3-nemotron-super-49b-v1';
 
-// Only models this demo is provisioned for. Prevents the endpoint being used as
-// an open gateway to arbitrary (and more expensive) upstream models.
-const ALLOWED_MODELS = new Set<string>([DEFAULT_MODEL]);
+// Models this deployment is provisioned for. Callers may request any of these;
+// anything else falls back to DEFAULT_MODEL, so the function cannot be used as
+// an open gateway to arbitrary upstream models.
+const DEFAULT_MODEL = 'meta/llama-3.1-8b-instruct';
+const ALLOWED_MODELS = new Set<string>([
+  DEFAULT_MODEL,
+  'nvidia/llama-3.3-nemotron-super-49b-v1.5',
+  'nvidia/llama-3.3-nemotron-super-49b-v1',
+]);
 
 const MAX_MESSAGE_CHARS = 4000;
 const MAX_HISTORY_MESSAGES = 24;
@@ -198,9 +203,12 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   if (!upstream.ok || !upstream.body) {
-    // Deliberately generic: upstream error text can echo request metadata.
+    // Log the status code only (never headers, body, or the credential) so an
+    // operator can diagnose from Vercel runtime logs. Upstream error text can
+    // echo request metadata, so the caller still receives a generic message.
+    console.error('[nvidia-chat] upstream rejected request', upstream.status);
     const status = upstream.status === 401 || upstream.status === 403 ? 503 : 502;
-    return json({ error: 'AI provider rejected the request.' }, status);
+    return json({ error: 'AI provider rejected the request.', upstreamStatus: upstream.status }, status);
   }
 
   return new Response(upstream.body, {
