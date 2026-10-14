@@ -47,9 +47,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <!-- Preload critical modules -->
-    <link rel="modulepreload" href="/src/main.tsx" />
-    <link rel="modulepreload" href="/src/App.tsx" />
+    <!-- Do not add hand-written modulepreload tags pointing at source paths such
+         as /src/main.tsx or /src/App.tsx. The bundler resolves those into a
+         data:application/octet-stream URI (which leaks the entry source into
+         this document and is rejected by the browser) or a .tsx asset that does
+         not exist. The bundler emits correct preload tags for the hashed
+         chunks itself. -->
 
     <!-- DNS prefetch for API server (same-origin in production; the previous
          loopback-host hint here was a dev default and is intentionally omitted) -->
