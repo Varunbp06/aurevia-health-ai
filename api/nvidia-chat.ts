@@ -28,11 +28,16 @@ const NVIDIA_ENDPOINT = 'https://integrate.api.nvidia.com/v1/chat/completions';
 // Models this deployment is provisioned for. Callers may request any of these;
 // anything else falls back to DEFAULT_MODEL, so the function cannot be used as
 // an open gateway to arbitrary upstream models.
-const DEFAULT_MODEL = 'meta/llama-3.1-8b-instruct';
+//
+// NOTE: these IDs follow NVIDIA's current hosted catalog. They have not been
+// exercised end to end because this NVIDIA account currently receives
+// HTTP 410 Gone from the public inference endpoint, which is an account-level
+// permission issue (see docs/NVIDIA-ENDPOINT-STATUS.md).
+const DEFAULT_MODEL = 'nvidia/nemotron-3.5-lightning-30b-a3b';
 const ALLOWED_MODELS = new Set<string>([
   DEFAULT_MODEL,
-  'nvidia/llama-3.3-nemotron-super-49b-v1.5',
-  'nvidia/llama-3.3-nemotron-super-49b-v1',
+  'nvidia/nemotron-3-ultra-550b-a55b',
+  'meta/llama-3.1-8b-instruct',
 ]);
 
 const MAX_MESSAGE_CHARS = 4000;
@@ -180,6 +185,18 @@ export default async function handler(req: Request): Promise<Response> {
 
   const messages = [...sanitizeHistory(body.history), { role: 'user', content: message }];
 
+  const payload: Record<string, unknown> = {
+    model,
+    messages,
+    stream: true,
+    max_tokens: MAX_OUTPUT_TOKENS,
+  };
+  // Nemotron reasoning models emit thinking tokens unless told otherwise, which
+  // would leave the visible answer empty.
+  if (model.includes('nemotron')) {
+    payload.chat_template_kwargs = { enable_thinking: false, force_nonempty_content: true };
+  }
+
   let upstream: Response;
   try {
     upstream = await fetch(NVIDIA_ENDPOINT, {
@@ -189,12 +206,7 @@ export default async function handler(req: Request): Promise<Response> {
         Accept: 'text/event-stream',
         Authorization: `Bearer ${apiKey}`,
       },
-      body: JSON.stringify({
-        model,
-        messages,
-        stream: true,
-        max_tokens: MAX_OUTPUT_TOKENS,
-      }),
+      body: JSON.stringify(payload),
       signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     });
   } catch {
