@@ -9,7 +9,6 @@ Each test pins a specific behaviour that previously failed open:
 """
 
 import ast
-import inspect
 import os
 import sys
 

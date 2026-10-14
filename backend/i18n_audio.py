@@ -13,11 +13,10 @@ import wave
 
 import httpx
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
-
-from backend import auth
-
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
+
+from backend import auth
 
 logger = logging.getLogger(__name__)
 

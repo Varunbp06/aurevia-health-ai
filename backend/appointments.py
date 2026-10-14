@@ -1,8 +1,7 @@
 import asyncio
 import json
 import logging
-import time
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any, List
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -12,7 +11,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from . import audit, auth, core_ai, database, email_service, models, schemas
-from .agents.scheduling_agent import BOOKING_ACTION_PATTERN, SchedulingAgent
+from .agents.scheduling_agent import SchedulingAgent
 from .facility_scope import users_share_facility_context
 
 ACTIVE_APPOINTMENT_STATUSES = ("Scheduled", "Rescheduled")
@@ -154,7 +153,6 @@ def create_appointment(
     db.refresh(new_appt)
 
     # Send Confirmation Email (Async/Background in production, Sync here for safety)
-    from . import email_service
     video_link = f"https://meet.jit.si/ai-health-{new_appt.id}" # Secure unique link
 
     email_service.send_booking_confirmation(
@@ -349,7 +347,6 @@ async def agent_stream_endpoint(
     chat_history.append({"role": "user", "content": req.message})
 
     async def stream_generator():
-        last_activity = time.time()
         streamed_reply_parts = []
         stream_task = None
 
@@ -391,7 +388,6 @@ async def agent_stream_endpoint(
                 if msg_type == "chunk":
                     streamed_reply_parts.append(data)
                     yield f"data: {json.dumps({'reply': data, 'status': 'streaming'})}\n\n"
-                    last_activity = time.time()
                 elif msg_type == "done":
                     break
                 elif msg_type == "error":

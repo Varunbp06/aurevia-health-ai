@@ -174,7 +174,6 @@ def get_active_license_modules() -> list:
 
 def enforce_license_tier(required_tier: str):
     """Dependency helper to enforce a minimum license tier for specific endpoints."""
-    import os
 
     from fastapi import HTTPException
 
@@ -205,7 +204,6 @@ def enforce_license_tier(required_tier: str):
 
 def enforce_license_module(required_module: str, minimum_tier: str = "enterprise"):
     """Dependency helper to enforce that a specific module or minimum tier is licensed."""
-    import os
 
     from fastapi import HTTPException
 
