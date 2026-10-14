@@ -9,7 +9,18 @@ import sys
 
 import pytest
 
-BACKEND = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+# Discover the backend/ package location from an already-imported module so the
+# test file can live anywhere (tests/unit/, workspace copies, CI clones) without
+# hard-coding a sibling layout.
+try:
+    import backend
+
+    BACKEND = os.path.dirname(os.path.abspath(backend.__file__))
+except Exception:
+    # Fallback for environments where backend/ is reached via cwd alone.
+    BACKEND = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "backend")
+    BACKEND = os.path.normpath(BACKEND)
+
 REPO_ROOT = os.path.dirname(BACKEND)
 for candidate in (REPO_ROOT, os.path.dirname(REPO_ROOT)):
     if candidate not in sys.path:

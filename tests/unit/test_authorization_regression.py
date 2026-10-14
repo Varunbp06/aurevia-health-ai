@@ -14,7 +14,18 @@ import sys
 
 import pytest
 
-BACKEND = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+# Discover the backend/ package location from an already-imported module so the
+# test file can live anywhere (tests/unit/, workspace copies, CI clones) without
+# hard-coding a sibling layout.
+try:
+    import backend
+
+    BACKEND = os.path.dirname(os.path.abspath(backend.__file__))
+except Exception:
+    # Fallback for environments where backend/ is reached via cwd alone.
+    BACKEND = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "backend")
+    BACKEND = os.path.normpath(BACKEND)
+
 REPO_ROOT = os.path.dirname(BACKEND)
 
 # `auth` and `licensing` use relative imports (`from . import database`), so they
@@ -23,8 +34,8 @@ for candidate in (REPO_ROOT, os.path.dirname(REPO_ROOT)):
     if candidate not in sys.path:
         sys.path.insert(0, candidate)
 
-# backend.auth refuses to import without SECRET_KEY (correctly fail-closed), and
-# a test run is exactly the case it exempts, so set TESTING before importing.
+# `auth` refuses to import without SECRET_KEY (correctly fail-closed), and a
+# test run is exactly the case it exempts, so set TESTING before importing.
 os.environ.setdefault("SECRET_KEY", "test_secret_key_for_local_tests_only")
 os.environ.setdefault("TESTING", "1")
 
