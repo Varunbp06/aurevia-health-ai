@@ -47,6 +47,13 @@ export function streamChat(
 
   let p = cloudProvider || (typeof window !== 'undefined' ? localStorage.getItem('ai_cloud_provider') : null);
   let k = cloudApiKey || (typeof window !== 'undefined' ? localStorage.getItem('ai_cloud_api_key') : null);
+  const nvidiaKey = typeof window !== 'undefined' ? (import.meta.env.VITE_NVIDIA_API_KEY as string) : '';
+
+  // If no provider set but we have an NVIDIA key, use it directly
+  if (nvidiaKey && !k) {
+    p = 'nvidia';
+    k = nvidiaKey;
+  }
 
   if (!p) {
     p = "custom";
@@ -64,6 +71,59 @@ export function streamChat(
   let receivedContent = false;
 
   const language = typeof window !== 'undefined' ? localStorage.getItem('app-language') || 'en' : 'en';
+  const useDirectNvidia = nvidiaKey && p === 'nvidia';
+
+  // When backend is unreachable and NVIDIA key is available, call NVIDIA API directly
+  if (useDirectNvidia) {
+    const nvidiaMessages = history.map((m: any) => ({ role: m.role, content: m.content }));
+    nvidiaMessages.push({ role: 'user', content: message });
+
+    fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${k}`,
+      },
+      body: JSON.stringify({
+        model: model || 'nvidia/llama-3.3-nemotron-super-49b-v1',
+        messages: nvidiaMessages,
+        stream: true,
+        max_tokens: 1024,
+      }),
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`NVIDIA API HTTP ${res.status}`);
+        const reader = res.body?.getReader();
+        if (!reader) throw new Error('No stream');
+        const decoder = new TextDecoder();
+        let buffer = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const payload = line.slice(6).trim();
+              if (payload === '[DONE]') { onDone(); return; }
+              try {
+                const parsed = JSON.parse(payload);
+                const delta = parsed.choices?.[0]?.delta?.content || '';
+                if (delta) { receivedContent = true; onChunk({ reply: delta }); }
+              } catch { /* skip */ }
+            }
+          }
+        }
+        onDone();
+      })
+      .catch((err) => {
+        if (err.name === 'AbortError') return;
+        onError(err.message || 'NVIDIA API connection failed');
+      });
+    return () => controller.abort();
+  }
 
   fetch(`${API_BASE}/chat/stream`, {
     method: 'POST',
