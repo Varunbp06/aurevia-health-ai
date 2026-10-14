@@ -32,6 +32,16 @@ export async function getChatContext(query: string): Promise<{ context: string; 
 }
 
 // ── SSE Streaming Chat ───────────────────────────────────────────
+//
+// Resolution order, so the public demo keeps working without a deployed
+// backend while never shipping a provider credential to the browser:
+//   1. this app's own backend stream (`${API_BASE}/chat/stream`)
+//   2. this app's own backend, non-streaming (`${API_BASE}/chat`)
+//   3. the server-side provider proxy (`/api/nvidia-chat`), which holds the
+//      provider key in the Vercel environment and is never in the bundle.
+//
+// Provider keys entered by a user in the Model Manager are their own and are
+// stored in localStorage; they are forwarded to our backend as before.
 export function streamChat(
   message: string,
   history: { role: string; content: string }[],
@@ -44,16 +54,10 @@ export function streamChat(
   model?: string
 ) {
   const controller = new AbortController();
+  const language = typeof window !== 'undefined' ? localStorage.getItem('app-language') || 'en' : 'en';
 
   let p = cloudProvider || (typeof window !== 'undefined' ? localStorage.getItem('ai_cloud_provider') : null);
   let k = cloudApiKey || (typeof window !== 'undefined' ? localStorage.getItem('ai_cloud_api_key') : null);
-  const nvidiaKey = typeof window !== 'undefined' ? (import.meta.env.VITE_NVIDIA_API_KEY as string) : '';
-
-  // If no provider set but we have an NVIDIA key, use it directly
-  if (nvidiaKey && !k) {
-    p = 'nvidia';
-    k = nvidiaKey;
-  }
 
   if (!p) {
     p = "custom";
@@ -70,132 +74,133 @@ export function streamChat(
 
   let receivedContent = false;
 
-  const language = typeof window !== 'undefined' ? localStorage.getItem('app-language') || 'en' : 'en';
-  const useDirectNvidia = nvidiaKey && p === 'nvidia';
+  const unauthorized = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('healthcare-auth');
+      redirectToLogin();
+    }
+    onError('Unauthorized');
+  };
 
-  // When backend is unreachable and NVIDIA key is available, call NVIDIA API directly
-  if (useDirectNvidia) {
-    const nvidiaMessages = history.map((m: any) => ({ role: m.role, content: m.content }));
-    nvidiaMessages.push({ role: 'user', content: message });
-
-    fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${k}`,
-      },
-      body: JSON.stringify({
-        model: model || 'nvidia/llama-3.3-nemotron-super-49b-v1',
-        messages: nvidiaMessages,
-        stream: true,
-        max_tokens: 1024,
-      }),
-      signal: controller.signal,
-    })
-      .then(async (res) => {
-        if (!res.ok) throw new Error(`NVIDIA API HTTP ${res.status}`);
-        const reader = res.body?.getReader();
-        if (!reader) throw new Error('No stream');
-        const decoder = new TextDecoder();
-        let buffer = '';
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const payload = line.slice(6).trim();
-              if (payload === '[DONE]') { onDone(); return; }
-              try {
-                const parsed = JSON.parse(payload);
-                const delta = parsed.choices?.[0]?.delta?.content || '';
-                if (delta) { receivedContent = true; onChunk({ reply: delta }); }
-              } catch { /* skip */ }
-            }
-          }
-        }
-        onDone();
-      })
-      .catch((err) => {
-        if (err.name === 'AbortError') return;
-        onError(err.message || 'NVIDIA API connection failed');
-      });
-    return () => controller.abort();
-  }
-
-  fetch(`${API_BASE}/chat/stream`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ message, history, model, rag_scope: ragScope, language }),
-    signal: controller.signal,
-  })
-    .then(async (res) => {
-      if (res.status === 401) {
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('healthcare-auth');
-          redirectToLogin();
-        }
-        throw new Error('Unauthorized');
-      }
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error('No stream');
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const text = decoder.decode(value);
-        for (const line of text.split('\n')) {
-          if (line.startsWith('data: ')) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              if (data.reply) {
-                receivedContent = true;
-              }
-              onChunk(data);
-              if (data.status === 'complete') { onDone(); return; }
-              if (data.status === 'error') { onError(data.error || 'Unknown error'); return; }
-            } catch { /* skip malformed */ }
-          }
-        }
-      }
-      onDone();
-    })
-    .catch(async (err) => {
-      if (err.name === 'AbortError') return;
-
-      if (!receivedContent) {
+  /** Reads an OpenAI-compatible SSE stream (`data: {"choices":[{"delta":...}]}`). */
+  const readProviderStream = async (res: Response): Promise<void> => {
+    const reader = res.body?.getReader();
+    if (!reader) throw new Error('No stream');
+    const decoder = new TextDecoder();
+    let buffer = '';
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const payload = line.slice(6).trim();
+        if (payload === '[DONE]') return;
         try {
-          const syncRes = await fetch(`${API_BASE}/chat`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', ...authHeaders() },
-            body: JSON.stringify({ message, history, language }),
-          });
-          if (syncRes.status === 401) {
-            if (typeof window !== 'undefined') {
-              localStorage.removeItem('healthcare-auth');
-              redirectToLogin();
-            }
-            throw new Error('Unauthorized');
+          const parsed = JSON.parse(payload);
+          const delta = parsed.choices?.[0]?.delta?.content || '';
+          if (delta) {
+            receivedContent = true;
+            onChunk({ reply: delta });
           }
-          if (!syncRes.ok) throw new Error(`HTTP ${syncRes.status}`);
-          const syncData = await syncRes.json();
-          const replyText = syncData.response || syncData.reply || "";
-          onChunk({ reply: replyText });
-          onDone();
-          return;
-        } catch (fallbackErr: any) {
-          onError(fallbackErr.message || "Connection interrupted.");
-          return;
-        }
+        } catch { /* skip malformed frame */ }
       }
+    }
+  };
 
-      onError(err.message || "Connection interrupted.");
-    });
+  /** Reads this app's own backend SSE envelope (`data: {reply|status}`). */
+  const readBackendStream = async (res: Response): Promise<boolean> => {
+    const reader = res.body?.getReader();
+    if (!reader) throw new Error('No stream');
+    const decoder = new TextDecoder();
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const text = decoder.decode(value);
+      for (const line of text.split('\n')) {
+        if (!line.startsWith('data: ')) continue;
+        try {
+          const data = JSON.parse(line.slice(6));
+          if (data.reply) receivedContent = true;
+          onChunk(data);
+          if (data.status === 'complete') { onDone(); return true; }
+          if (data.status === 'error') { onError(data.error || 'Unknown error'); return true; }
+        } catch { /* skip malformed */ }
+      }
+    }
+    return false;
+  };
 
+  const run = async () => {
+    // 1 ── Backend stream
+    try {
+      const res = await fetch(`${API_BASE}/chat/stream`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ message, history, model, rag_scope: ragScope, language }),
+        signal: controller.signal,
+      });
+      if (res.status === 401) { unauthorized(); return; }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      // A static deployment answers unknown routes with the SPA shell. That is
+      // not a working API, so a non-SSE body must fall through to the fallbacks
+      // instead of ending the turn with an empty reply.
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('text/event-stream')) {
+        throw new Error('Chat backend unavailable');
+      }
+      const finished = await readBackendStream(res);
+      if (!finished) onDone();
+      return;
+    } catch (err: any) {
+      if (err?.name === 'AbortError') return;
+      if (receivedContent) { onError(err?.message || 'Connection interrupted.'); return; }
+    }
+
+    // 2 ── Backend, non-streaming
+    try {
+      const syncRes = await fetch(`${API_BASE}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
+        body: JSON.stringify({ message, history, language }),
+        signal: controller.signal,
+      });
+      if (syncRes.status === 401) { unauthorized(); return; }
+      if (!syncRes.ok) throw new Error(`HTTP ${syncRes.status}`);
+      const syncData = await syncRes.json();
+      const replyText = syncData?.response || syncData?.reply || "";
+      if (!replyText) throw new Error('Empty backend reply');
+      onChunk({ reply: replyText });
+      onDone();
+      return;
+    } catch (fallbackErr: any) {
+      if (fallbackErr?.name === 'AbortError') return;
+    }
+
+    // 3 ── Server-side provider proxy (holds the key; key never reaches here)
+    try {
+      const proxyRes = await fetch('/api/nvidia-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, history, model }),
+        signal: controller.signal,
+      });
+      if (!proxyRes.ok) {
+        const detail = await proxyRes.json().catch(() => ({} as { error?: string }));
+        throw new Error(detail?.error || `HTTP ${proxyRes.status}`);
+      }
+      await readProviderStream(proxyRes);
+      onDone();
+    } catch (proxyErr: any) {
+      if (proxyErr?.name === 'AbortError') return;
+      onError(proxyErr?.message || "Connection interrupted.");
+    }
+  };
+
+  void run();
   return () => controller.abort();
 }
 
