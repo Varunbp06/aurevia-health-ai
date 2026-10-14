@@ -1,63 +1,64 @@
 # NVIDIA inference endpoint status
 
-**Status: BLOCKED (external, account-level).** Not a code defect, and not
-something this repository can fix.
+**Status: WORKING — verified end to end on production.**
 
-## Symptom
+## Verified evidence
 
-`POST https://integrate.api.nvidia.com/v1/chat/completions` returns
-**HTTP 410 Gone** for every model, through the `/api/nvidia-chat` proxy:
+Request:
+
+```bash
+curl -sS -N -X POST https://aureviahealth.vercel.app/api/nvidia-chat \
+  -H 'Content-Type: application/json' \
+  -d '{"message":"Reply with exactly: READY","history":[]}'
+```
+
+Response (streaming SSE, truncated):
 
 ```
-{"error":"AI provider rejected the request.","upstreamStatus":410}
+data: {"choices":[{"index":0,"delta":{"content":"READ","role":"assistant"}}],...,"model":"nvidia/nemotron-3.5-lightning-30b-a3b"}
+data: {"choices":[{"index":0,"delta":{"content":"Y","role":"assistant"}}],...}
+data: {"choices":[{"index":0,"delta":{"role":"assistant"},"finish_reason":"stop"}],...}
+data: [DONE]
 ```
 
-Verified on production against three different model IDs
-(`meta/llama-3.1-8b-instruct`, `nvidia/llama-3.3-nemotron-super-49b-v1`,
-`nvidia/llama-3.3-nemotron-super-49b-v1.5`) — all returned 410, which rules out
-a single bad model ID and points at the endpoint/account rather than the request.
+The model returned the requested token, so the full path is proven:
+browser → `/api/nvidia-chat` (Edge Function) → NVIDIA → streamed back to the
+client. The provider credential stayed server-side throughout.
 
-## Cause
+## What was actually wrong
 
-NVIDIA's developer forums document this exact behaviour: the public inference
-endpoint returns `410 Gone` for accounts that do not have **Public API
-Endpoints** enabled for their NVIDIA organisation. The error body is often
-empty, and it is returned regardless of which model is requested.
+A first attempt used the legacy model IDs
+`nvidia/llama-3.3-nemotron-super-49b-v1`, `...-v1.5` and
+`meta/llama-3.1-8b-instruct`. All three returned **HTTP 410 Gone**, which is why
+the proxy was initially believed to be blocked at account level. The 410s were
+model-specific: the retired Nemotron Super 49B v1 family is no longer served on
+this endpoint.
 
-References:
+Switching the default to `nvidia/nemotron-3.5-lightning-30b-a3b` resolved it
+immediately. Do not reintroduce the legacy IDs.
 
-- https://forums.developer.nvidia.com/t/request-enable-public-api-endpoints-for-personal-account-http-410-error/384417
-- https://forums.developer.nvidia.com/t/request-to-enable-public-api-endpoints-permission-for-my-personal-organization-http-410/379922
+## Allow-listed models
 
-## Resolution (requires the account owner)
+| Model | State |
+| --- | --- |
+| `nvidia/nemotron-3.5-lightning-30b-a3b` | default — **verified working** |
+| `nvidia/nemotron-3-ultra-550b-a55b` | allowed, not yet exercised |
+| `meta/llama-3.1-8b-instruct` | allowed as a fallback; returned 410 in testing — treat as unreliable |
 
-1. Sign in to <https://build.nvidia.com> with the account behind the
-   `NVIDIA_API_KEY` configured in this Vercel project.
-2. Enable **Public API Endpoints** for that organisation/personal account.
-3. Re-run the smoke check:
+## Non-credential controls (verified on production)
 
-   ```bash
-   curl -sS -X POST https://aureviahealth.vercel.app/api/nvidia-chat \
-     -H 'Content-Type: application/json' \
-     -d '{"message":"Reply with exactly: READY","history":[]}'
-   ```
+| Check | Result |
+| --- | --- |
+| `GET /api/nvidia-chat` | `405 {"error":"Method not allowed"}` — not swallowed by the SPA rewrite |
+| `POST` with `Origin: https://evil.example` | `403 {"error":"Origin not allowed"}` |
+| `DELETE /api/nvidia-chat` | `405` |
+| Provider key in deployed bundle | absent (`nvapi-`, `NVIDIA_API_KEY`, and the upstream URL all have zero matches) |
+| Provider key in response body | absent |
 
-   A working account streams `data: {"choices":[{"delta":...}]}` frames. A `410`
-   in the JSON body means the permission is still not enabled.
+## Deployment-scope note
 
-## Why the application is nevertheless safe and honest
-
-- The provider credential is **server-only** (`NVIDIA_API_KEY`, a Vercel
-  sensitive variable read exclusively by the `/api/nvidia-chat` Edge Function).
-  It is not present in the client bundle, source maps, or any response body.
-- When the provider is unavailable the proxy returns a generic, honest error.
-  It never fabricates a model reply and never falls back to exposing a key.
-- Chat remains usable without this provider via the in-browser WebGPU engine
-  (Model Manager → Browser AI), which needs no credential at all.
-
-## Unverified
-
-The model IDs allow-listed in `api/nvidia-chat.ts` follow NVIDIA's current
-hosted catalog but have **not** been exercised end to end, because the account
-returns 410 before a model is ever reached. Re-test after the permission is
-enabled.
+`NVIDIA_API_KEY` is configured for the **Production** environment only. Preview
+deployments therefore do not receive it and correctly answer
+`503 {"error":"AI provider is not configured on this deployment."}`. Add the
+variable to the Preview scope as well if preview builds should reach the
+provider.

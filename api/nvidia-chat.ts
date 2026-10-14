@@ -29,10 +29,9 @@ const NVIDIA_ENDPOINT = 'https://integrate.api.nvidia.com/v1/chat/completions';
 // anything else falls back to DEFAULT_MODEL, so the function cannot be used as
 // an open gateway to arbitrary upstream models.
 //
-// NOTE: these IDs follow NVIDIA's current hosted catalog. They have not been
-// exercised end to end because this NVIDIA account currently receives
-// HTTP 410 Gone from the public inference endpoint, which is an account-level
-// permission issue (see docs/NVIDIA-ENDPOINT-STATUS.md).
+// DEFAULT_MODEL is verified streaming in production. The legacy
+// nvidia/llama-3.3-nemotron-super-49b-v1 ids return HTTP 410 Gone from this
+// endpoint, so they must not be reintroduced. See docs/NVIDIA-ENDPOINT-STATUS.md.
 const DEFAULT_MODEL = 'nvidia/nemotron-3.5-lightning-30b-a3b';
 const ALLOWED_MODELS = new Set<string>([
   DEFAULT_MODEL,
