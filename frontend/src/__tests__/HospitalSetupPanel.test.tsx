@@ -2,6 +2,13 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import HospitalSetupPanel from '@/components/operations/HospitalSetupPanel';
 import { createBed, createDepartment, getDepartments } from '@/lib/api';
 
+vi.mock('framer-motion', () => ({
+  AnimatePresence: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+  motion: {
+    div: ({ children, ...props }: { children?: React.ReactNode }) => <div {...props}>{children}</div>,
+  },
+}));
+
 vi.mock('@/lib/api', () => ({
   getDepartments: vi.fn(() => Promise.resolve([
     { id: 1, name: 'Cardiology', department_type: 'OPD', location: 'First Floor', status: 'active', created_at: '2026-05-26T10:00:00Z' },

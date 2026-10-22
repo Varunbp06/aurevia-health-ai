@@ -3,6 +3,13 @@ import OperationsCockpit from '@/components/operations/OperationsCockpit';
 import { getAdminOperationsCockpit } from '@/lib/api';
 import { ApiConnectionError } from '@/lib/apiErrors';
 
+vi.mock('framer-motion', () => ({
+  AnimatePresence: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+  motion: {
+    div: ({ children, ...props }: { children?: React.ReactNode }) => <div {...props}>{children}</div>,
+  },
+}));
+
 let mockAuthUser = { username: 'admin_user', full_name: 'Admin User', role: 'admin' };
 
 vi.mock('@/lib/auth', () => ({
