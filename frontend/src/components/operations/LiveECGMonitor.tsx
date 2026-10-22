@@ -185,7 +185,9 @@ const LiveECGMonitor = memo(function LiveECGMonitor({ hr, status, mode = "ecg" }
     if (transferredRef.current) return;
 
     // Detect OffscreenCanvas support (guard for browsers, JSDOM, or automated tests)
-    const supportsOffscreen = typeof canvas.transferControlToOffscreen === "function";
+    const supportsOffscreen =
+      typeof canvas.transferControlToOffscreen === "function" &&
+      typeof Worker !== "undefined";
 
     if (supportsOffscreen) {
       try {
