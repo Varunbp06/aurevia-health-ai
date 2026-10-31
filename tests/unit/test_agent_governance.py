@@ -38,7 +38,7 @@ def test_agent_lineage_graph_tracking():
 
 def test_api_agent_governance_endpoints():
     # Governed Execution API
-    resp1 = client.post("/api/v1/data-platform/agents/governed-execute", json={
+    resp1 = client.post("/v1/data-platform/agents/governed-execute", json={
         "agent_id": "AGENT-ICU-SEPSIS",
         "action_name": "evaluate_sepsis_risk",
         "input_data": {"respiratory_rate": 25, "systolic_bp": 90, "gcs_score": 13},
@@ -49,6 +49,6 @@ def test_api_agent_governance_endpoints():
     assert len(body["fda_audit_hash"]) == 64
 
     # Lineage API
-    resp2 = client.get("/api/v1/data-platform/agents/lineage")
+    resp2 = client.get("/v1/data-platform/agents/lineage")
     assert resp2.status_code == 200
     assert resp2.json()["total_nodes"] >= 1

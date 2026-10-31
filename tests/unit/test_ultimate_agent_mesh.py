@@ -65,7 +65,7 @@ def test_master_governed_mesh_task():
 
 def test_api_mesh_endpoints():
     # Debate API
-    resp1 = client.post("/api/v1/data-platform/agents/mesh/consensus-debate", json={
+    resp1 = client.post("/v1/data-platform/agents/mesh/consensus-debate", json={
         "case_id": "CASE-TEST-100",
         "case_data": {"qsofa_score": 3},
     })
@@ -73,14 +73,14 @@ def test_api_mesh_endpoints():
     assert resp1.json()["total_agents_participated"] >= 1
 
     # ReAct API
-    resp2 = client.post("/api/v1/data-platform/agents/mesh/execute-react-goal", json={
+    resp2 = client.post("/v1/data-platform/agents/mesh/execute-react-goal", json={
         "goal": "Test ReAct Cycle",
     })
     assert resp2.status_code == 200
     assert resp2.json()["total_steps"] >= 1
 
     # DAG API
-    resp3 = client.post("/api/v1/data-platform/agents/mesh/dag-orchestrate", json={
+    resp3 = client.post("/v1/data-platform/agents/mesh/dag-orchestrate", json={
         "goal": "Test DAG Workflow",
     })
     assert resp3.status_code == 200

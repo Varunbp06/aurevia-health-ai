@@ -20,7 +20,7 @@ def test_agent_benchmark_runner_scorecard():
 
 
 def test_api_agent_benchmark_endpoint():
-    res = client.get("/api/v1/data-platform/agents/benchmark/run")
+    res = client.get("/v1/data-platform/agents/benchmark/run")
     assert res.status_code == 200
     body = res.json()
     assert "overall_performance_score" in body

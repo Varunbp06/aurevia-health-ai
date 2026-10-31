@@ -39,13 +39,13 @@ def test_agent_rpm_adherence():
 
 
 def test_api_research_rpm_agent_endpoints():
-    resp1 = client.post("/api/v1/data-platform/agents/trial-matching/match", json={
+    resp1 = client.post("/v1/data-platform/agents/trial-matching/match", json={
         "condition": "NSCLC", "biomarker": "EGFR",
     })
     assert resp1.status_code == 200
     assert resp1.json()["match_confidence"] > 0.0
 
-    resp2 = client.post("/api/v1/data-platform/agents/rpm-adherence/evaluate", json={
+    resp2 = client.post("/v1/data-platform/agents/rpm-adherence/evaluate", json={
         "missed_doses_last_7d": 1, "avg_systolic_bp": 120,
     })
     assert resp2.status_code == 200

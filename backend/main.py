@@ -155,7 +155,12 @@ def run_migrations():
         command.upgrade(alembic_cfg, "head")
         logger.info("Migrations completed successfully.")
     except Exception as mig_err:
-        logger.warning("Migration check failed: %s. Ensuring database schema via metadata.create_all...", mig_err)
+        # Only the exception class is logged: database errors echo DSNs, passwords
+        # and patient identifiers into log sinks.
+        logger.warning(
+            "Migration check failed (%s). Ensuring database schema via metadata.create_all...",
+            type(mig_err).__name__,
+        )
         models.Base.metadata.create_all(bind=database.engine)
 
 

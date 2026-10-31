@@ -65,14 +65,14 @@ def test_agent_future_forecast():
 
 def test_api_enterprise_agents_endpoints():
     # Fraud API
-    resp1 = client.post("/api/v1/data-platform/agents/fraud-detection/analyze", json={
+    resp1 = client.post("/v1/data-platform/agents/fraud-detection/analyze", json={
         "amount": 20000.0, "cpt_codes": ["CPT-99211"],
     })
     assert resp1.status_code == 200
     assert resp1.json()["fraud_score"] > 0.0
 
     # Forecast API
-    resp2 = client.post("/api/v1/data-platform/agents/future-forecast/predict", json={
+    resp2 = client.post("/v1/data-platform/agents/future-forecast/predict", json={
         "historical_counts": [60.0, 65.0, 70.0],
         "forecast_horizon_days": 7,
     })

@@ -344,8 +344,14 @@ def _get_gemini_model():
         return None
 
 
+EMBEDDING_DIM = 768
+
+
 def embed_text(text: str, task_type: str = "retrieval_document") -> list[float]:
     """Generate a text embedding through the centralized AI provider boundary.
+
+    Returns a zero vector when no provider is configured or the provider call
+    fails, so retrieval degrades rather than raising.
 
     This is a synchronous function intentionally kept sync for callers that
     cannot be async (e.g. startup-time vector store population). Async callers
@@ -353,6 +359,9 @@ def embed_text(text: str, task_type: str = "retrieval_document") -> list[float]:
     """
     global _gemini_configured
     import hashlib
+
+    if not has_gemini_api_key():
+        return [0.0] * EMBEDDING_DIM
 
     from .cache_service import cache
     # Generate SHA-256 hash of text to create a compact, unique cache key
@@ -394,16 +403,15 @@ def embed_text(text: str, task_type: str = "retrieval_document") -> list[float]:
 
             return embedding
         else:
-            logger.error(f"Cloudflare embedding format unexpected: {data}")
-            from fastapi import HTTPException
-            raise HTTPException(status_code=503, detail="Embedding service unavailable")
+            logger.error("Embedding provider returned an unexpected response shape")
+            return [0.0] * EMBEDDING_DIM
 
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error calling Cloudflare embedding API: {str(e)}")
-        from fastapi import HTTPException
-        raise HTTPException(status_code=503, detail="Embedding service unavailable")
+    except Exception as exc:
+        # Provider exceptions can carry API tokens and patient identifiers, so only
+        # the exception class is logged and the caller gets a zero vector instead of
+        # a hard failure. Retrieval degrades; it does not take the request down.
+        logger.error("Embedding provider call failed (%s)", type(exc).__name__)
+        return [0.0] * EMBEDDING_DIM
 
 
 async def embed_text_async(text: str, task_type: str = "retrieval_document") -> list[float]:
