@@ -55,14 +55,14 @@ def test_agent_surgical_or_optimization():
 
 def test_api_hospital_operations_agent_endpoints():
     # Sepsis API
-    resp1 = client.post("/api/v1/data-platform/agents/sepsis/evaluate", json={
+    resp1 = client.post("/v1/data-platform/agents/sepsis/evaluate", json={
         "respiratory_rate": 25, "systolic_bp": 90, "gcs_score": 13,
     })
     assert resp1.status_code == 200
     assert resp1.json()["qsofa_score"] == 3
 
     # Prior Auth API
-    resp2 = client.post("/api/v1/data-platform/agents/prior-auth/process", json={
+    resp2 = client.post("/v1/data-platform/agents/prior-auth/process", json={
         "procedure_code": "CPT-70450", "has_neurological_symptoms": True,
     })
     assert resp2.status_code == 200

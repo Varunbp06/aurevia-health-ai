@@ -17,7 +17,7 @@ def test_api_lakehouse_sql_execute():
         tbl = open_table_engine.create_table("sql_test", schema)
         tbl.insert([{"id": "A", "dept": "cardio", "score": 90}])
 
-    res = client.post("/api/v1/data-platform/sql/execute", json={
+    res = client.post("/v1/data-platform/sql/execute", json={
         "sql": "SELECT COUNT(*) FROM sql_test",
     })
     assert res.status_code == 200
@@ -28,7 +28,7 @@ def test_api_lakehouse_sql_execute():
 
 
 def test_api_catalog_search():
-    res = client.get("/api/v1/data-platform/catalog/search?query=vitals")
+    res = client.get("/v1/data-platform/catalog/search?query=vitals")
     assert res.status_code == 200
     body = res.json()
     assert "query" in body
@@ -36,7 +36,7 @@ def test_api_catalog_search():
 
 
 def test_api_agentic_bi_ask():
-    res = client.post("/api/v1/data-platform/bi/ask", json={
+    res = client.post("/v1/data-platform/bi/ask", json={
         "question": "how many records in sql_test",
         "table": "sql_test",
     })
@@ -47,7 +47,7 @@ def test_api_agentic_bi_ask():
 
 
 def test_api_spark_variant_shred():
-    res = client.post("/api/v1/data-platform/spark/variant-shred", json={
+    res = client.post("/v1/data-platform/spark/variant-shred", json={
         "raw_json": '{"id": "V-100", "hr": 99, "status": "ACTIVE"}',
         "target_fields": ["hr"],
     })
@@ -58,7 +58,7 @@ def test_api_spark_variant_shred():
 
 
 def test_api_data_apps_list():
-    res = client.get("/api/v1/data-platform/apps/list")
+    res = client.get("/v1/data-platform/apps/list")
     assert res.status_code == 200
     body = res.json()
     assert "total" in body
@@ -66,7 +66,7 @@ def test_api_data_apps_list():
 
 
 def test_api_supervisor_agent_route():
-    res = client.post("/api/v1/data-platform/agents/route", json={
+    res = client.post("/v1/data-platform/agents/route", json={
         "capability": "TRIAGE",
     })
     assert res.status_code == 200
@@ -76,7 +76,7 @@ def test_api_supervisor_agent_route():
 
 
 def test_api_plan_and_execute_orchestration():
-    res = client.post("/api/v1/data-platform/agents/plan-and-execute", json={
+    res = client.post("/v1/data-platform/agents/plan-and-execute", json={
         "goal": "Evaluate ED Patient Risk & Dosage",
         "steps": [
             {

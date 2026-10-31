@@ -193,3 +193,60 @@ def pytest_addoption(parser):
 def pytest_runtest_setup(item):
     if "slow" in item.keywords and not item.config.getoption("--run-slow"):
         pytest.skip("need --run-slow option to run")
+
+
+# ── Authentication for business-logic tests ──────────────────────────────────
+#
+# Most of this suite exercises route behaviour (payload shape, business rules,
+# status codes after a valid caller), not access control. Those routes are now
+# guarded by auth.require_admin / require_clinician_or_admin, which is the
+# correct production behaviour and is covered end-to-end by the dedicated
+# security suites below.
+#
+# Any test file whose path mentions auth/security/anonymous/permission/RBAC, or
+# that lives under tests/e2e, is deliberately excluded so it keeps driving the
+# real dependency chain and would still fail if a guard were removed.
+_AUTH_SUITE_MARKERS = (
+    "anonymous_access",
+    "auth",
+    "security",
+    "permission",
+    "rbac",
+    "tenant",
+)
+
+
+@pytest.fixture(autouse=True)
+def authenticated_principal(request):
+    """Run business-logic tests as a signed-in admin principal."""
+    import types
+
+    path = str(getattr(request.node, "path", "")).replace("\\", "/").lower()
+    if "/e2e/" in path or any(marker in path for marker in _AUTH_SUITE_MARKERS):
+        yield None
+        return
+
+    from backend import auth
+    from backend.main import app
+
+    principal = types.SimpleNamespace(
+        id=1,
+        username="ci-admin",
+        email="ci-admin@example.com",
+        full_name="CI Admin",
+        role="admin",
+        is_active=True,
+        is_superuser=True,
+    )
+
+    overrides = {
+        auth.get_current_user: lambda: principal,
+        auth.require_admin: lambda: principal,
+        auth.require_clinician_or_admin: lambda: principal,
+    }
+    app.dependency_overrides.update(overrides)
+    try:
+        yield principal
+    finally:
+        for dependency in overrides:
+            app.dependency_overrides.pop(dependency, None)
